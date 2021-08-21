@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import "./index.less";
+import "./index.scss";
 
 export default defineComponent({
   name: "Nav",
@@ -7,10 +7,12 @@ export default defineComponent({
     leftIcon: {
       type: String,
       default: "icon-fanhui",
+      desc: "定义left插槽时此prop失效",
     },
     rightIcon: {
       type: String,
       default: "icon-gengduo",
+      desc: "定义right插槽时此prop失效",
     },
   },
   emits: ["leftClick", "rightClick"],
@@ -23,14 +25,14 @@ export default defineComponent({
     };
     const renderLeft = () => {
       return slots.left ? (
-        slots.left!()
+        slots.left()
       ) : (
         <i class={["iconfont", props.leftIcon]} onClick={handleLeftClick}></i>
       );
     };
     const renderRight = () => {
       return slots.right ? (
-        slots.right!()
+        slots.right()
       ) : (
         <i class={["iconfont", props.rightIcon]} onClick={handleRightClick}></i>
       );

@@ -17,19 +17,32 @@
         </div>
       </template>
     </Nav>
+    <HomeBanner />
+    <MenuList />
+    <FindMusiList />
+    <SelectMusicVideo />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import Nav from "@/components/Nav/Nav";
+import HomeBanner from "./components/HomeBanner";
+
+import MenuList from "./components/MenuList.vue";
+import FindMusiList from "./components/FindMusiList.vue";
+import SelectMusicVideo from "./components/SelectMusicVideo.vue";
 
 export default defineComponent({
   name: "Home",
   components: {
     Nav,
+    HomeBanner,
+    MenuList,
+    FindMusiList,
+    SelectMusicVideo,
   },
-  setup(props, { emit }) {
+  setup() {
     const selectId = ref(1);
     const navData = reactive([
       { id: 1, name: "我的" },
@@ -37,12 +50,14 @@ export default defineComponent({
       { id: 3, name: "云村" },
       { id: 4, name: "视频" },
     ]);
+
     const handLeftClick = () => {
       console.log(111);
     };
     const handleChange = (num: number) => {
       selectId.value = num;
     };
+
     return {
       handLeftClick,
       handleChange,
@@ -53,4 +68,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="scss" scoped></style>

@@ -1,0 +1,27 @@
+.title-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.25rem;
+  margin: 0.25rem 0;
+  align-items: center;
+  .title-title {
+    font-size: 0.45rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+  }
+  .more-card {
+    // font-size: 0.25rem;
+    border: 1px solid #dedede;
+    border-radius: 0.3rem;
+    padding: 0.08rem 0.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .more-title {
+      font-size: 0.25rem;
+    }
+    .iconfont {
+      font-size: 0.3rem;
+    }
+  }
+}
