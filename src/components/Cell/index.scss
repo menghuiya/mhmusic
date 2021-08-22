@@ -1,0 +1,46 @@
+@import "@/assets/css/variable.scss";
+
+.cell-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: $all-box-padding; //仅仅在此项目中这样 不需要可以取消
+  .cell-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    .iconfont {
+      font-size: 0.5rem;
+    }
+    .cell-title {
+      flex: 1;
+      font-size: 0.35rem;
+      margin-left: 0.1rem;
+    }
+  }
+  .cell-right {
+    display: flex;
+    align-items: center;
+    color: #909399;
+    .iconfont {
+      font-size: 0.5rem;
+    }
+    .cell-value {
+      font-size: 0.35rem;
+      margin-left: 0.1rem;
+      // color: #909399;
+    }
+  }
+  // &::after {
+  //   position: absolute;
+  //   box-sizing: border-box;
+  //   content: " ";
+  //   pointer-events: none;
+  //   right: 0.5rem;
+  //   bottom: 0;
+  //   left: 0.5rem;
+  //   border-bottom: 1px solid #d6d7d8;
+  //   transform: scaleY(0.5);
+  // }
+}

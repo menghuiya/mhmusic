@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, nextTick, onMounted, onUnmounted, ref } from "vue";
 import "./index.scss";
 import router from "@/router";
 
@@ -24,6 +24,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    bgImg: {
+      type: String,
+      default: "",
+      desc: "作为背景使用",
+    },
   },
   emits: ["leftClick", "rightClick"],
   setup(props, { emit, slots }) {
@@ -48,6 +53,34 @@ export default defineComponent({
         ></i>
       );
     };
+    const offsetHeight = ref(0);
+    const isFixed = ref<boolean>(false);
+    const NavRef = ref();
+    const initHeight = () => {
+      const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      if (scrollTop > offsetHeight.value) {
+        isFixed.value = true;
+        // NavRef.value.style.background = `url('${props.bgImg}')`;
+      } else {
+        isFixed.value = false;
+        // NavRef.value.style.background = ``;
+      }
+    };
+
+    onMounted(() => {
+      window.addEventListener("scroll", initHeight);
+      nextTick(() => {
+        offsetHeight.value = NavRef.value.offsetHeight;
+      });
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("scroll", initHeight);
+    });
+
     const renderRight = () => {
       return slots.right ? (
         slots.right()
@@ -61,7 +94,7 @@ export default defineComponent({
     };
     return () => {
       return (
-        <div class="top-nav">
+        <div class={["top-nav", isFixed.value ? "nav-fixed" : ""]} ref={NavRef}>
           <div class="top-left">{renderLeft()}</div>
           <div class="top-center">{slots.center ? slots.center() : null}</div>
           <div class="top-right">{renderRight()}</div>

@@ -1,17 +1,23 @@
 <template>
+  <Nav
+    leftIcon="icon-fanhui"
+    iconColor="#fff"
+    :backStatus="true"
+    :bgImg="sheetData.coverImgUrl"
+  >
+    <template #center>
+      <span class="top-title">歌单®</span>
+    </template>
+    <template #right>
+      <i class="iconfont icon-sousuo search top-icon"></i>
+      <i class="iconfont icon-gengduo more top-icon"></i>
+    </template>
+  </Nav>
   <div v-if="sheetData">
     <div class="sheet-bg-box">
       <img class="sheet-bg" :src="sheetData.coverImgUrl" alt="" />
     </div>
-    <Nav leftIcon="icon-fanhui" iconColor="#fff" :backStatus="true">
-      <template #center>
-        <span class="top-title">歌单®</span>
-      </template>
-      <template #right>
-        <i class="iconfont icon-sousuo search top-icon"></i>
-        <i class="iconfont icon-gengduo more top-icon"></i>
-      </template>
-    </Nav>
+
     <div class="sheet-base">
       <div class="sheet-baseinfo-box">
         <div class="sheet-cover">
@@ -42,15 +48,17 @@
       <div class="sheet-otherinfo-box">
         <div class="sheet-otherinfo sheet-collet">
           <i class="iconfont icon-zengjiashuzi"></i>
-          <span>{{ sheetData.subscribedCount }}</span>
+          <div class="sheet-num">
+            {{ getCounts(sheetData.subscribedCount) }}
+          </div>
         </div>
         <div class="sheet-otherinfo sheet-comment">
           <i class="iconfont icon-pinglun"></i>
-          <span>{{ sheetData.commentCount }}</span>
+          <div class="sheet-num">{{ getCounts(sheetData.commentCount) }}</div>
         </div>
         <div class="sheet-otherinfo sheet-share">
           <i class="iconfont icon-fenxiang"></i>
-          <span>{{ sheetData.shareCount }}</span>
+          <div class="sheet-num">{{ getCounts(sheetData.shareCount) }}</div>
         </div>
       </div>
     </div>
@@ -86,14 +94,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .sheet-bg-box {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   height: 6.2rem;
   overflow: hidden;
   z-index: -1;
   .sheet-bg {
-    // width: 12rem;
+    width: 10rem;
     height: auto;
     filter: blur(40px) brightness(0.6);
     transform: scale(1.2);
@@ -168,11 +176,11 @@ export default defineComponent({
         font-size: 0.25rem;
         color: #c8c9cc;
         letter-spacing: 1px;
-        height: 0.8rem;
+        height: 0.4rem;
         line-height: 0.4rem;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
         word-break: break-all;
@@ -220,18 +228,21 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-around;
-    font-size: 0.25rem;
+    // font-size: 0.25rem;
     .sheet-otherinfo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex: 1;
-      span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .sheet-num {
         margin-left: 0.1rem;
-        font-size: 0.35rem;
+        font-size: 0.3rem;
       }
       .iconfont {
-        font-size: 0.4rem;
+        font-size: 0.5rem;
+        // vertical-align: middle;
+        // margin-top: 1px;
       }
     }
     .sheet-comment {

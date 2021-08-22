@@ -1,7 +1,9 @@
+@import "@/assets/css/variable.scss";
+
 .title-box {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.25rem;
+  padding: $noline-box-padding;
   margin: 0.25rem 0;
   align-items: center;
   .title-title {

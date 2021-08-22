@@ -1,8 +1,16 @@
+@import "@/assets/css/variable.scss";
+//--test ：为js操作此变量需要用到的KEY
+//red: 默认的css属性值
+
 .top-nav {
   display: flex;
-  padding: 0.25rem;
+  padding: $all-box-padding;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  overflow: hidden;
   .top-left {
     // flex: 2;
     font-size: 0.5rem;
@@ -35,4 +43,8 @@
       font-size: 0.5rem;
     }
   }
+}
+
+.nav-fixed {
+  background-color: #000;
 }
