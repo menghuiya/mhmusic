@@ -1,37 +1,8 @@
-// //@ts-check
-// /**
-//  * @param {number} delay
-//  */
-// export function debounceFactory(delay: number) {
-//   /**
-//    * @param {() => void} callback
-//    */
-//   let timer: number | undefined = undefined;
-//   return (callback: Function) => {
-//     clearTimeout(timer);
-//     timer = setTimeout(() => {
-//       callback();
-//     }, delay);
-//   };
-// }
-
-// /**
-//  * @param {number} delay
-//  */
-// export function throttleFactory(delay: number) {
-//   /**
-//    * @param {() => void} callback
-//    */
-//   let preTime: number = Date.now();
-//   return (callback: Function) => {
-//     let nowTime = Date.now();
-//     if (nowTime - preTime > delay) {
-//       callback();
-//       preTime = nowTime;
-//     }
-//   };
-// }
-
+/**
+ * 格式化播放量
+ * @param num
+ * @returns
+ */
 const getShowNumber = (num: number | undefined) => {
   let result = "";
   if (!num) {

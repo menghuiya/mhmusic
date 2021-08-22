@@ -1,48 +1,42 @@
 <template>
   <div>
-    <Nav leftIcon="icon-liebiao" rightIcon="icon-sousuo">
-      <template #center>
-        <span>歌单®</span>
-      </template>
-      <template #right>
-        <i class="iconfont icon-sousuo search"></i>
-        <i class="iconfont icon-gengduo"></i>
-      </template>
-    </Nav>
+    <SheetTop :sheetData="state.playlist" v-if="state.playlist" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
 import { getSongSheetDetail } from "@/api/songSheet";
 import { useRoute } from "vue-router";
 import { SheetReturnItem } from "./types";
 
-import Nav from "@/components/Nav/Nav";
+import SheetTop from "./components/SheetTop.vue";
 
 export default defineComponent({
   name: "index",
   components: {
-    Nav,
+    SheetTop,
   },
   props: {},
   setup() {
     const route = useRoute();
+    const state = reactive({
+      playlist: null,
+      privileges: [],
+    });
     onMounted(() => {
       getSongSheetDetail(Number(route.query.id)).then(
         (res: SheetReturnItem) => {
-          console.log(res.playlist);
-          console.log(res.privileges);
+          state.playlist = res.playlist;
+          state.privileges = res.privileges;
         }
       );
     });
-    return {};
+    return {
+      state,
+    };
   },
 });
 </script>
 
-<style lang="scss" scoped>
-.search {
-  margin-right: 0.5rem;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import "./index.scss";
+import router from "@/router";
 
 export default defineComponent({
   name: "Nav",
@@ -14,11 +15,24 @@ export default defineComponent({
       default: "icon-gengduo",
       desc: "定义right插槽时此prop失效",
     },
+    iconColor: {
+      type: String,
+      default: "#000",
+      desc: "定义right插槽时此prop失效",
+    },
+    backStatus: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["leftClick", "rightClick"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
-      emit("leftClick");
+      if (props.backStatus) {
+        router.go(-1);
+      } else {
+        emit("leftClick");
+      }
     };
     const handleRightClick = () => {
       emit("rightClick");
@@ -27,14 +41,22 @@ export default defineComponent({
       return slots.left ? (
         slots.left()
       ) : (
-        <i class={["iconfont", props.leftIcon]} onClick={handleLeftClick}></i>
+        <i
+          class={["iconfont", props.leftIcon]}
+          onClick={handleLeftClick}
+          style={`color:${props.iconColor}`}
+        ></i>
       );
     };
     const renderRight = () => {
       return slots.right ? (
         slots.right()
       ) : (
-        <i class={["iconfont", props.rightIcon]} onClick={handleRightClick}></i>
+        <i
+          class={["iconfont", props.rightIcon]}
+          onClick={handleRightClick}
+          style={`color:${props.iconColor}`}
+        ></i>
       );
     };
     return () => {

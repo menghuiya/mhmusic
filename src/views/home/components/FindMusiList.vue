@@ -41,7 +41,7 @@ export default defineComponent({
       router.push({
         path: "/sheetList",
         query: {
-          id: 6648782637,
+          id: sheetData.id,
         },
       });
     };
