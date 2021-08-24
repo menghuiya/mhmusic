@@ -11,6 +11,8 @@
   top: 0;
   z-index: 999;
   overflow: hidden;
+  transition: background-image 0.4s;
+  background: no-repeat center center / cover;
   .top-left {
     // flex: 2;
     font-size: 0.5rem;
@@ -45,6 +47,6 @@
   }
 }
 
-.nav-fixed {
-  background-color: #000;
-}
+// .nav-fixed {
+//   background-color: #000;
+// }

@@ -3,7 +3,7 @@
     leftIcon="icon-fanhui"
     iconColor="#fff"
     :backStatus="true"
-    :bgImg="sheetData.coverImgUrl"
+    :bgImg="TopBg"
   >
     <template #center>
       <span class="top-title">歌单®</span>
@@ -14,8 +14,8 @@
     </template>
   </Nav>
   <div v-if="sheetData">
-    <div class="sheet-bg-box">
-      <img class="sheet-bg" :src="sheetData.coverImgUrl" alt="" />
+    <div class="sheet-bg-box" :style="`background-image:url(${TopBg});`">
+      <!-- <img class="sheet-bg" :src="TopBg" alt="" /> -->
     </div>
 
     <div class="sheet-base">
@@ -66,9 +66,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import Nav from "@/components/Nav/Nav";
-import { getShowNumber } from "@/utils/tool";
+import { getShowNumber, imgToBlob } from "@/utils/tool";
 
 export default defineComponent({
   name: "index",
@@ -85,7 +85,20 @@ export default defineComponent({
     const getCounts = (num: number) => {
       return getShowNumber(num);
     };
+    const TopBg = ref("");
+
+    onMounted(() => {
+      imgToBlob(
+        props.sheetData.coverImgUrl + "?imageView=1&thumbnail=225x0",
+        (blur: any) => {
+          TopBg.value = blur;
+        },
+        100,
+        -0.1
+      ); // blur
+    });
     return {
+      TopBg,
       getCounts,
     };
   },
@@ -98,14 +111,18 @@ export default defineComponent({
   left: 0;
   top: 0;
   height: 6.2rem;
+  width: 100%;
   overflow: hidden;
   z-index: -1;
-  .sheet-bg {
-    width: 10rem;
-    height: auto;
-    filter: blur(40px) brightness(0.6);
-    transform: scale(1.2);
-  }
+  transition: background-image 0.4s;
+  background: no-repeat center bottom / cover;
+  background-size: cover;
+  // .sheet-bg {
+  //   width: 10rem;
+  //   height: auto;
+  //   // filter: blur(40px) brightness(0.6);
+  //   // transform: scale(1.2);
+  // }
 }
 
 .top-title {

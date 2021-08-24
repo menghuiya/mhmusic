@@ -1,6 +1,7 @@
 import { defineComponent, nextTick, onMounted, onUnmounted, ref } from "vue";
 import "./index.scss";
 import router from "@/router";
+import { imgToBlob } from "@/utils/tool";
 
 export default defineComponent({
   name: "Nav",
@@ -63,10 +64,10 @@ export default defineComponent({
         document.body.scrollTop;
       if (scrollTop > offsetHeight.value) {
         isFixed.value = true;
-        // NavRef.value.style.background = `url('${props.bgImg}')`;
+        NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
       } else {
         isFixed.value = false;
-        // NavRef.value.style.background = ``;
+        NavRef.value.style.backgroundImage = ``;
       }
     };
 
