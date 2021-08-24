@@ -10,9 +10,14 @@
     flex: 1;
     display: flex;
     align-items: center;
-    .iconfont {
-      font-size: 0.5rem;
+    .left-icon {
+      text-align: center;
+      width: 0.6rem;
+      .iconfont {
+        font-size: 0.5rem;
+      }
     }
+
     .cell-title {
       flex: 1;
       font-size: 0.35rem;

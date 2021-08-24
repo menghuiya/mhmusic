@@ -15,7 +15,7 @@
           :arrow="false"
           icon="icon-Controls-02"
           iconColor="red"
-          iconSize="0.6rem"
+          iconSize="0.5rem"
         >
           <template #title>
             <div class="title-text">播放全部</div>
@@ -34,6 +34,7 @@
           :arrow="false"
           v-for="(item, index) in state.playlist ? state.playlist.tracks : []"
           :key="item.id"
+          @click="playMusic(index)"
         >
           <template #icon>
             <div class="list-index">{{ index + 1 }}</div>
@@ -65,6 +66,7 @@ import { SheetReturnItem } from "./types";
 import CellItem from "@/components/Cell/CellItem";
 import LoadingCom from "@/components/Loading/LoadingCom";
 import SheetTop from "./components/SheetTop.vue";
+import store from "@/store";
 
 export default defineComponent({
   name: "index",
@@ -77,7 +79,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const state = reactive({
-      playlist: null,
+      playlist: null as any,
       privileges: [],
     });
     onMounted(() => {
@@ -88,9 +90,16 @@ export default defineComponent({
         }
       );
     });
+    const playMusic = (mIndex: number) => {
+      if (state.playlist) {
+        store.commit("setPlayCurrntIndex", mIndex);
+        store.commit("setPlayList", state.playlist.tracks);
+      }
+    };
 
     return {
       state,
+      playMusic,
     };
   },
 });
@@ -114,7 +123,7 @@ export default defineComponent({
   .title-text {
     font-size: 0.42rem;
     font-weight: 600;
-    margin-left: 0.1rem;
+    margin-left: 0.2rem;
   }
   .sheet-num {
     font-size: 0.25rem;
@@ -134,12 +143,14 @@ export default defineComponent({
   }
   .list-index {
     color: #909399;
-    font-size: 0.5rem;
-    margin-left: 0.08rem;
+    font-size: 0.45rem;
+    // margin-left: 0.08rem;
     text-align: center;
+    width: 0.6rem;
   }
   .sheet-music-box {
-    margin-left: 0.3rem;
+    flex: 1;
+    margin-left: 0.2rem;
     .sheet-music-name {
       font-size: 0.4rem;
       line-height: 0.5rem;

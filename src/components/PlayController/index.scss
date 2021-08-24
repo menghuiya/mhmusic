@@ -1,0 +1,60 @@
+.play-box-area {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  // height: 1.3rem;
+  z-index: 998;
+  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+}
+.play-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #f4f4f5;
+  padding: 0.1rem 0.25rem;
+
+  .play-left {
+    width: 1rem;
+    background-color: #ccc;
+    height: 1rem;
+    border-radius: 0.5rem;
+    // margin-left: 0.25rem;
+    // margin-bottom: 0.1rem;
+  }
+  .play-center {
+    flex: 1;
+    margin-left: 0.2rem;
+    letter-spacing: 0.026667rem;
+    .music-name {
+      font-size: 0.38rem;
+      margin-right: 0.5rem;
+    }
+    .music-author {
+      font-size: 0.32rem;
+      color: #909399;
+    }
+  }
+  .play-right {
+    display: flex;
+    align-items: center;
+    .play-btn {
+      margin-right: 0.3rem;
+      .iconfont {
+        font-size: 0.8rem;
+      }
+      .icon-bofang1 {
+        font-size: 0.75rem;
+      }
+    }
+    .play-list {
+      font-size: 0.8rem;
+      // margin-right: 0.25rem;
+      .iconfont {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
