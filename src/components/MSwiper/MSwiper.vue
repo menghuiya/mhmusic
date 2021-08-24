@@ -5,6 +5,7 @@
       @swiper="onSwiper"
       @slideChange="onSlideChange"
       :autoplay="true"
+      v-if="swiperData.length"
     >
       <swiper-slide
         v-for="item in swiperData"
@@ -15,6 +16,11 @@
         <div class="swiper-tag" :style="`background-color:${item.titleColor}`">
           {{ item.typeTitle }}
         </div>
+      </swiper-slide>
+    </swiper>
+    <swiper v-else>
+      <swiper-slide>
+        <div class="swiper-size-load"></div>
       </swiper-slide>
     </swiper>
   </div>
@@ -55,10 +61,17 @@ export default defineComponent({
   .swiper-slide {
     padding: 0 0.25rem;
     height: 4.5rem;
+    .swiper-size-load {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.2rem;
+      background-color: #c0c4cc;
+    }
     img {
       width: 100%;
       height: 100%;
       border-radius: 0.2rem;
+      background-color: #c0c4cc;
     }
     .swiper-tag {
       margin: 0 0.25rem;

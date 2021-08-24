@@ -1,8 +1,8 @@
 <template>
-  <div v-if="state.playlist">
+  <div>
     <SheetTop :sheetData="state.playlist" />
     <div class="sheet-detail-box">
-      <div class="vip-box" v-if="false">
+      <div class="vip-box" v-if="true">
         <CellItem
           title="领取成长值，升级可延长VIP天数"
           value="立即领取"
@@ -10,42 +10,49 @@
           iconColor="red"
         />
       </div>
-      <CellItem
-        :arrow="false"
-        icon="icon-Controls-02"
-        iconColor="red"
-        iconSize="0.6rem"
-      >
-        <template #title>
-          <div class="title-text">播放全部</div>
-          <span class="sheet-num">（112）</span>
-        </template>
-        <template #right>
-          <i class="iconfont icon-xiazai mh-download"></i>
-          <i class="iconfont icon-n-check mh-select"></i>
-        </template>
-      </CellItem>
-      <CellItem
-        :arrow="false"
-        v-for="(item, index) in state.playlist.tracks"
-        :key="item.id"
-      >
-        <template #icon>
-          <div class="list-index">{{ index + 1 }}</div>
-        </template>
-        <template #title>
-          <div class="sheet-music-box">
-            <div class="sheet-music-name">{{ item.name }}</div>
-            <div class="sheet-music-author">
-              {{ item.ar[0].name }}-{{ item.al.name }}
+      <div class="sheet-list-all">
+        <CellItem
+          :arrow="false"
+          icon="icon-Controls-02"
+          iconColor="red"
+          iconSize="0.6rem"
+        >
+          <template #title>
+            <div class="title-text">播放全部</div>
+            <span class="sheet-num"
+              >（{{ state.playlist ? state.playlist.trackCount : 0 }}）</span
+            >
+          </template>
+          <template #right>
+            <i class="iconfont icon-xiazai mh-download"></i>
+            <i class="iconfont icon-n-check mh-select"></i>
+          </template>
+        </CellItem>
+      </div>
+      <div v-if="state.playlist">
+        <CellItem
+          :arrow="false"
+          v-for="(item, index) in state.playlist ? state.playlist.tracks : []"
+          :key="item.id"
+        >
+          <template #icon>
+            <div class="list-index">{{ index + 1 }}</div>
+          </template>
+          <template #title>
+            <div class="sheet-music-box">
+              <div class="sheet-music-name">{{ item.name }}</div>
+              <div class="sheet-music-author">
+                {{ item.ar[0].name }}-{{ item.al.name }}
+              </div>
             </div>
-          </div>
-        </template>
-        <template #right>
-          <i class="iconfont icon-bofangqi mh-play-video"></i>
-          <i class="iconfont icon-gengduo mh-more"></i>
-        </template>
-      </CellItem>
+          </template>
+          <template #right>
+            <i class="iconfont icon-bofangqi mh-play-video"></i>
+            <i class="iconfont icon-gengduo mh-more"></i>
+          </template>
+        </CellItem>
+      </div>
+      <LoadingCom v-else />
     </div>
   </div>
 </template>
@@ -56,12 +63,14 @@ import { getSongSheetDetail } from "@/api/songSheet";
 import { useRoute } from "vue-router";
 import { SheetReturnItem } from "./types";
 import CellItem from "@/components/Cell/CellItem";
+import LoadingCom from "@/components/Loading/LoadingCom";
 import SheetTop from "./components/SheetTop.vue";
 
 export default defineComponent({
   name: "index",
   components: {
     SheetTop,
+    LoadingCom,
     CellItem,
   },
   props: {},
@@ -79,6 +88,7 @@ export default defineComponent({
         }
       );
     });
+
     return {
       state,
     };
@@ -90,6 +100,12 @@ export default defineComponent({
 .sheet-detail-box {
   background-color: #fff;
   margin: 0.3rem 0;
+  .sheet-list-all {
+    position: sticky;
+    top: 1rem;
+    background-color: #fff;
+    z-index: 1;
+  }
   .vip-box {
     margin: 0 0.3rem;
     border: 1px solid #d6d7d8;
@@ -120,16 +136,29 @@ export default defineComponent({
     color: #909399;
     font-size: 0.5rem;
     margin-left: 0.08rem;
+    text-align: center;
   }
   .sheet-music-box {
     margin-left: 0.3rem;
     .sheet-music-name {
       font-size: 0.4rem;
+      line-height: 0.5rem;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .sheet-music-author {
       font-size: 0.32rem;
       color: #909399;
       margin-top: 0.1rem;
+      line-height: 0.35rem;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
   .mh-play-video {

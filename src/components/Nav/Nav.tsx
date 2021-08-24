@@ -31,7 +31,7 @@ export default defineComponent({
       desc: "作为背景使用",
     },
   },
-  emits: ["leftClick", "rightClick"],
+  emits: ["leftClick", "rightClick", "moreNav", "lessNav"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
       if (props.backStatus) {
@@ -63,11 +63,17 @@ export default defineComponent({
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       if (scrollTop > offsetHeight.value) {
-        isFixed.value = true;
-        NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+        if (!isFixed.value) {
+          isFixed.value = true;
+          NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+          emit("moreNav");
+        }
       } else {
-        isFixed.value = false;
-        NavRef.value.style.backgroundImage = ``;
+        if (isFixed.value) {
+          isFixed.value = false;
+          NavRef.value.style.backgroundImage = ``;
+          emit("lessNav");
+        }
       }
     };
 

@@ -1,7 +1,11 @@
 <template>
   <TitleLine />
   <div class="find-music-box">
-    <swiper :slides-per-view="'auto'" :space-between="8">
+    <swiper
+      :slides-per-view="'auto'"
+      :space-between="8"
+      v-if="findSheetData.length"
+    >
       <swiper-slide
         v-for="item in findSheetData"
         :key="item.id"
@@ -10,6 +14,8 @@
         <SongSheetCard :sheetData="item" />
       </swiper-slide>
     </swiper>
+
+    <LoadingCom v-else />
   </div>
 </template>
 
@@ -18,6 +24,7 @@ import { getRecomdSheet } from "@/api/home";
 import { defineComponent, onMounted, ref } from "vue";
 import { RecomdOptions, RecomdSheetItem } from "./types";
 import TitleLine from "@/components/TitleLine/TitleLine";
+import LoadingCom from "@/components/Loading/LoadingCom";
 import SongSheetCard from "@/components/SongSheetCard/SongSheetCard";
 import router from "@/router";
 
@@ -26,6 +33,7 @@ export default defineComponent({
   components: {
     TitleLine,
     SongSheetCard,
+    LoadingCom,
   },
   props: {},
   // emits: ["item-click"],

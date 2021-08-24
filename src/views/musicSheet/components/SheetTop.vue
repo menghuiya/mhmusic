@@ -4,16 +4,18 @@
     iconColor="#fff"
     :backStatus="true"
     :bgImg="TopBg"
+    @moreNav="scollerMore"
+    @lessNav="scollerLess"
   >
     <template #center>
-      <span class="top-title">歌单®</span>
+      <span class="top-title">{{ sheetTitle }}</span>
     </template>
     <template #right>
       <i class="iconfont icon-sousuo search top-icon"></i>
       <i class="iconfont icon-gengduo more top-icon"></i>
     </template>
   </Nav>
-  <div v-if="sheetData">
+  <div>
     <div class="sheet-bg-box" :style="`background-image:url(${TopBg});`">
       <!-- <img class="sheet-bg" :src="TopBg" alt="" /> -->
     </div>
@@ -21,27 +23,39 @@
     <div class="sheet-base">
       <div class="sheet-baseinfo-box">
         <div class="sheet-cover">
-          <img class="sheet-cover-img" :src="sheetData.coverImgUrl" alt="" />
+          <img
+            class="sheet-cover-img"
+            :src="sheetData.coverImgUrl"
+            v-if="sheetData"
+          />
+          <div class="sheet-cover-img-load" v-else></div>
           <div class="sheet-cover-count">
             <i class="iconfont icon-bofang2"></i>
-            {{ getCounts(sheetData.playCount) }}
+            {{ sheetData ? getCounts(sheetData.playCount) : 0 }}
           </div>
         </div>
         <div class="sheet-info">
           <div class="sheet-name">
-            {{ sheetData.name }}
+            {{ sheetData ? sheetData.name : "" }}
           </div>
           <div class="sheet-user">
-            <img class="user-cover" :src="sheetData.creator.avatarUrl" />
+            <img
+              class="user-cover"
+              :src="sheetData.creator.avatarUrl"
+              v-if="sheetData"
+            />
+            <div class="user-cover-load" v-else></div>
             <div class="user-name">
-              {{ sheetData.creator.nickname }}
+              {{
+                sheetData && sheetData.creator ? sheetData.creator.nickname : ""
+              }}
             </div>
             <div class="user-action">
               <i class="iconfont icon-zengjia"></i>
             </div>
           </div>
           <div class="sheet-desc">
-            {{ sheetData.description }}
+            {{ sheetData ? sheetData.description : "" }}
           </div>
         </div>
       </div>
@@ -49,16 +63,20 @@
         <div class="sheet-otherinfo sheet-collet">
           <i class="iconfont icon-zengjiashuzi"></i>
           <div class="sheet-num">
-            {{ getCounts(sheetData.subscribedCount) }}
+            {{ sheetData ? getCounts(sheetData.subscribedCount) : "收藏" }}
           </div>
         </div>
         <div class="sheet-otherinfo sheet-comment">
           <i class="iconfont icon-pinglun"></i>
-          <div class="sheet-num">{{ getCounts(sheetData.commentCount) }}</div>
+          <div class="sheet-num">
+            {{ sheetData ? getCounts(sheetData.commentCount) : "评论" }}
+          </div>
         </div>
         <div class="sheet-otherinfo sheet-share">
           <i class="iconfont icon-fenxiang"></i>
-          <div class="sheet-num">{{ getCounts(sheetData.shareCount) }}</div>
+          <div class="sheet-num">
+            {{ sheetData ? getCounts(sheetData.shareCount) : "分享" }}
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import Nav from "@/components/Nav/Nav";
 import { getShowNumber, imgToBlob } from "@/utils/tool";
 
@@ -82,24 +100,40 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const sheetTitle = ref("歌单®");
     const getCounts = (num: number) => {
       return getShowNumber(num);
     };
     const TopBg = ref("");
+    watch(
+      () => props.sheetData,
+      (newV) => {
+        imgToBlob(
+          newV.coverImgUrl + "?imageView=1&thumbnail=225x0",
+          (blur: any) => {
+            TopBg.value = blur;
+          },
+          100,
+          -0.1
+        ); // blur
+      }
+    );
 
-    onMounted(() => {
-      imgToBlob(
-        props.sheetData.coverImgUrl + "?imageView=1&thumbnail=225x0",
-        (blur: any) => {
-          TopBg.value = blur;
-        },
-        100,
-        -0.1
-      ); // blur
-    });
+    const scollerMore = () => {
+      sheetTitle.value = props.sheetData.name;
+    };
+
+    const scollerLess = () => {
+      sheetTitle.value = "歌单®";
+    };
+
+    // onMounted(() => {});
     return {
+      sheetTitle,
       TopBg,
       getCounts,
+      scollerMore,
+      scollerLess,
     };
   },
 });
@@ -115,7 +149,7 @@ export default defineComponent({
   overflow: hidden;
   z-index: -1;
   transition: background-image 0.4s;
-  background: no-repeat center bottom / cover;
+  background: #c8c9cc no-repeat center bottom / cover;
   background-size: cover;
   // .sheet-bg {
   //   width: 10rem;
@@ -129,6 +163,9 @@ export default defineComponent({
   color: #fff;
   font-weight: 600;
   transform: scaleY(1.05);
+  width: 6rem;
+  overflow: hidden;
+  height: 0.6rem;
 }
 .top-icon {
   color: #fff;
@@ -149,8 +186,16 @@ export default defineComponent({
       position: relative;
       .sheet-cover-img {
         width: 3rem;
+        height: 3rem;
         border-radius: 0.25rem;
+        background-color: #f4f4f5;
         filter: drop-shadow(5px 5px 5px #000);
+      }
+      .sheet-cover-img-load {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.25rem;
+        background-color: #f4f4f5;
       }
       .sheet-cover-count {
         position: absolute;
@@ -211,6 +256,13 @@ export default defineComponent({
           width: 0.7rem;
           height: 0.7rem;
           border-radius: 50%;
+          background-color: #f4f4f5;
+        }
+        .user-cover-load {
+          width: 0.7rem;
+          height: 0.7rem;
+          border-radius: 50%;
+          background-color: #f4f4f5;
         }
         .user-name {
           font-size: 0.25rem;

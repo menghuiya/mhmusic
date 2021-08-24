@@ -1,0 +1,44 @@
+.load-small {
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  text-align: center;
+  .k-line {
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    // border-radius: 15px;
+    background-color: red;
+    margin: 0 2px;
+  }
+
+  .k-line1-1 {
+    animation: k-loadingA 0.5s 0s infinite;
+  }
+  .k-line1-2 {
+    animation: k-loadingA 0.5s 0.2s infinite;
+  }
+  .k-line1-3 {
+    animation: k-loadingA 0.5s 0.3s infinite;
+  }
+  .k-line1-4 {
+    animation: k-loadingA 0.5s 0.4s infinite;
+  }
+}
+.k-title {
+  font-size: 12px;
+  color: #c0c4cc;
+  text-align: center;
+}
+
+@keyframes k-loadingA {
+  0% {
+    height: 8px;
+  }
+  50% {
+    height: 20px;
+  }
+  100% {
+    height: 8px;
+  }
+}
