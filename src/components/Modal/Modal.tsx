@@ -1,6 +1,6 @@
-import { defineComponent, Teleport } from "vue";
+import { defineComponent, PropType, Teleport } from "vue";
 import "./index.scss";
-
+type CustomEventFuncType<T> = PropType<(arg: T) => void>;
 export default defineComponent({
   name: "Dialog",
   props: {
@@ -12,11 +12,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    onCloseModal: Function as CustomEventFuncType<null>,
   },
-  emits: ["closeModal"],
+  emits: ["close-modal"],
   setup(props, { emit }) {
     const handleClick = () => {
-      emit("closeModal");
+      emit("close-modal");
     };
     const renderModal = () => {
       return props.isOpen ? (

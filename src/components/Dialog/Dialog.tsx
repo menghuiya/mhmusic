@@ -1,7 +1,7 @@
 import { defineComponent, ref, watch } from "vue";
 import "./index.scss";
 
-import Modal from "./Modal";
+import Modal from "@/components/Modal/Modal";
 
 export default defineComponent({
   name: "Dialog",
@@ -27,7 +27,7 @@ export default defineComponent({
     },
     top: {
       type: String,
-      default: "40%",
+      default: "15vh",
     },
     fullscreen: {
       type: Boolean,
@@ -42,6 +42,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const modalStatu = ref(true);
     const modalClick = () => {
+      console.log("触发了吗s1");
       modalStatu.value = false;
       emit("close");
     };
@@ -61,18 +62,18 @@ export default defineComponent({
     const renderDialog = () => {
       if (props.visible) {
         return (
-          <div>
+          <div class="dialog-box">
             <Modal
               mIndex={101}
               isOpen={modalStatu.value}
               onCloseModal={modalClick}
             />
+
             <div
-              class="dialog-box"
+              class="dialog"
               style={{
                 width: props.width,
-                height: props.height,
-                top: props.top,
+                marginTop: props.top,
               }}
             >
               <div class="dialog-head">
