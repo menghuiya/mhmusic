@@ -12,9 +12,31 @@
       </div>
     </Dialog>
 
-    <PopuUp :visible="dialogStatu" @close="closeDialog" direction="left" />
+    <PopuUp
+      :visible="dialogStatu1"
+      @close="closeDialog('left')"
+      direction="left"
+    />
+    <PopuUp
+      :visible="dialogStatu2"
+      @close="closeDialog('bottom')"
+      direction="bottom"
+    />
+    <PopuUp
+      :visible="dialogStatu3"
+      @close="closeDialog('top')"
+      direction="top"
+    />
+    <PopuUp
+      :visible="dialogStatu4"
+      @close="closeDialog('right')"
+      direction="right"
+    />
 
-    <button @click="btnClick">显示按钮</button>
+    <button @click="btnClick('left')">左边出来</button>
+    <button @click="btnClick('bottom')">底部出来</button>
+    <button @click="btnClick('top')">顶部出来</button>
+    <button @click="btnClick('right')">右边出来</button>
   </div>
 </template>
 
@@ -29,17 +51,47 @@ export default defineComponent({
     PopuUp,
   },
   setup() {
-    const dialogStatu = ref(false);
-    const btnClick = () => {
-      dialogStatu.value = true;
+    const dialogStatu1 = ref(false);
+    const dialogStatu2 = ref(false);
+    const dialogStatu3 = ref(false);
+    const dialogStatu4 = ref(false);
+    const btnClick = (dict: string) => {
+      switch (dict) {
+        case "left":
+          dialogStatu1.value = true;
+          break;
+        case "bottom":
+          dialogStatu2.value = true;
+          break;
+        case "top":
+          dialogStatu3.value = true;
+          break;
+        case "right":
+          dialogStatu4.value = true;
+          break;
+      }
     };
-    const closeDialog = () => {
-      console.log("触发了吗2");
-
-      dialogStatu.value = false;
+    const closeDialog = (dict: string) => {
+      switch (dict) {
+        case "left":
+          dialogStatu1.value = false;
+          break;
+        case "bottom":
+          dialogStatu2.value = false;
+          break;
+        case "top":
+          dialogStatu3.value = false;
+          break;
+        case "right":
+          dialogStatu4.value = false;
+          break;
+      }
     };
     return {
-      dialogStatu,
+      dialogStatu1,
+      dialogStatu2,
+      dialogStatu3,
+      dialogStatu4,
       btnClick,
       closeDialog,
     };

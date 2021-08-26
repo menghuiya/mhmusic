@@ -20,7 +20,7 @@ export default defineComponent({
       validator: (value: string) => {
         return ["bottom", "left", "right", "top"].includes(value);
       },
-      default: "bottom",
+      default: "",
     },
     height: {
       type: String,
@@ -54,24 +54,65 @@ export default defineComponent({
         }
       }
     );
+    const renderStyle = () => {
+      const styleMap = {
+        zIndex: 888,
+        width: "",
+        height: "",
+      };
+      if (props.direction === "left" || props.direction === "right") {
+        styleMap.width = props.visible ? props.width : "0";
+      } else {
+        styleMap.height = props.visible ? props.height : "0";
+      }
+      return styleMap;
+    };
     const renderPop = () => {
       return (
-        <div>
+        <div class={["pop", "pop-" + props.direction]} style={renderStyle()}>
           <Modal
             mIndex={101}
             isOpen={modalStatu.value}
             onCloseModal={modalClick}
           />
-          <div
-            class={["pop", "pop-" + props.direction]}
-            style={{
-              // height: props.visible ? props.height : 0,
-              width: props.visible ? props.width : 0,
-              // display: props.visible ? "" : "none",
-              zIndex: 888,
-            }}
-          >
-            1212
+          <div class={["pop-container"]}>
+            <div class="pop-head">
+              <div class="dialog-title">标题</div>
+              <div class="dialog-close" onClick={closeBtnClick}>
+                {/* <i class="iconfont icon-"></i> */}
+                关闭
+              </div>
+            </div>
+            <div class="pop-body">
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              <div>你是🐖^(*￣(oo)￣)^吗</div>
+            </div>
           </div>
         </div>
       );

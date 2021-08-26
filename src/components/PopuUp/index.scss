@@ -2,23 +2,62 @@
   position: fixed;
   max-height: 100%;
   overflow-y: auto;
-  background-color: #fff;
-
+  // background-color: #fff;
+  // transition: all .3s ease-in-out;
   // transition: transform 0.3s, -webkit-transform 0.3s;
   -webkit-overflow-sc-webkit-overflow-scrolling: touch;
+  .pop-container {
+    position: relative;
+    background: #fff;
+    box-shadow: 0 1px 3px #0000004d;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 0.2rem;
+    .pop-head {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.3rem;
+      font-size: 0.4rem;
+      .pop-title {
+        font-size: 0.48rem;
+        color: #303133;
+        font-weight: 400;
+      }
+    }
+    .pop-body {
+      font-size: 0.36rem;
+      padding-top: 0.2rem;
+    }
+  }
 }
 
 .pop-bottom {
   bottom: 0;
   left: 0;
   width: 100%;
-  transition: width 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.pop-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
 }
 .pop-left {
   top: 0;
   left: 0;
-  height: 100vh;
-  transition: width 0.3s ease-in-out;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+}
+.pop-right {
+  top: 0;
+  right: 0;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
 @keyframes bottom-out {
