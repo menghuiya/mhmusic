@@ -75,7 +75,7 @@ export default defineComponent({
     }
     .swiper-tag {
       margin: 0 0.25rem;
-      font-size: 0.12rem;
+      font-size: 0.32rem;
       padding: 0.01rem 0.2rem;
       position: absolute;
       bottom: 0;
