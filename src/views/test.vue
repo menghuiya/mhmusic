@@ -5,6 +5,7 @@
       top="10vh"
       title="请问一下"
       height="12rem"
+      :visible="dialogStatu"
       @close="closeDialog"
     >
       <div class="test">
@@ -16,23 +17,34 @@
       :visible="dialogStatu1"
       @close="closeDialog('left')"
       direction="left"
+      :style="{ width: '30%', height: '100%' }"
     />
     <PopuUp
       :visible="dialogStatu2"
       @close="closeDialog('bottom')"
       direction="bottom"
+      :style="{ height: '30%' }"
     />
     <PopuUp
       :visible="dialogStatu3"
       @close="closeDialog('top')"
       direction="top"
+      :style="{ height: '30%' }"
     />
-    <PopuUp
+    <!-- <PopuUp
       :visible="dialogStatu4"
       @close="closeDialog('right')"
       direction="right"
+      :style="{ width: '30%', height: '100%' }"
+    /> -->
+    <PopuUp
+      :visible="dialogStatu4"
+      @close="closeDialog('right')"
+      direction="center"
+      :style="{ padding: '30px 50px' }"
     />
 
+    <button @click="btnClick">dialog的哦</button>
     <button @click="btnClick('left')">左边出来</button>
     <button @click="btnClick('bottom')">底部出来</button>
     <button @click="btnClick('top')">顶部出来</button>
@@ -51,6 +63,7 @@ export default defineComponent({
     PopuUp,
   },
   setup() {
+    const dialogStatu = ref(false);
     const dialogStatu1 = ref(false);
     const dialogStatu2 = ref(false);
     const dialogStatu3 = ref(false);
@@ -69,6 +82,8 @@ export default defineComponent({
         case "right":
           dialogStatu4.value = true;
           break;
+        default:
+          dialogStatu.value = true;
       }
     };
     const closeDialog = (dict: string) => {
@@ -85,9 +100,12 @@ export default defineComponent({
         case "right":
           dialogStatu4.value = false;
           break;
+        default:
+          dialogStatu.value = false;
       }
     };
     return {
+      dialogStatu,
       dialogStatu1,
       dialogStatu2,
       dialogStatu3,
