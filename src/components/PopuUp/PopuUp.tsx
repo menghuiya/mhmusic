@@ -77,41 +77,14 @@ export default defineComponent({
           />
           <div class={["pop-container"]}>
             <div class="pop-head">
-              <div class="dialog-title">标题</div>
-              <div class="dialog-close" onClick={closeBtnClick}>
+              <div class="pop-title">标题</div>
+              <div class="pop-close" onClick={closeBtnClick}>
                 {/* <i class="iconfont icon-"></i> */}
                 关闭
               </div>
             </div>
             <div class="pop-body">
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
-              <div>你是🐖^(*￣(oo)￣)^吗</div>
+              {slots.default ? slots.default!() : null}
             </div>
           </div>
         </div>
