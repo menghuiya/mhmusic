@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, Transition, watch } from "vue";
 import "./index.scss";
 
 import Modal from "@/components/Modal/Modal";
@@ -40,9 +40,8 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
-    const modalStatu = ref(true);
+    const modalStatu = ref(false);
     const modalClick = () => {
-      console.log("触发了吗s1");
       modalStatu.value = false;
       emit("close");
     };
@@ -53,28 +52,21 @@ export default defineComponent({
     watch(
       () => props.visible,
       (newProps) => {
-        if (newProps) {
-          modalStatu.value = true;
-        }
+        modalStatu.value = newProps;
       }
     );
-
+    Transition;
     const renderDialog = () => {
-      if (props.visible) {
-        return (
-          <div class="dialog-box">
-            <Modal
-              mIndex={101}
-              isOpen={modalStatu.value}
-              onCloseModal={modalClick}
-            />
-
+      return (
+        <div class="dialog-box" v-show={props.visible}>
+          <Transition name="dialog-fade">
             <div
               class="dialog"
               style={{
                 width: props.width,
                 marginTop: props.top,
               }}
+              v-show={props.visible}
             >
               <div class="dialog-head">
                 <div class="dialog-title">{props.title}</div>
@@ -87,14 +79,21 @@ export default defineComponent({
                 {slots.default ? slots.default!() : null}
               </div>
             </div>
-          </div>
-        );
-      } else {
-        return null;
-      }
+          </Transition>
+        </div>
+      );
     };
     return () => {
-      return renderDialog();
+      return (
+        <>
+          <Modal
+            mIndex={101}
+            show={modalStatu.value}
+            onClickModal={modalClick}
+          />
+          {renderDialog()}
+        </>
+      );
     };
   },
 });

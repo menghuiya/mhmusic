@@ -4,6 +4,40 @@
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
-  background: #000;
+  // opacity: 0.5;
+  background: rgba(0, 0, 0, 0.7);
 }
+
+.modal-fade {
+  &-enter-active {
+    animation: 0.3s modal-fade-in ease-out;
+  }
+
+  &-leave-active {
+    animation: 0.3s modal-fade-out ease-in;
+  }
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+// .modal-fade-enter-from,
+// .modal-fade-leave-active {
+//   opacity: 0;
+// }

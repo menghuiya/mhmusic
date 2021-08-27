@@ -16,6 +16,8 @@
     box-sizing: border-box;
     width: 50%;
     padding: 0.2rem;
+    z-index: 2;
+    // transform: translate3d(-50%, -50%, 0);
     .dialog-head {
       display: flex;
       align-items: center;
@@ -33,5 +35,44 @@
       font-size: 0.36rem;
       padding-top: 0.2rem;
     }
+  }
+}
+
+.dialog-fade {
+  &-enter-active {
+    animation: 0.3s dialog-fade-in both ease-out;
+  }
+
+  &-leave-active {
+    animation: 0.3s dialog-fade-out both ease-in;
+  }
+}
+
+// .dialog-fade-enter-from {
+//   transform: translate3d(-50%, -50%, 0) scale(0.7);
+//   opacity: 0;
+// }
+
+// .dialog-fade-leave-active {
+//   transform: translate3d(-50%, -50%, 0) scale(0.9);
+//   opacity: 0;
+// }
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

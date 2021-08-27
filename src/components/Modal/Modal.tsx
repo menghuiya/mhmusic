@@ -1,4 +1,4 @@
-import { defineComponent, PropType, Teleport } from "vue";
+import { defineComponent, PropType, Teleport, Transition } from "vue";
 import "./index.scss";
 type CustomEventFuncType<T> = PropType<(arg: T) => void>;
 export default defineComponent({
@@ -8,28 +8,31 @@ export default defineComponent({
       type: Number,
       default: 1,
     },
-    isOpen: {
+    show: {
       type: Boolean,
       default: false,
     },
-    onCloseModal: Function as CustomEventFuncType<null>,
+    onClickModal: Function as CustomEventFuncType<null>,
   },
-  emits: ["close-modal"],
+  emits: ["click-modal"],
   setup(props, { emit }) {
     const handleClick = () => {
-      emit("close-modal");
+      emit("click-modal");
     };
     const renderModal = () => {
-      return props.isOpen ? (
+      return (
         <div
           class="mh-modal"
-          style={{ zIndex: props.mIndex }}
+          style={{
+            zIndex: props.mIndex,
+          }}
+          v-show={props.show}
           onClick={handleClick}
         ></div>
-      ) : null;
+      );
     };
     return () => {
-      return <Teleport to="#modal">{renderModal()}</Teleport>;
+      return <Transition name="modal-fade">{renderModal()}</Transition>;
     };
   },
 });
