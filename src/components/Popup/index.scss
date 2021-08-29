@@ -12,20 +12,19 @@
 .popup-box {
   position: fixed;
   max-height: 100%;
-  overflow-y: auto;
-
+  // overflow-y: auto;
   transition: 0.3s;
   z-index: 200;
+  background: #fff;
   // -webkit-overflow-scrolling: touch;
   .pop-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border-bottom: 1px solid #ccc;
     padding-bottom: 0.3rem;
     font-size: 0.4rem;
-    background-color: #fff;
-
+    // background-color: #fff;
+    box-sizing: border-box;
     .pop-title {
       font-size: 0.48rem;
       color: #303133;
@@ -33,11 +32,12 @@
     }
   }
   .pop-body {
-    background-color: #fff;
+    // background-color: #fff;
     font-size: 0.36rem;
-    padding-top: 0.2rem;
+    // padding-top: 0.2rem;
     height: 100%;
     width: 100%;
+    overflow-y: auto;
   }
 }
 .pop-center {

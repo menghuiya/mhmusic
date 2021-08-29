@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import Nav from "@/components/Nav/Nav";
 import { getShowNumber, imgToBlob } from "@/utils/tool";
 

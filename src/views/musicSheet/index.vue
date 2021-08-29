@@ -2,7 +2,7 @@
   <div>
     <SheetTop :sheetData="state.playlist" />
     <div class="sheet-detail-box">
-      <div class="vip-box" v-if="true">
+      <div class="vip-box" v-if="false">
         <CellItem
           title="领取成长值，升级可延长VIP天数"
           value="立即领取"
@@ -29,6 +29,7 @@
           </template>
         </CellItem>
       </div>
+
       <div v-if="state.playlist">
         <CellItem
           :arrow="false"
@@ -60,14 +61,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from "vue";
-import { getSongSheetDetail } from "@/api/songSheet";
+import { getSongSheetDetail, getSongSheetDetailAll } from "@/api/songSheet";
 import { useRoute } from "vue-router";
 import { SheetReturnItem } from "./types";
 import CellItem from "@/components/Cell/CellItem";
 import LoadingCom from "@/components/Loading/LoadingCom";
 import SheetTop from "./components/SheetTop.vue";
 import store from "@/store";
-
 export default defineComponent({
   name: "index",
   components: {
@@ -85,8 +85,13 @@ export default defineComponent({
     onMounted(() => {
       getSongSheetDetail(Number(route.query.id)).then(
         (res: SheetReturnItem) => {
-          state.playlist = res.playlist;
-          state.privileges = res.privileges;
+          const tempData = res.playlist;
+          const ids = res.playlist.trackIds.map((item: any) => item.id);
+          getSongSheetDetailAll(ids.join(",")).then((data: any) => {
+            tempData.tracks = data.songs;
+            state.playlist = tempData;
+            state.privileges = data.privileges;
+          });
         }
       );
     });
@@ -109,6 +114,8 @@ export default defineComponent({
 .sheet-detail-box {
   background-color: #fff;
   margin: 0.3rem 0;
+  height: 100%;
+  position: relative;
   .sheet-list-all {
     position: sticky;
     top: 1rem;

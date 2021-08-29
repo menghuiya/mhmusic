@@ -1,10 +1,18 @@
-import { defineComponent, reactive, ref, Transition, watch } from "vue";
+import {
+  CSSProperties,
+  defineComponent,
+  PropType,
+  reactive,
+  ref,
+  Transition,
+  watch,
+} from "vue";
 import "./index.scss";
 
 import Modal from "@/components/Modal/Modal";
 
 export default defineComponent({
-  name: "PopuUp",
+  name: "Popup",
   components: { Modal },
   props: {
     visible: {
@@ -22,26 +30,13 @@ export default defineComponent({
       default: "",
     },
     style: {
-      type: Object,
+      type: Object as PropType<CSSProperties>,
     },
-    //禁止页面滚动
-    scroll: {
-      type: Boolean,
-      default: true,
-    },
-    transitionAppear: Boolean,
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
     const modalStatu = ref(false);
     const modalClick = () => {
-      modalStatu.value = false;
-      emit("close");
-    };
-    const onTouchMove = (event: Event) => {
-      !props.scroll && event.preventDefault();
-    };
-    const hideOnBlur = () => {
       modalStatu.value = false;
       emit("close");
     };
@@ -60,6 +55,20 @@ export default defineComponent({
       }
     });
 
+    const renderPopHead = () => {
+      return slots.head ? (
+        slots.head!()
+      ) : (
+        <div class="pop-head">
+          <div class="pop-title">{props.title}</div>
+          <div class="pop-close" onClick={modalClick}>
+            {/* <i class="iconfont icon-"></i> */}
+            关闭
+          </div>
+        </div>
+      );
+    };
+
     const renderPopup = () => {
       return (
         <div
@@ -67,15 +76,8 @@ export default defineComponent({
           v-show={modalStatu.value}
           style={props.style}
         >
-          {/* {slots.default?slots.default!():null} */}
-          <div class="pop-head">
-            <div class="pop-title">{props.title}</div>
-            <div class="pop-close" onClick={modalClick}>
-              {/* <i class="iconfont icon-"></i> */}
-              关闭
-            </div>
-          </div>
-          <div class="pop-body">{slots.default?.()}</div>
+          {renderPopHead()}
+          <div class="pop-body">{slots.default ? slots.default!() : null}</div>
         </div>
       );
     };
@@ -85,12 +87,7 @@ export default defineComponent({
           ? "pop-fade"
           : `pop-slide-${props.direction}`;
       return (
-        <Transition
-          name={name}
-          appear={props.transitionAppear}
-          onAfterEnter={onOpened}
-          onAfterLeave={onClose}
-        >
+        <Transition name={name} onAfterEnter={onOpened} onAfterLeave={onClose}>
           {renderPopup()}
         </Transition>
       );
@@ -103,6 +100,7 @@ export default defineComponent({
             mIndex={101}
             show={modalStatu.value}
             onClickModal={modalClick}
+            lockScroll={true}
           />
           {renderTransition()}
         </>

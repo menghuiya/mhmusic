@@ -1,6 +1,7 @@
-import { defineComponent, PropType, Teleport, Transition } from "vue";
+import { defineComponent, Transition } from "vue";
 import "./index.scss";
-type CustomEventFuncType<T> = PropType<(arg: T) => void>;
+
+import { CustomEventFuncType } from "@/utils/types";
 export default defineComponent({
   name: "Dialog",
   props: {
@@ -12,12 +13,18 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    lockScroll: Boolean,
     onClickModal: Function as CustomEventFuncType<null>,
   },
   emits: ["click-modal"],
   setup(props, { emit }) {
     const handleClick = () => {
       emit("click-modal");
+    };
+    const preventTouchMove = (event: TouchEvent) => {
+      if (props.lockScroll) {
+        event.preventDefault();
+      }
     };
     const renderModal = () => {
       return (
@@ -28,6 +35,7 @@ export default defineComponent({
           }}
           v-show={props.show}
           onClick={handleClick}
+          onTouchmove={preventTouchMove}
         ></div>
       );
     };

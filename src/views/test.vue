@@ -13,31 +13,32 @@
       </div>
     </Dialog>
 
-    <PopuUp
+    <Popup
       :visible="dialogStatu1"
       @close="closeDialog('left')"
       direction="left"
       :style="{ width: '30%', height: '100%' }"
     />
-    <PopuUp
+    <Popup
       :visible="dialogStatu2"
       @close="closeDialog('bottom')"
       direction="bottom"
       :style="{ height: '30%' }"
-    />
-    <PopuUp
+    >
+    </Popup>
+    <Popup
       :visible="dialogStatu3"
       @close="closeDialog('top')"
       direction="top"
       :style="{ height: '30%' }"
     />
-    <!-- <PopuUp
+    <!-- <Popup
       :visible="dialogStatu4"
       @close="closeDialog('right')"
       direction="right"
       :style="{ width: '30%', height: '100%' }"
     /> -->
-    <PopuUp
+    <Popup
       :visible="dialogStatu4"
       @close="closeDialog('right')"
       direction="center"
@@ -55,12 +56,12 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import Dialog from "../components/Dialog/Dialog";
-import PopuUp from "../components/PopuUp/PopuUp";
+import Popup from "../components/Popup/Popup";
 
 export default defineComponent({
   components: {
     Dialog,
-    PopuUp,
+    Popup,
   },
   setup() {
     const dialogStatu = ref(false);

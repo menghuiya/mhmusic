@@ -16,3 +16,17 @@ export function getSongSheetDetail(id: number, s = 8) {
     },
   });
 }
+/**
+ * 获取歌单详情 全部内容
+ * @param ids
+ * @returns
+ */
+export function getSongSheetDetailAll(ids: string) {
+  return request({
+    url: `/song/detail`,
+    method: "get",
+    params: {
+      ids: ids,
+    },
+  });
+}

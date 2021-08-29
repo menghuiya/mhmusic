@@ -1,7 +1,16 @@
-import { defineComponent, nextTick, onMounted, onUnmounted, ref } from "vue";
+import {
+  CSSProperties,
+  defineComponent,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  PropType,
+  ref,
+} from "vue";
 import "./index.scss";
 import router from "@/router";
 import { imgToBlob } from "@/utils/tool";
+import { CustomEventFuncType } from "@/utils/types";
 
 export default defineComponent({
   name: "Nav",
@@ -30,18 +39,21 @@ export default defineComponent({
       default: "",
       desc: "作为背景使用",
     },
+    style: Object as PropType<CSSProperties>,
+    onLeftClick: Function as CustomEventFuncType<null>,
+    onRightClick: Function as CustomEventFuncType<null>,
   },
-  emits: ["leftClick", "rightClick", "moreNav", "lessNav"],
+  emits: ["left-click", "right-click", "moreNav", "lessNav"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
       if (props.backStatus) {
         router.go(-1);
       } else {
-        emit("leftClick");
+        emit("left-click");
       }
     };
     const handleRightClick = () => {
-      emit("rightClick");
+      emit("right-click");
     };
     const renderLeft = () => {
       return slots.left ? (
@@ -101,7 +113,11 @@ export default defineComponent({
     };
     return () => {
       return (
-        <div class={["top-nav", isFixed.value ? "nav-fixed" : ""]} ref={NavRef}>
+        <div
+          class={["top-nav", isFixed.value ? "nav-fixed" : ""]}
+          ref={NavRef}
+          style={props.style}
+        >
           <div class="top-left">{renderLeft()}</div>
           <div class="top-center">{slots.center ? slots.center() : null}</div>
           <div class="top-right">{renderRight()}</div>

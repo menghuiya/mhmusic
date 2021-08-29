@@ -24,6 +24,7 @@ export default defineComponent({
   padding: 0;
   box-sizing: border-box;
   font-family: Helvetica;
+  user-select: none;
 }
 a,
 img,

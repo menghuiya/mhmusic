@@ -16,11 +16,11 @@ export default defineComponent({
     title: {
       type: String,
       default: "标题",
-      desc: "标题",
+      desc: "",
     },
     value: {
       type: String,
-      default: "值",
+      default: "",
       desc: "显示的值",
     },
     iconColor: {

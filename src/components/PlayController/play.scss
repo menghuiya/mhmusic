@@ -1,0 +1,225 @@
+.playing {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // width: 100%;
+  // height: 100vh;
+  transition: background-image 0.4s;
+  background: #000 no-repeat center bottom / cover;
+  background-size: cover;
+  font-size: 0.32rem;
+  // overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &-nav-music {
+    color: #fff;
+    text-align: center;
+    &-name {
+      font-weight: 600;
+      font-size: 0.42rem;
+      width: 5rem;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    &-author {
+      font-size: 0.32rem;
+    }
+    &-scoller {
+      span {
+        display: inline-block; /*inline样式不能使用动画*/
+        animation: scroll 5s linear infinite;
+        &::after {
+          content: attr(data-text);
+          margin-left: 2rem;
+        }
+      }
+    }
+  }
+  &-center {
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    // width: 100%;
+    height: 100%;
+    position: relative;
+    flex: 1;
+
+    &-needle {
+      width: 3rem;
+      position: relative;
+      left: 1rem;
+      transform: rotate(-25deg);
+      transform-origin: 0.4rem 0.4rem;
+      transition: all 1s;
+      z-index: 1;
+      &-active {
+        transform: rotate(0deg);
+      }
+    }
+
+    &-box {
+      position: relative;
+      // background: #000;
+      width: 8rem;
+      height: 8rem;
+      margin: auto;
+      top: -2.3rem;
+      overflow: hidden;
+      &-boder {
+        // position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+      }
+      &-musimg {
+        position: absolute;
+        z-index: -1;
+        height: 6rem;
+        width: 6rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+    }
+    &-active {
+      animation: turn 6s linear infinite;
+    }
+    &-word {
+      height: 100%;
+      // background: #000;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+      &-container {
+        position: absolute;
+        height: 80%;
+        width: 100%;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        overflow-y: scroll;
+        font-size: 0.36rem;
+        text-align: center;
+        scroll-behavior: smooth;
+        .empty-word {
+          height: 50%;
+          width: 100%;
+        }
+        .word-line {
+          padding: 0.2rem 0;
+          font-size: 0.36rem;
+          letter-spacing: 0.026667rem;
+          color: #c0c4cc;
+          transition-duration: 600ms;
+        }
+        .word-active {
+          color: #fff;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &-bottom {
+    height: 3.5rem;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    // background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    &-empty {
+      height: 3.5rem;
+      padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+      padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    }
+    &-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      &-row {
+        color: #fff;
+        .iconfont {
+          font-size: 0.7rem;
+        }
+      }
+    }
+    &-action {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      &-row {
+        color: #fff;
+        .iconfont {
+          font-size: 0.7rem;
+        }
+        .icon-bofang1 {
+          font-size: 1.5rem;
+          vertical-align: middle;
+        }
+        .icon-bofang {
+          font-size: 1.7rem;
+          vertical-align: middle;
+        }
+      }
+      .row-play {
+        width: 2rem;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.play-page-enter-active {
+  transition: all 0.3s ease;
+}
+
+.play-page-leave-active {
+  transition: all 0.3s ease;
+}
+
+.play-page-enter-from,
+.play-page-leave-active {
+  transform: translate3d(-100%, 100%, 0);
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(
+      calc(-50% - 1rem)
+    ); /*总长的一半再加上margin-left的一半*/
+  }
+}
+
+@keyframes turn {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
