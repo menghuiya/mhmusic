@@ -32,6 +32,11 @@ input {
   border: none;
 }
 
+input,
+textarea {
+  user-select: text !important;
+}
+
 a {
   text-decoration: none;
 }

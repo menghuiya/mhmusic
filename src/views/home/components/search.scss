@@ -1,31 +1,48 @@
-.search {
+.searchpage {
   position: fixed;
-  top: 0;
-  left: 0;
+  // top: 0;
+  // left: 0;
+  bottom: 0;
+  right: 0;
   background-color: #fff;
   height: 100%;
   width: 100%;
   z-index: 100;
-  opacity: 1;
+  padding: 0.25rem;
+  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+  // opacity: 1;
   &-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.25rem;
+
     font-size: 0.32rem;
     &-box {
       flex: 1;
       height: 0.8rem;
       position: relative;
-      .iocnfont {
+      .icon-sousuo {
         position: absolute;
-        left: 0;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        vertical-align: middle;
+        color: #909399;
+      }
+      .icon-shanchu2 {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        vertical-align: middle;
+        color: #909399;
       }
     }
     &-input {
       width: 100%;
       height: 100%;
-      background: #ccc;
+      background: #f1f1f1;
       border: none;
       border-radius: 99rem;
       padding: 0.2rem 0.7rem;
@@ -37,18 +54,51 @@
       }
     }
     &-cancel {
-      font-size: 0.5rem;
-      padding: 0 0.3rem;
+      font-size: 0.48rem;
+      padding: 0 0.1rem 0 0.35rem;
+    }
+  }
+  &-body {
+    overflow-y: auto;
+    height: calc(100% - 2.5rem);
+    font-size: 0.36rem;
+    &-history {
+      display: flex;
+      align-items: center;
+      padding: 0.25rem 0;
+      .history-title {
+        font-size: 0.36rem;
+        font-weight: 600;
+        margin-right: 0.2rem;
+      }
+      .history-body {
+        flex: 1;
+        font-size: 0.32rem;
+        display: flex;
+        overflow-x: scroll;
+        white-space: nowrap;
+        &-card {
+          margin: 0 0.2rem;
+          padding: 0.2rem 0.3rem;
+          background-color: #f1f1f1;
+          border-radius: 999rem;
+          flex: 1;
+        }
+        // &::-webkit-scrollbar {
+        //   height: 0 !important;
+        //   width: 0 !important;
+        // }
+      }
     }
   }
 }
 
-.search-fade-enter-active,
-.search-fade-leave-active {
-  transition: all 0.3s ease;
+.searchpage-fade-enter-active,
+.searchpage-fade-leave-active {
+  transition: all 0.3s ease-in-out;
 }
 
-.search-fade-enter-from,
-.search-fade-leave-active {
+.searchpage-fade-enter-from,
+.searchpage-fade-leave-active {
   opacity: 0;
 }

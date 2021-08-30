@@ -46,8 +46,8 @@ const showStatus = (status: number) => {
 const service = axios.create({
   // 联调
   // baseURL: process.env.NODE_ENV === 'production' ? `/` : '/api',
-  baseURL: "http://localhost:3000",
-  // baseURL: "http://192.168.124.19:3000",
+  // baseURL: "http://localhost:3000",
+  baseURL: "http://192.168.124.19:3000",
   headers: {
     get: {
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
