@@ -4,7 +4,7 @@
       leftIcon="icon-liebiao"
       rightIcon="icon-sousuo"
       @leftClick="handLeftClick"
-      @rightClick="handLeftClick"
+      @rightClick="handRightClick"
     >
       <template #center>
         <div
@@ -21,6 +21,7 @@
     <MenuList />
     <FindMusiList />
     <SelectMusicVideo />
+    <SearchPage :visible="showSearch" @close="showSearch = false" />
   </div>
 </template>
 
@@ -28,6 +29,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import Nav from "@/components/Nav/Nav";
 import HomeBanner from "./components/HomeBanner";
+import SearchPage from "./components/SearchPage";
 
 import MenuList from "./components/MenuList.vue";
 import FindMusiList from "./components/FindMusiList.vue";
@@ -41,9 +43,11 @@ export default defineComponent({
     MenuList,
     FindMusiList,
     SelectMusicVideo,
+    SearchPage,
   },
   setup() {
     const selectId = ref(1);
+    const showSearch = ref(true);
     const navData = reactive([
       { id: 1, name: "我的" },
       { id: 2, name: "发现" },
@@ -54,15 +58,20 @@ export default defineComponent({
     const handLeftClick = () => {
       console.log(111);
     };
+    const handRightClick = () => {
+      showSearch.value = true;
+    };
     const handleChange = (num: number) => {
       selectId.value = num;
     };
 
     return {
       handLeftClick,
+      handRightClick,
       handleChange,
       selectId,
       navData,
+      showSearch,
     };
   },
 });

@@ -1,0 +1,54 @@
+.search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  opacity: 1;
+  &-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem;
+    font-size: 0.32rem;
+    &-box {
+      flex: 1;
+      height: 0.8rem;
+      position: relative;
+      .iocnfont {
+        position: absolute;
+        left: 0;
+      }
+    }
+    &-input {
+      width: 100%;
+      height: 100%;
+      background: #ccc;
+      border: none;
+      border-radius: 99rem;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.4rem;
+      &:focus {
+        border: none;
+        border-color: red;
+        outline: none;
+      }
+    }
+    &-cancel {
+      font-size: 0.5rem;
+      padding: 0 0.3rem;
+    }
+  }
+}
+
+.search-fade-enter-active,
+.search-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.search-fade-enter-from,
+.search-fade-leave-active {
+  opacity: 0;
+}
