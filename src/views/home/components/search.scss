@@ -46,7 +46,7 @@
       border: none;
       border-radius: 99rem;
       padding: 0.2rem 0.7rem;
-      font-size: 0.4rem;
+      font-size: 0.34rem;
       &:focus {
         border: none;
         border-color: red;
@@ -55,7 +55,7 @@
     }
     &-cancel {
       font-size: 0.48rem;
-      padding: 0 0.1rem 0 0.35rem;
+      padding-left: 0.25rem;
     }
   }
   &-body {
@@ -82,12 +82,75 @@
           padding: 0.2rem 0.3rem;
           background-color: #f1f1f1;
           border-radius: 999rem;
-          flex: 1;
         }
-        // &::-webkit-scrollbar {
-        //   height: 0 !important;
-        //   width: 0 !important;
-        // }
+        &::-webkit-scrollbar {
+          height: 0 !important;
+          width: 0 !important;
+        }
+      }
+    }
+    &-research {
+      display: flex;
+      align-items: center;
+      .research-title {
+        font-size: 0.32rem;
+        color: #909399;
+      }
+      .research-body {
+        flex: 1;
+        font-size: 0.32rem;
+        display: flex;
+        overflow-x: scroll;
+        white-space: nowrap;
+        &-card {
+          color: #409eff;
+          margin: 0 0.2rem;
+        }
+        &::-webkit-scrollbar {
+          height: 0 !important;
+          width: 0 !important;
+        }
+      }
+    }
+    &-hotlist {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 1px solid #f2f6fc;
+      .hot-card {
+        width: 50%;
+        padding: 0.15rem 0;
+        display: flex;
+        align-items: center;
+        &-index {
+          width: 0.5rem;
+          display: inline-block;
+          font-size: 0.36rem;
+          font-weight: 600;
+          color: #909399;
+        }
+        &-name {
+          display: inline-block;
+          font-size: 0.36rem;
+        }
+        &:nth-child(-n + 3) {
+          .hot-card-index {
+            color: red;
+          }
+          .hot-card-name {
+            font-weight: 600;
+          }
+        }
+        &-tag {
+          zoom: 0.3;
+          margin-left: 0.2rem;
+          vertical-align: middle;
+          image-rendering: -moz-crisp-edges;
+          image-rendering: -o-crisp-edges;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+          -ms-interpolation-mode: nearest-neighbor;
+        }
       }
     }
   }

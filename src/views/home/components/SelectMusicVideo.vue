@@ -1,5 +1,10 @@
 <template>
-  <TitleLine showType="left" title="精选音乐视频" btnName="换一批" />
+  <TitleLine
+    showType="left"
+    title="精选音乐视频"
+    icon="icon-shuaxin1"
+    btnName="换一批"
+  />
   <div class="song-video-box">
     <swiper :slides-per-view="'auto'" :space-between="8">
       <swiper-slide

@@ -14,3 +14,25 @@ export function getMusicWord(id: number) {
     },
   });
 }
+
+/**
+ * 获取热搜列表
+ * @param type 
+ * @returns 
+ */
+export function getHotSearch() {
+  return request({
+    url: '/search/hot/detail',
+    method: "get",
+  });
+}
+
+/**
+ * 获取默认搜索关键词
+ * @returns 
+ */
+export function getDefaultSearch(){
+  return request({
+    url:'/search/default'
+  })
+}
