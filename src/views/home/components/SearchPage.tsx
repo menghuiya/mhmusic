@@ -9,7 +9,7 @@ import {
 import "./search.scss";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import { getHotSearch, getDefaultSearch } from "@/api/public";
-
+import { musicAreaData, recomeActivitData } from "./baseData";
 export default defineComponent({
   name: "HomeBanner",
   components: {},
@@ -26,6 +26,8 @@ export default defineComponent({
     const realkeyword = ref("");
     const placeholder = ref("搜索音乐、视频、播客、歌词");
     const hotSerachData = ref([]);
+    const defaultImg = require("@/assets/images/activ01.png");
+
     const closeSearch = () => {
       clear();
       emit("close");
@@ -154,7 +156,45 @@ export default defineComponent({
               </div>
               <div class="searchpage-body-musicarea">
                 <div class="musicarea-title">音乐专区</div>
-                <div class="musicarea-body">bddy</div>
+                <div class="musicarea-body">
+                  {musicAreaData.map((item) => {
+                    return (
+                      <div
+                        class="musicarea-body-card"
+                        style={{
+                          background: item.bgStyle,
+                        }}
+                      >
+                        <div class="musicarea-body-card-head">
+                          <div class="musicarea-body-card-head-title">
+                            {item.title}
+                          </div>
+                          <div class="musicarea-body-card-head-icon">🎶</div>
+                        </div>
+                        <div class="musicarea-body-card-bottom">
+                          {item.desc}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div class="searchpage-body-activity">
+                <div class="activity-title">推荐活动</div>
+                <div class="activity-body">
+                  {recomeActivitData.map((item) => {
+                    return (
+                      <div class="activity-body-card">
+                        <img
+                          src={defaultImg}
+                          alt=""
+                          class="activity-body-card-cover"
+                        />
+                        <div class="activity-body-card-title">{item.title}</div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    padding-bottom: 0.25rem;
     font-size: 0.32rem;
     &-box {
       flex: 1;
@@ -54,8 +54,9 @@
       }
     }
     &-cancel {
-      font-size: 0.48rem;
+      font-size: 0.42rem;
       padding-left: 0.25rem;
+      font-weight: 600;
     }
   }
   &-body {
@@ -150,6 +151,80 @@
           image-rendering: -webkit-optimize-contrast;
           image-rendering: crisp-edges;
           -ms-interpolation-mode: nearest-neighbor;
+        }
+      }
+    }
+    &-musicarea {
+      margin-top: 0.3rem;
+      .musicarea-title {
+        font-size: 0.36rem;
+        font-weight: 600;
+      }
+      .musicarea-body {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        // justify-content: space-around;
+        &-card {
+          width: 48%;
+          color: #fff;
+          background-color: #000;
+          overflow: hidden;
+          margin: 0.15rem auto;
+          border-radius: 0.2rem;
+          &-head {
+            padding: 0.2rem 0.3rem 0.4rem 0.3rem;
+            font-size: 0.46rem;
+            font-weight: 500;
+            display: flex;
+            &-title {
+              flex: 1;
+            }
+            &-icon {
+              color: #fff;
+            }
+          }
+          &-bottom {
+            padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+            font-size: 0.32rem;
+            width: 100%;
+            background: #7573732e;
+            color: #f4f4f5;
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+    &-activity {
+      margin-top: 0.3rem;
+      .activity-title {
+        font-size: 0.36rem;
+        font-weight: 600;
+      }
+      .activity-body {
+        &-card {
+          padding: 0.1rem 0;
+          display: flex;
+          align-items: center;
+          &-cover {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.2rem;
+            margin-right: 0.3rem;
+          }
+          &-title {
+            flex: 1;
+            font-size: 0.38rem;
+            padding: 0.35rem 0;
+            letter-spacing: 0.026667rem;
+            border-bottom: 1px solid #ebeef5;
+            line-height: 0.35rem;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
         }
       }
     }
