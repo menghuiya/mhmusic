@@ -24,19 +24,21 @@
       position: relative;
       .icon-sousuo {
         position: absolute;
-        left: 5px;
+        left: 8px;
         top: 50%;
         transform: translateY(-50%);
         vertical-align: middle;
         color: #909399;
+        font-size: 0.36rem;
       }
       .icon-shanchu2 {
         position: absolute;
-        right: 5px;
+        right: 8px;
         top: 50%;
         transform: translateY(-50%);
         vertical-align: middle;
         color: #909399;
+        font-size: 0.36rem;
       }
     }
     &-input {

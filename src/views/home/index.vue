@@ -47,7 +47,7 @@ export default defineComponent({
   },
   setup() {
     const selectId = ref(1);
-    const showSearch = ref(true);
+    const showSearch = ref(false);
     const navData = reactive([
       { id: 1, name: "我的" },
       { id: 2, name: "发现" },
