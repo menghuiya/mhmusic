@@ -1,11 +1,14 @@
 .msearch {
   padding: 0 0.25rem;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2.5rem);
+  display: flex;
+  flex-direction: column;
   .msearch-top {
     position: sticky;
     top: 0;
     background-color: #fff;
+    z-index: 100;
   }
   &-head {
     display: flex;
@@ -121,8 +124,26 @@
     }
   }
   &-body {
-    overflow-y: auto;
-    height: calc(100% - 2.5rem);
+    height: 100%;
     font-size: 0.36rem;
+
+    // overflow-y: auto;
+    &-track {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      will-change: left;
+    }
+    .swiper-slide {
+      width: 100%;
+      height: 100%;
+      padding: 0 0.1rem;
+
+      .tst {
+        height: 100%;
+        overflow-y: auto;
+      }
+    }
   }
 }
