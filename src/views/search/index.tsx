@@ -8,9 +8,21 @@ import {
 } from "vue";
 import "./index.scss";
 import { searchNavData } from "./searchBaseData";
+//引入九个组件 暂时没有想到好的
+import SearchAlbum from "./components/SearchAlbum";
+import SearchAllPage from "./components/SearchAllPage";
+import SearchFm from "./components/SearchFm";
+import SearchMusicSheet from "./components/SearchMusicSheet";
+import SearchMusicWord from "./components/SearchMusicWord";
+import SearchMv from "./components/SearchMv";
+import SearchSinger from "./components/SearchSinger";
+import SearchSingleSong from "./components/SearchSingleSong";
+import SearchUser from "./components/SearchUser";
+import SearchVideos from "./components/SearchVideos";
 
 export default defineComponent({
   name: "index",
+  components: {},
   props: {},
   setup(props, { emit, slots }) {
     const inputRef = ref();
@@ -76,6 +88,7 @@ export default defineComponent({
       nextTick(() => {
         const navActive: any = document.querySelector(".msearch-nav-active");
         moveUnderLine(navActive.offsetWidth, navActive.offsetLeft);
+        console.log(document.body.clientHeight);
       });
     });
 
@@ -149,52 +162,36 @@ export default defineComponent({
               onSwiper={onSwiper}
               onSlideChange={onSlideChange}
             >
-              {searchNavData.map((item) => {
-                return (
-                  <swiperSlide key={item.id}>
-                    <div class="tst">
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}</h2>
-                      <h2>{item.name}111</h2>
-                    </div>
-                  </swiperSlide>
-                );
-              })}
+              <swiperSlide>
+                <SearchAllPage />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchSingleSong />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchMusicSheet />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchVideos />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchSinger />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchMusicWord />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchUser />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchFm />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchAlbum />
+              </swiperSlide>
+              <swiperSlide>
+                <SearchMv />
+              </swiperSlide>
             </swiper>
           </div>
         </div>
