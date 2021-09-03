@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   CSSProperties,
   defineComponent,
@@ -19,12 +20,15 @@ import SearchSinger from "./components/SearchSinger";
 import SearchSingleSong from "./components/SearchSingleSong";
 import SearchUser from "./components/SearchUser";
 import SearchVideos from "./components/SearchVideos";
+import router from "@/router";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "index",
   components: {},
   props: {},
   setup(props, { emit, slots }) {
+    const route = useRoute();
     const inputRef = ref();
     const keyword = ref("");
     const realkeyword = ref("");
@@ -36,7 +40,7 @@ export default defineComponent({
 
     const closeSearch = () => {
       clear();
-      emit("close");
+      router.go(-1);
     };
     const clear = () => {
       keyword.value = "";
@@ -85,10 +89,10 @@ export default defineComponent({
       }
     );
     onMounted(() => {
+      keyword.value = route.query.keyword + "";
       nextTick(() => {
         const navActive: any = document.querySelector(".msearch-nav-active");
         moveUnderLine(navActive.offsetWidth, navActive.offsetLeft);
-        console.log(document.body.clientHeight);
       });
     });
 
@@ -111,7 +115,10 @@ export default defineComponent({
         <div class="msearch">
           <div class="msearch-top">
             <div class="msearch-head">
-              <i class="iconfont icon-fanhui msearch-head-back"></i>
+              <i
+                class="iconfont icon-fanhui msearch-head-back"
+                onClick={closeSearch}
+              ></i>
               <div class="msearch-head-box">
                 <i class="iconfont icon-sousuo"></i>
                 <input

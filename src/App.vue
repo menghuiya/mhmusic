@@ -1,6 +1,12 @@
 <template>
   <div>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <!-- vue3.0配置 keep-alive缓存-->
+      <keep-alive>
+        <component :is="Component" v-if="$route.meta.keepAlive" />
+      </keep-alive>
+      <component :is="Component" v-if="!$route.meta.keepAlive" />
+    </router-view>
     <PlayController />
   </div>
 </template>

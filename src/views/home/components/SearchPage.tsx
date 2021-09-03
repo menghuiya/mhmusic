@@ -10,6 +10,7 @@ import "./search.scss";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import { getHotSearch, getDefaultSearch } from "@/api/public";
 import { musicAreaData, recomeActivitData } from "./baseData";
+import router from "@/router";
 export default defineComponent({
   name: "HomeBanner",
   components: {},
@@ -49,9 +50,19 @@ export default defineComponent({
       // console.log("onBlur");
     };
 
+    const inputKeyDown = (event: Event | any) => {
+      if (event.keyCode === 13) {
+        router.push({
+          path: "/search",
+          query: {
+            keyword: keyword.value || realkeyword.value,
+          },
+        });
+      }
+    };
+
     const getHotSearchData = () => {
       getHotSearch().then((res: any) => {
-        console.log(res);
         hotSerachData.value = res.data;
       });
     };
@@ -97,6 +108,7 @@ export default defineComponent({
                   onBlur={onBlur}
                   ref={inputRef}
                   autofocus={true}
+                  onKeydown={inputKeyDown}
                 />
                 <i
                   class="iconfont icon-shanchu2"
