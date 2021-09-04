@@ -5,7 +5,11 @@ import {
   ref,
   Transition,
   watch,
+  computed,
+  onActivated,
+  onDeactivated,
 } from "vue";
+import { useStore } from "vuex";
 import "./search.scss";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import { getHotSearch, getDefaultSearch } from "@/api/public";
@@ -22,13 +26,17 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const store = useStore();
     const inputRef = ref();
     const keyword = ref("");
     const realkeyword = ref("");
     const placeholder = ref("搜索音乐、视频、播客、歌词");
     const hotSerachData = ref([]);
     const defaultImg = require("@/assets/images/activ01.png");
-
+    // const historyData = ref(store.getters.getSearchHistory);
+    const historyData = computed(() => {
+      return store.state.historySearch;
+    });
     const closeSearch = () => {
       clear();
       emit("close");
@@ -50,15 +58,30 @@ export default defineComponent({
       // console.log("onBlur");
     };
 
+    const goSearchPage = (keyword: string) => {
+      router.push({
+        path: "/search",
+        query: {
+          keyword: keyword,
+        },
+      });
+    };
+
     const inputKeyDown = (event: Event | any) => {
       if (event.keyCode === 13) {
-        router.push({
-          path: "/search",
-          query: {
-            keyword: keyword.value || realkeyword.value,
-          },
-        });
+        store.commit("setSearchHistory", keyword.value || realkeyword.value);
+        goSearchPage(keyword.value || realkeyword.value);
       }
+    };
+    type ClickHandler = (item: any) => (e: Event) => void;
+    const clickHistory: ClickHandler = (item) => (e) => {
+      e.preventDefault();
+      store.commit("setSearchHistory", item);
+      goSearchPage(item);
+    };
+
+    const deleteHistory = () => {
+      store.commit("clearSearchHistory");
     };
 
     const getHotSearchData = () => {
@@ -68,7 +91,6 @@ export default defineComponent({
     };
     const getDefaultSearchData = () => {
       getDefaultSearch().then((res: any) => {
-        console.log(res);
         placeholder.value = res.data.showKeyword;
         realkeyword.value = res.data.realkeyword;
       });
@@ -76,6 +98,7 @@ export default defineComponent({
 
     onMounted(() => {
       getHotSearchData();
+      store.commit("initSearchHistory");
     });
 
     watch(
@@ -90,6 +113,16 @@ export default defineComponent({
         }
       }
     );
+
+    onActivated(() => {
+      console.log("激活了");
+      if (props.visible) {
+        inputRef.value.focus();
+      }
+    });
+    onDeactivated(() => {
+      console.log("激活了");
+    });
 
     return () => {
       return (
@@ -121,13 +154,27 @@ export default defineComponent({
               </div>
             </div>
             <div class="searchpage-body">
-              <div class="searchpage-body-history">
+              <div
+                class="searchpage-body-history"
+                v-show={historyData.value.length}
+              >
                 <div class="history-title">历史</div>
                 <div class="history-body">
-                  <div class="history-body-card">水星记</div>
-                  <div class="history-body-card">六点半演出</div>
-                  <div class="history-body-card">蛤蟆皮</div>
+                  {historyData.value.map((item: any) => {
+                    return (
+                      <div
+                        class="history-body-card"
+                        onClick={clickHistory(item)}
+                      >
+                        {item}
+                      </div>
+                    );
+                  })}
                 </div>
+                <i
+                  class="iconfont icon-shanchu1 history-delete"
+                  onClick={deleteHistory}
+                ></i>
               </div>
               <div class="searchpage-body-research">
                 <div class="research-title">推荐搜索：</div>
@@ -153,7 +200,10 @@ export default defineComponent({
               <div class="searchpage-body-hotlist">
                 {hotSerachData.value.map((item: any, index: number) => {
                   return (
-                    <div class="hot-card">
+                    <div
+                      class="hot-card"
+                      onClick={clickHistory(item.searchWord)}
+                    >
                       <span class="hot-card-index">{index + 1}</span>
                       <span class="hot-card-name">{item.searchWord}</span>
                       <img

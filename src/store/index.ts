@@ -8,6 +8,7 @@ export default createStore({
     playCurrentIndex: null,
     lyric: "",
     playCurrentTime: 0,
+    historySearch: [] as any[],
   },
   getters: {
     lyricList(state) {
@@ -70,6 +71,28 @@ export default createStore({
     },
     setPlayCurrentTime(state, value) {
       state.playCurrentTime = value;
+    },
+    initSearchHistory(state) {
+      state.historySearch = JSON.parse(
+        localStorage.getItem("historySearch") || "[]"
+      );
+    },
+    setSearchHistory(state, value) {
+      const index = state.historySearch.findIndex((item) => item === value);
+      //如果存在该关键词,删除该关键词并且重新加入到第一个
+      if (index !== -1) {
+        state.historySearch.splice(index, 1);
+      }
+      state.historySearch.unshift(value);
+      localStorage.setItem(
+        "historySearch",
+        JSON.stringify(state.historySearch)
+      );
+    },
+    clearSearchHistory(state) {
+      state.historySearch = [];
+      localStorage.removeItem("historySearch");
+      //
     },
   },
   actions: {

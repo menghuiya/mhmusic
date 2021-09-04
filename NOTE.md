@@ -4,6 +4,18 @@
 
 <hr/>
 
+#### 使用到的技术
+
+1. 前端
+
+   `vue3.0`，`ts+tsx`，`glfx`，`swiper`，`rem`，`scss`，
+
+2. 后端 
+
+   [Binaryify]: https://github.com/Binaryify/NeteaseCloudMusicApi	"网易云接口"
+
+   `node.js`
+
 #### 一，顶部Nav采用的定位方式
 
 这里有两种方式可供选择；
@@ -25,6 +37,16 @@
    父元素的高度不能低于sticky元素的高度
 
    必须指定top、bottom、left、right4个值之一，否则只会处于相对定位
+   
+   ```css
+   .xxx {
+     position: sticky;
+     top: 0;
+     z-index: 100;
+   }
+   ```
+   
+   
 
 #### 二，弹出框后禁止底部页面滚动
 
@@ -184,4 +206,199 @@ tsx代码中使用时不能使用`xxxref.value` 直接使用`xxxref`
 * `onEnded` 播放结束
 * `onTimeupDate` 播放时间更新播放时 类似`setInterval` 循环
 * ... （等待更新 拖动进度条等等）
+
+#### 八，自定义popup组件（借鉴vant-popup）
+
+在自定义自己的popup组件时遇到最大的问题就是要兼容各个方向，但是css动画的变化时要根据自身的原始数据 到新的数据的大小来变化产生的；如果是每次组件都是单独一个`DIV`元素的话，就不会出现问题，如果想要一个组件，通过变量控制不同的方向， 就会出现问题，动画效果就会错乱！
+
+#### 九， 做播放器时，封面图片的唱片指针遇到的问题；
+
+当我们使用css中的`rotate`动画属性时 ，需要控制旋转中心，此时需要使用到` transform-origin`
+
+下面实例代码
+
+```css
+&-needle {
+      width: 3rem;
+      position: relative;
+      left: 1rem;
+      transform: rotate(-25deg);
+      transform-origin: 0.4rem 0.4rem;
+      transition: all 1s;
+      z-index: 1;
+      &-active {
+        transform: rotate(0deg);
+      }
+    }
+```
+
+#### 十，在定义``click  ``,`touchmove`等等函数,需要使用到<font color=red>event</font>时遇到的问题
+
+当我们要组织默认事件，或者使用函数传递参数时，在`vue3`+`tsx`中是不能直接传递参数的，需要声明相应的类型，如下所示
+
+1. tsx语法中传递一个`index`时
+
+   ```tsx
+   <div
+    class={[
+      "read-play-music-left",
+       index === props.currentIndex ? " active" : "",
+    ]}
+    onClick={clickHandler(index)}
+    ></div>  
+   ```
+
+2. 在函数中接受时,定义type，后才能使用相应的值
+
+   ```tsx
+   type ClickHandler = (index: number) => (e: MouseEvent) => void;
+   const clickHandler: ClickHandler = (index) => (e) => {
+     e.preventDefault();
+     store.commit("setPlayCurrntIndex", index);
+   };
+   ```
+
+
+
+#### 十一，h5界面禁止缩放+iosX以上机型适配等设置
+
+1. 首先在html界面meta中加入相关配置 
+
+   ```html
+   <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+       />
+   ```
+
+   `user-scalable=no` 禁止缩放
+
+   `viewport-fit=cover`安全区适配时使用
+
+2. 在需要配置安全适配的css代码中加入
+
+   ```scss
+   padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+   padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+   ```
+
+   需要注意的是：此方法只适合定位在底部的内容
+
+#### 十二，导航条下面的下划线跟随移动
+
+1. 我们使用最简单的方法，但是该方法无法有滚动的效果
+
+   <img src="https://img2018.cnblogs.com/blog/1059788/201902/1059788-20190213173529738-2108536811.gif" alt="效果图" style="zoom:150%;" />
+
+   代码也很简单 在你每个导航下面新增一下内容,需要注意的是本身需要设置相对定位
+
+   ```scss
+   div{
+       position:relative;
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 100%;
+          width: 0;
+          height: 2px;
+          background-color: #000;
+          transition: all 0.3s ease-out;
+       }
+   }
+   &-active {
+     color: #000;
+     font-weight: 600;
+     &::after {
+     width: 100%;
+     left: 0;
+   	}
+   
+     & + .nav::after {
+        left: 0;
+     }
+   }
+   ```
+
+2. 将下划线设置为绝对定位，通过js进行定位宽度
+
+   先设置scss
+
+   ```SCSS
+   &-underline {
+      position: absolute;
+      bottom: 0;
+      display: block;
+      height: 4px;
+      border-radius: 4px;
+      background-color: red;
+      transition: all 0.3s ease-out;
+      margin-bottom: 0.1rem;
+   }
+   ```
+
+   再通过js控制宽度和向左的距离
+
+   ```tsx
+   //获取当前导航本身
+   const navActive: any = document.querySelector(".msearch-nav-active");
+   //传递给函数 元素宽度 距离左边的距离
+   moveUnderLine(navActive.offsetWidth, navActive.offsetLeft);
+   //定义moveUnderLine函数 多处使用
+   const moveUnderLine = (width: number | string, left: number | string) => {
+     navUnderlinStyle.value = {
+       width: width + "px",
+       left: left + "px",
+     };
+   };
+   ```
+
+3. 因为我们导航本身也属于滚动属性，而且设置了滚动时会居中显示，这样与我们下划线的绝对定位产生了错位！ 
+
+   此时需要将下划线，导航放在同一个div中 并且div的定位属性设置为 <font color=red>`relative`</font> 这样才能让导航条跟随导航的滚动的位置一致；下面展示导航滚动自动居中的js代码
+
+   ```tsx
+   //获取激活导航元素
+   const navActive: any = document.querySelector(".msearch-nav-active");
+   //获取整个滚动区域的宽度（设置多宽就是多少）
+   const navWidth = navBoxRef.value.offsetWidth;
+   if (navActive) {
+     //获取激活导航的距离左边的距离
+     const navOffsetWidth = navActive.offsetLeft;
+     //中间值 通过偏移宽度减去元素本身宽度再除以2  
+     const diffWidth = (navWidth - navActive.offsetWidth) / 2; 
+     //需要滚动的距离targetWidth
+     const targetWidth = navOffsetWidth - diffWidth;
+     //设置滚动距离
+     navBoxRef.value.scrollLeft = targetWidth;
+     //上面下划线跟随滚动
+     moveUnderLine(navActive.offsetWidth, navOffsetWidth);
+   }
+   ```
+
+#### 十三， 使用 `swiper.js` 倘若每个`slider`高度不固定，每个 `slider`有滚动时无法有各自的滚动
+
+需要设计，swiper占满所剩下的屏幕空间，此时页面会有滚动，但是设置高度为100%后，页面会全部滚动===》当第一个 `slider`滚动时，第二个也同样跟着滚动相应的距离！
+
+此时需要设置`slider`的高度！才能避免这种情况，或者在每个`slider`的内容中自己固定一定的高度后再设置scoller滚动
+
+
+
+#### 十四，在ts中使用localStorage.getItem时提示错误
+
+错误提示：![image-20210905003941646](C:\Users\12743\AppData\Roaming\Typora\typora-user-images\image-20210905003941646.png)
+
+```ts
+state.historySearch = JSON.parse(localStorage.getItem("historySearch"));
+```
+
+解决办法：
+
+```ts
+state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
+```
+
+错误原因
+
+**提示不要使用’{}‘或’[]’,因为JSON.parse(’{}’)、JSON.parse(’[]’) 为true !!**
 

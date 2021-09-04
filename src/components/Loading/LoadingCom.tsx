@@ -18,8 +18,8 @@ export default defineComponent({
       return (
         <div>
           <div class="load-small">
-            <div class="k-line k-line1-1"> </div>
-            <div class="k-line k-line1-2"> </div>
+            <div class="k-line k-line1-1"></div>
+            <div class="k-line k-line1-2"></div>
             <div class="k-line k-line1-3"></div>
             <div class="k-line k-line1-4"></div>
           </div>

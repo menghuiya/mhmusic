@@ -6,16 +6,16 @@ import {
   onMounted,
   ref,
   watch,
+  reactive,
 } from "vue";
 import "./index.scss";
 import { searchNavData } from "./searchBaseData";
+import { getSearchData } from "@/api/search";
 //引入九个组件 暂时没有想到好的
+import LoadingCom from "@/components/Loading/LoadingCom";
 import SearchAlbum from "./components/SearchAlbum";
 import SearchAllPage from "./components/SearchAllPage";
-import SearchFm from "./components/SearchFm";
 import SearchMusicSheet from "./components/SearchMusicSheet";
-import SearchMusicWord from "./components/SearchMusicWord";
-import SearchMv from "./components/SearchMv";
 import SearchSinger from "./components/SearchSinger";
 import SearchSingleSong from "./components/SearchSingleSong";
 import SearchUser from "./components/SearchUser";
@@ -37,6 +37,18 @@ export default defineComponent({
     const navBoxRef = ref(); // nav的refs
     const navUnderlinStyle = ref<CSSProperties>({});
     const swipeRef = ref(); //swiper的实例
+    const seachData = reactive<any>({
+      1018: null, //综合
+      1: null, //单曲
+      1000: null, //歌单
+      1014: null, //视频
+      100: null, //歌手
+      1006: null, //歌词
+      1002: null, //用户
+      1009: null, //电台
+      10: null, //专辑
+      1004: null, //mv
+    });
 
     const closeSearch = () => {
       clear();
@@ -44,10 +56,14 @@ export default defineComponent({
     };
     const clear = () => {
       keyword.value = "";
+      router.go(-1);
     };
 
     const inputData = (event: any) => {
       keyword.value = event.target.value;
+      if (!keyword.value) {
+        router.go(-1);
+      }
       // console.log(keyword.value);
     };
     const onFocus = (event: any) => {
@@ -72,6 +88,15 @@ export default defineComponent({
       navActiveId.value = item.id;
       swipeToCurrentTab(navActiveId.value);
     };
+
+    const getData = (type: number) => {
+      getSearchData(keyword.value, type).then((res: any) => {
+        seachData[type] = res.result;
+        // console.log(type, seachData[type]);
+      });
+      // seachData[type] = {};
+      // console.log("切换啦", type);
+    };
     watch(
       () => navActiveId.value,
       () => {
@@ -84,16 +109,24 @@ export default defineComponent({
             const targetWidth = navOffsetWidth - diffWidth;
             navBoxRef.value.scrollLeft = targetWidth;
             moveUnderLine(navActive.offsetWidth, navOffsetWidth);
+            if (!seachData[searchNavData[navActiveId.value].type]) {
+              getData(searchNavData[navActiveId.value].type);
+            }
           }
         });
       }
     );
+
     onMounted(() => {
-      keyword.value = route.query.keyword + "";
+      keyword.value = route.query.keyword + "" || "";
       nextTick(() => {
         const navActive: any = document.querySelector(".msearch-nav-active");
         moveUnderLine(navActive.offsetWidth, navActive.offsetLeft);
+        if (keyword.value) {
+          getData(searchNavData[navActiveId.value].type);
+        }
       });
+      swipeToCurrentTab(navActiveId.value);
     });
 
     const swipeToCurrentTab = (index: number) => {
@@ -130,7 +163,6 @@ export default defineComponent({
                   onFocus={onFocus}
                   onBlur={onBlur}
                   ref={inputRef}
-                  autofocus={true}
                 />
                 <i
                   class="iconfont icon-shanchu2"
@@ -170,34 +202,55 @@ export default defineComponent({
               onSlideChange={onSlideChange}
             >
               <swiperSlide>
-                <SearchAllPage />
+                {seachData[1018] ? (
+                  <SearchAllPage data={seachData[1018]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
               <swiperSlide>
-                <SearchSingleSong />
+                {seachData[1] ? (
+                  <SearchSingleSong data={seachData[1]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
               <swiperSlide>
-                <SearchMusicSheet />
+                {seachData[1000] ? (
+                  <SearchMusicSheet data={seachData[1000]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
               <swiperSlide>
-                <SearchVideos />
+                {seachData[1014] ? (
+                  <SearchVideos data={seachData[1014]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
               <swiperSlide>
-                <SearchSinger />
+                {seachData[100] ? (
+                  <SearchSinger data={seachData[100]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
+
               <swiperSlide>
-                <SearchMusicWord />
+                {seachData[1002] ? (
+                  <SearchUser data={seachData[1002]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
+
               <swiperSlide>
-                <SearchUser />
-              </swiperSlide>
-              <swiperSlide>
-                <SearchFm />
-              </swiperSlide>
-              <swiperSlide>
-                <SearchAlbum />
-              </swiperSlide>
-              <swiperSlide>
-                <SearchMv />
+                {seachData[10] ? (
+                  <SearchAlbum data={seachData[10]} />
+                ) : (
+                  <LoadingCom />
+                )}
               </swiperSlide>
             </swiper>
           </div>

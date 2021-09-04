@@ -34,6 +34,7 @@ export default defineComponent({
       desc: "icon颜色",
     },
   },
+  emits: ["click"],
   setup(props, { emit, slots }) {
     const renderIcon = () => {
       //主要是用于插入图片等
@@ -75,9 +76,13 @@ export default defineComponent({
       ) : null;
     };
 
+    const onClick = () => {
+      emit("click");
+    };
+
     return () => {
       return (
-        <div class="cell-box">
+        <div class="cell-box" onClick={onClick}>
           <div class="cell-left">
             {renderIcon()}
             {renderTitle()}

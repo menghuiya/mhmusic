@@ -5,9 +5,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     component: () => import("../views/home/index.vue"),
-    meta: { 
-      keepAlive:true, //是否需要缓存
-     }
+    meta: {
+      keepAlive: true, //是否需要缓存
+    },
   },
   {
     path: "/sheetList",

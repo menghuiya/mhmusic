@@ -27,6 +27,10 @@ export default defineComponent({
     titleStyle: {
       type: Object as PropType<CSSProperties>,
     },
+    showLeft: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props, { emit, slots }) {
     const renderFresh = () => {
@@ -52,7 +56,7 @@ export default defineComponent({
           <div class="title-title" style={props.titleStyle}>
             {props.title}
           </div>
-          <div class="more-card">
+          <div class="more-card" v-show={props.showLeft}>
             {renderFresh()}
             <div class="more-title">{props.btnName}</div>
             {renderMore()}

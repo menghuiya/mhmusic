@@ -64,4 +64,18 @@ const imgToBlob = (
   };
 };
 
-export { getShowNumber, imgToBlob };
+const getFormateData = (num: number) => {
+  const date = new Date(num);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  return `${year}-${month}-${day}`;
+};
+
+const getFormateTime = (num: number) => {
+  const min = Math.floor(num / 60000);
+  const sec = Math.floor((num % 60000) / 1000);
+  return `${min > 9 ? min : "0" + min}:${sec > 9 ? sec : "0" + sec}`;
+};
+
+export { getShowNumber, imgToBlob, getFormateData, getFormateTime };
