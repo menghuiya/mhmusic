@@ -78,4 +78,16 @@ const getFormateTime = (num: number) => {
   return `${min > 9 ? min : "0" + min}:${sec > 9 ? sec : "0" + sec}`;
 };
 
-export { getShowNumber, imgToBlob, getFormateData, getFormateTime };
+const getPlayForamtTime = (time: number) => {
+  const min = Math.floor(time / 60);
+  const sec = Number((time % 60).toFixed(0));
+  return `${min > 9 ? min : "0" + min}:${sec > 9 ? sec : "0" + sec}`;
+};
+
+export {
+  getShowNumber,
+  imgToBlob,
+  getFormateData,
+  getFormateTime,
+  getPlayForamtTime,
+};

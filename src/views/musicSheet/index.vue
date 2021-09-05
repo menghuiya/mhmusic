@@ -87,6 +87,7 @@ export default defineComponent({
         (res: SheetReturnItem) => {
           const tempData = res.playlist;
           const ids = res.playlist.trackIds.map((item: any) => item.id);
+          document.title = document.title + "-" + res.playlist.name;
           getSongSheetDetailAll(ids.join(",")).then((data: any) => {
             tempData.tracks = data.songs;
             state.playlist = tempData;

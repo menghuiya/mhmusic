@@ -14,6 +14,7 @@ export default defineComponent({
     const popVisible = ref(false);
     const playPageVisible = ref(false);
     const playControRef = ref();
+    const playBufferTime = ref(0);
 
     const changePlayStatu = () => {
       if (!playControRef.value) {
@@ -55,17 +56,33 @@ export default defineComponent({
 
     const onPlay = () => {
       playing.value = true;
+      store.commit("setPlayTotalTime", playControRef.value.duration);
+      document.title =
+        "▶️" + store.state.playList[store.state.playCurrentIndex].name;
     };
 
     const onPause = () => {
       playing.value = false;
+      document.title =
+        store.state.playList[store.state.playCurrentIndex].name +
+        "-单曲-梦回云音乐";
     };
 
     const onTimeupdate = () => {
       const timeDisplay = playControRef.value.currentTime; //获取实时时间
       // const min = t
       // console.log(timeDisplay);
+      const timeRanges = playControRef.value.buffered;
+      if (timeRanges.length - 1 !== -1) {
+        // 获取已缓存的时间  timeRanges.end(timeRanges.length - 1)
+        playBufferTime.value = timeRanges.end(timeRanges.length - 1);
+      }
+
       store.commit("setPlayCurrentTime", timeDisplay);
+    };
+
+    const changeMusicTime = (time: number) => {
+      playControRef.value.currentTime = time;
     };
 
     watch(
@@ -172,8 +189,10 @@ export default defineComponent({
             visible={playPageVisible.value}
             onClose={closePlayPage}
             playing={playing.value}
+            bufferTime={playBufferTime.value}
             onChangePlaying={changePlayStatu}
             onPlayReadList={openRedyList}
+            onChangePlaytime={changeMusicTime}
           />
         </>
       );

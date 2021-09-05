@@ -5,6 +5,7 @@
       rightIcon="icon-sousuo"
       @leftClick="handLeftClick"
       @rightClick="handRightClick"
+      style="background:#fff"
     >
       <template #center>
         <div

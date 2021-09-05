@@ -3,7 +3,8 @@ import { PropType } from "vue";
 const PlayControlKey = "PlayControlKey";
 
 interface PlayContenx {
-  play(index: number): void;
+  play(type: boolean): void; //播放音乐
+  pause(): void; //暂停音乐
 }
 
 interface LyricItem {
@@ -17,5 +18,12 @@ interface LyricItem {
 }
 
 type CustomEventFuncType<T> = PropType<(arg: T) => void>;
+type ClickEventFuncType = (item: any) => (e: Event) => void;
 
-export { PlayContenx, PlayControlKey, CustomEventFuncType, LyricItem };
+export {
+  PlayContenx,
+  PlayControlKey,
+  CustomEventFuncType,
+  LyricItem,
+  ClickEventFuncType,
+};

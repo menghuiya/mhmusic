@@ -5,9 +5,10 @@ import {
   ref,
   Transition,
   watch,
+  nextTick,
 } from "vue";
 import "./play.scss";
-import { imgToBlob } from "@/utils/tool";
+import { imgToBlob, getPlayForamtTime } from "@/utils/tool";
 import Nav from "../Nav/Nav";
 declare function require(img: string): string; // 声明
 
@@ -29,15 +30,24 @@ export default defineComponent({
       type: Object,
       defautl: null,
     },
+    bufferTime: {
+      type: Number,
+      default: 0,
+    },
     onChangePlaying: Function as CustomEventFuncType<null>,
     onPlayReadList: Function as CustomEventFuncType<null>,
+    onChangePlaytime: Function as CustomEventFuncType<number>,
   },
-  emits: ["close", "change-playing", "play-read-list"],
+  emits: ["close", "change-playing", "play-read-list", "change-playtime"],
   setup(props, { emit, slots }) {
     const pageBg = ref("");
     const store = useStore();
     const showMusic = ref(false);
     const musciWordRef = ref();
+    const playLineWidth = ref(0);
+    const vnodePlayTime = ref(0); //虚拟播放事件 拖动进度时显示
+    const isChangePlayTime = ref(false); //是否在拖动
+    const vnodePlayWidth = ref(0); //虚拟拖动长度
     watch(
       () => props.musicData,
       (newValue) => {
@@ -68,6 +78,8 @@ export default defineComponent({
             // console.log(wordActive, offsetTop, height);
           }
         }
+        playLineWidth.value =
+          (store.state.playCurrentTime / store.state.playTotalTime) * 100;
       }
     );
 
@@ -88,6 +100,29 @@ export default defineComponent({
 
     const changeMusicWord = () => {
       showMusic.value = !showMusic.value;
+    };
+
+    const dragDropLine = (event: TouchEvent) => {
+      if (event.type === "touchmove") {
+        isChangePlayTime.value = true;
+      }
+      const slider: any = document.querySelector(".playline-slider");
+
+      const clientX = event.changedTouches[0].clientX;
+      const tx = clientX - slider.offsetLeft;
+      if (slider.offsetWidth >= tx && tx >= 0) {
+        const timeRate = tx / slider.offsetWidth; //此时还未乘以100 使用需要
+        const playCurrentTime = store.state.playTotalTime * timeRate;
+        vnodePlayTime.value = playCurrentTime;
+        vnodePlayWidth.value = timeRate * 100;
+
+        if (event.type === "touchend") {
+          emit("change-playtime", playCurrentTime);
+          setTimeout(() => {
+            isChangePlayTime.value = false;
+          }, 200);
+        }
+      }
     };
 
     const changePreMusic = () => {
@@ -225,7 +260,45 @@ export default defineComponent({
                 <i class="iconfont icon-gengduo"></i>
               </div>
             </div>
-            <div class="playing-bottom-process">先等等</div>
+            <div class="playing-bottom-process">
+              <div class="playline">
+                <span class="playline-start">
+                  {isChangePlayTime.value
+                    ? getPlayForamtTime(vnodePlayTime.value)
+                    : getPlayForamtTime(store.state.playCurrentTime)}
+                </span>
+                <div
+                  class="playline-slider"
+                  onTouchstart={dragDropLine}
+                  onTouchmove={dragDropLine}
+                  onTouchend={dragDropLine}
+                >
+                  <div class="playline-slider-buffer"></div>
+                  <div
+                    class="playline-slider-processor"
+                    style={{
+                      width:
+                        (isChangePlayTime.value
+                          ? vnodePlayWidth.value
+                          : playLineWidth.value) + "%",
+                    }}
+                  ></div>
+                  <div
+                    class="playline-slider-controller"
+                    style={{
+                      left: `calc(${
+                        isChangePlayTime.value
+                          ? vnodePlayWidth.value
+                          : playLineWidth.value
+                      }% - 5px)`,
+                    }}
+                  ></div>
+                </div>
+                <span class="playline-end">
+                  {getPlayForamtTime(store.state.playTotalTime)}
+                </span>
+              </div>
+            </div>
             <div class="playing-bottom-action">
               <div class="playing-bottom-action-row">
                 <i class="iconfont icon-xunhuan"></i>

@@ -8,6 +8,7 @@ export default createStore({
     playCurrentIndex: null,
     lyric: "",
     playCurrentTime: 0,
+    playTotalTime: 0,
     historySearch: [] as any[],
   },
   getters: {
@@ -72,6 +73,9 @@ export default createStore({
     setPlayCurrentTime(state, value) {
       state.playCurrentTime = value;
     },
+    setPlayTotalTime(state, value) {
+      state.playTotalTime = value;
+    },
     initSearchHistory(state) {
       state.historySearch = JSON.parse(
         localStorage.getItem("historySearch") || "[]"
@@ -98,7 +102,11 @@ export default createStore({
   actions: {
     async reqLyric(content, payload) {
       await getMusicWord(payload.id).then((res: any) => {
-        content.commit("setLyric", res.lrc.lyric);
+        if (res.nolyric) {
+          content.commit("setLyric", "");
+        } else {
+          content.commit("setLyric", res.lrc.lyric);
+        }
       });
     },
   },
