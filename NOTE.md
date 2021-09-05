@@ -402,3 +402,168 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
 
 **提示不要使用’{}‘或’[]’,因为JSON.parse(’{}’)、JSON.parse(’[]’) 为true !!**
 
+#### 十五，写一个播放器进度条（音量大小，下载进度）等等均可用
+
+首先来看看具体长啥样（模仿网易云pc端）
+
+![image-20210905222649740](C:\Users\12743\AppData\Roaming\Typora\typora-user-images\image-20210905222649740.png)
+
+1. 万能的html代码，平平无奇，不需要多讲
+
+   ```html
+   <div class="line">
+         <span>0.00</span>
+         <div class="slider">
+           <div class="buffer"></div>
+           <div class="processor"></div>
+           <div class="controller"></div>
+         </div>
+         <span>0.00</span>
+       </div>
+   ```
+
+2. css代码 样式必不可少呀，需要控制好样式
+
+   ```css
+   .line {
+     width: 100%;
+     height: 45px;
+     background-color: #2d2d2d;
+     border-top: 1px solid #4a4a4a;
+     border-bottom: 1px solid #4a4a4a;
+     position: fixed;
+     bottom: 50%;
+     display: flex;
+     align-items: center;
+     color: #fff;
+     /* padding: 10px; */
+   }
+   .line > span {
+     padding: 0 10px;
+   }
+   .slider {
+     flex: 1;
+     height: 5px;
+     background-color: #181818;
+     border-top: 1px solid #0b0b0b;
+     border-bottom: 1px solid #4a4a4a;
+     margin: 20px auto;
+     position: relative;
+     border-radius: 999px;
+     display: flex;
+     align-items: center;
+   }
+   .buffer {
+     width: 0;
+     height: 100%;
+     background-color: #535353;
+     border-radius: 999px;
+     position: absolute;
+   }
+   .processor {
+     width: 0;
+     height: 100%;
+     background-color: #c70c0c;
+     border-radius: 999px;
+     position: absolute;
+   }
+   .controller {
+     position: absolute;
+     width: 5px;
+     height: 5px;
+     border: 5px solid #f3f3f6;
+     background-color: #000;
+     border-radius: 50%;
+     left: -5px;
+     /* top: -6px; */
+     /* opacity: 0.3; */
+   }
+   ```
+
+   三个div 分别是
+
+   * `buffer`缓冲进度条 视频播放器和音乐播放器时使用
+   * `processor`播放进度条
+   * `controller`小按钮
+
+   这里主要是使用相对定位和绝对定位的结合使用，本来那个`controller`并不能平衡，但是给`slider`设置了flex布局后，可以完美居中水平线！
+
+3. 下面介绍鼠标拖拽和移动端手指触摸滑动的js部分
+
+   主要使用到的方法有：
+
+   * `onmousedown`  鼠标按下，`ontouchstart  ` 触摸开始 都是对进度条操作的开始
+   * `onmousemove`  鼠标移动，`ontouchmove ` 触摸滑动
+   * `onmouseup`  鼠标放开，`ontouchend ` 结束触摸
+
+   首先将所有元素获取到，这里使用<font color=red>`document.querySelector()`</font> 如下面代码所示
+
+   ```js
+   const slider = document.querySelector(".slider");
+   const buffer = document.querySelector(".buffer");
+   const processor = document.querySelector(".processor");
+   const controller = document.querySelector(".controller");
+   ```
+
+   其次定义两个函数，供我们使用,`dragDropHandle` 判断操作 `changeElement`具体修改页面
+
+   ```js
+   /**
+    * 判断移动的距离
+    * @param event MouseEvent || TouchEvent
+    */
+   function dragDropHandle(event) {
+     //获取距离右侧距离数值
+     const clientX = event.clientX || event.changedTouches[0].clientX;
+     //计算出到进度条左侧的值
+     const tx = clientX - slider.offsetLeft;
+     //计算小圆点本身宽度 并且1/2
+     const halfW = controller.offsetWidth >> 1;
+     switch (event.type) {
+       case "mousedown":
+         changeElement(tx, halfW);
+         break;
+       case "touchstart":
+         changeElement(tx, halfW);
+         break;
+       case "mousemove":
+         changeElement(tx, halfW);
+         break;
+       case "touchmove":
+         changeElement(tx, halfW);
+         break;
+       case "mouseup":
+         //做出拖拽结束后的操作
+         break;
+       case "touchend":
+         //做出滑动结束后的操作
+         break;
+     }
+   }
+   
+   /**
+    * 改变界面元素
+    * @param tx 当前鼠标或者手指所在位置到开始的距离
+    * @param halfW 进度按钮自身所占宽度
+    */
+   function changeElement(tx, halfW) {
+     if (slider.offsetWidth >= tx && tx >= 0) {
+       controller.style.left = tx - halfW + "px";
+       processor.style.width = tx + "px";
+     }
+   }
+   ```
+
+   后面直接调用给相应的元素设置监听即可
+
+   ```js
+   slider.addEventListener("mousedown", dragDropHandle);
+   slider.addEventListener("mousemove", dragDropHandle);
+   slider.addEventListener("mouseup", dragDropHandle);
+   slider.addEventListener("touchstart", dragDropHandle);
+   slider.addEventListener("touchmove", dragDropHandle);
+   slider.addEventListener("touchend", dragDropHandle);
+   ```
+
+   
+
