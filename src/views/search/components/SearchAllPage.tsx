@@ -5,14 +5,20 @@ import { getShowNumber, getFormateData } from "@/utils/tool";
 //组件引入区域
 import TitleLine from "@/components/TitleLine/TitleLine";
 import CellItem from "@/components/Cell/CellItem";
+import { CustomEventFuncType, ClickEventFuncType } from "@/utils/types";
 export default defineComponent({
   name: "SearchAllPage",
   props: {
     data: Object,
+    onMoreClick: Function as CustomEventFuncType<number>,
   },
-  setup(props) {
+  emits: ["more-click"],
+  setup(props, { emit }) {
     const defaultImg = require("@/assets/images/activ01.png");
 
+    const handleMoreClick: ClickEventFuncType = (id: number) => (e) => {
+      emit("more-click", id);
+    };
     return () => {
       return (
         <div class="all">
@@ -62,7 +68,7 @@ export default defineComponent({
                 })
               : null}
             {props.data && props.data.song && props.data.song.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(1)}>
                 <span>{props.data.song.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>
@@ -109,7 +115,7 @@ export default defineComponent({
             {props.data &&
             props.data.playList &&
             props.data.playList.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(2)}>
                 <span>{props.data.playList.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>
@@ -145,7 +151,7 @@ export default defineComponent({
             {props.data &&
             props.data.new_mlog &&
             props.data.new_mlog.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(3)}>
                 <span>{props.data.new_mlog.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>
@@ -202,7 +208,7 @@ export default defineComponent({
                 })
               : null}
             {props.data && props.data.artist && props.data.artist.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(4)}>
                 <span>{props.data.artist.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>
@@ -256,7 +262,7 @@ export default defineComponent({
                 })
               : null}
             {props.data && props.data.album && props.data.album.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(6)}>
                 <span>{props.data.album.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>
@@ -331,7 +337,7 @@ export default defineComponent({
                 })
               : null}
             {props.data && props.data.user && props.data.user.moreText ? (
-              <div class="more-bottom">
+              <div class="more-bottom" onClick={handleMoreClick(6)}>
                 <span>{props.data.user.moreText}</span>
                 <i class="iconfont icon-qianjin1"></i>
               </div>

@@ -143,6 +143,11 @@ export default defineComponent({
       navActiveId.value = swiper.activeIndex;
     };
 
+    const hanleMoreClick = (id: number) => {
+      navActiveId.value = id;
+      swipeToCurrentTab(navActiveId.value);
+    };
+
     return () => {
       return (
         <div class="msearch">
@@ -203,7 +208,10 @@ export default defineComponent({
             >
               <swiperSlide>
                 {seachData[1018] ? (
-                  <SearchAllPage data={seachData[1018]} />
+                  <SearchAllPage
+                    data={seachData[1018]}
+                    onMoreClick={hanleMoreClick}
+                  />
                 ) : (
                   <LoadingCom />
                 )}

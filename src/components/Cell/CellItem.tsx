@@ -8,6 +8,11 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    arrowIcon: {
+      type: String,
+      default: "icon-qianjin1",
+      desc: "右侧icon",
+    },
     icon: {
       type: String,
       default: "",
@@ -71,7 +76,7 @@ export default defineComponent({
       //是否显示arrow
       return props.arrow ? (
         <div class="right-icon">
-          <i class="iconfont icon-qianjin1"></i>
+          <i class={["iconfont", props.arrowIcon]}></i>
         </div>
       ) : null;
     };

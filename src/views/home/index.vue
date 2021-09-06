@@ -23,14 +23,16 @@
     <FindMusiList />
     <SelectMusicVideo />
     <SearchPage :visible="showSearch" @close="showSearch = false" />
+    <HomeInfo :visible="showInfo" @close="showInfo = false" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 import Nav from "@/components/Nav/Nav";
 import HomeBanner from "./components/HomeBanner";
 import SearchPage from "./components/SearchPage";
+import HomeInfo from "./components/HomeInfo";
 
 import MenuList from "./components/MenuList.vue";
 import FindMusiList from "./components/FindMusiList.vue";
@@ -45,10 +47,12 @@ export default defineComponent({
     FindMusiList,
     SelectMusicVideo,
     SearchPage,
+    HomeInfo,
   },
   setup() {
     const selectId = ref(1);
     const showSearch = ref(false);
+    const showInfo = ref(false);
     const navData = reactive([
       { id: 1, name: "我的" },
       { id: 2, name: "发现" },
@@ -57,8 +61,11 @@ export default defineComponent({
     ]);
 
     const handLeftClick = () => {
-      console.log(111);
+      showInfo.value = true;
     };
+    onMounted(() => {
+      handLeftClick();
+    });
     const handRightClick = () => {
       showSearch.value = true;
     };
@@ -73,6 +80,7 @@ export default defineComponent({
       selectId,
       navData,
       showSearch,
+      showInfo,
     };
   },
 });
