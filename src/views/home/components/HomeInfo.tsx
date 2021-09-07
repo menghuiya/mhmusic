@@ -18,6 +18,10 @@ export default defineComponent({
       emit("close");
     };
 
+    const userLogin = () => {
+      confirm("confirm 弹出框");
+    };
+
     const renderDefault = (): JSX.Element => {
       return (
         <div class="info-content">
@@ -39,26 +43,27 @@ export default defineComponent({
               title="云贝中心"
               value="40云贝待领取"
             />
-            <CellItem icon="icon-yonghu-yuan" title="创作者中心" />
+            <CellItem icon="icon-dengpaobeifen" title="创作者中心" />
           </div>
           <div class="info-content-group">
+            <div class="info-content-group-title">音乐服务</div>
             <CellItem icon="icon-ziyuan124" title="演出" />
             <CellItem icon="icon-gouwudai" title="商城" />
             <CellItem icon="icon-cailing" title="口袋铃声" />
             <CellItem icon="icon-94" title="游戏专区" />
           </div>
           <div class="info-content-group">
-            <p>其他</p>
+            <div class="info-content-group-title">其他</div>
             <CellItem icon="icon-shezhi" title="设置" />
             <CellItem icon="icon-yueliang" title="夜间模式" />
             <CellItem icon="icon-dingshi_timing" title="定时关闭" />
             <CellItem icon="icon-yifu" title="个性装扮" />
             <CellItem icon="icon-erji" title="边听边存" value="未开启" />
             <CellItem icon="icon-zaixianliucheng" title="在线听歌免流量" />
+            <CellItem icon="icon-zhizhang" title="添加Siri捷径" />
             <CellItem icon="icon-jinzhi" title="音乐黑名单" />
             <CellItem icon="icon-anquan" title="青少年模式" value="未开启" />
             <CellItem icon="icon-xianxingnaozhong" title="音乐闹钟" />
-            {/* <CellItem icon="icon-94" title="siri"  /> */}
           </div>
           <div class="info-content-group">
             <CellItem icon="icon-kefu" title="我的客服" />
@@ -82,9 +87,19 @@ export default defineComponent({
               head: () => (
                 <div class="info-head">
                   <CellItem
+                    onClick={userLogin}
                     title="立即登录"
                     icon="icon-yonghu-yuan"
                     arrowIcon="icon-saoma"
+                    iconSize="0.7rem"
+                    arrowStyle={{
+                      fontSize: "0.6rem",
+                      color: "#000",
+                    }}
+                    titleStyle={{
+                      fontSize: "0.4rem",
+                      fontWeight: 600,
+                    }}
                   />
                 </div>
               ),

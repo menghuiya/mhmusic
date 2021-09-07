@@ -25,7 +25,7 @@ export default defineComponent({
     },
     direction: {
       validator: (value: string) => {
-        return ["bottom", "left", "right", "top"].includes(value);
+        return ["bottom", "left", "right", "top", "center"].includes(value);
       },
       default: "",
     },

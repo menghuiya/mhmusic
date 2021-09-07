@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, PropType, CSSProperties } from "vue";
 import "./index.scss";
 
 export default defineComponent({
@@ -38,6 +38,12 @@ export default defineComponent({
       default: "0.5rem",
       desc: "icon颜色",
     },
+    arrowStyle: {
+      type: Object as PropType<CSSProperties>,
+    },
+    titleStyle: {
+      type: Object as PropType<CSSProperties>,
+    },
   },
   emits: ["click"],
   setup(props, { emit, slots }) {
@@ -59,7 +65,9 @@ export default defineComponent({
       return slots.title ? (
         slots.title()
       ) : (
-        <div class="cell-title">{props.title}</div>
+        <div class="cell-title" style={props.titleStyle}>
+          {props.title}
+        </div>
       );
     };
 
@@ -76,7 +84,7 @@ export default defineComponent({
       //是否显示arrow
       return props.arrow ? (
         <div class="right-icon">
-          <i class={["iconfont", props.arrowIcon]}></i>
+          <i class={["iconfont", props.arrowIcon]} style={props.arrowStyle}></i>
         </div>
       ) : null;
     };

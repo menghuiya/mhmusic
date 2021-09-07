@@ -38,12 +38,13 @@
       direction="right"
       :style="{ width: '30%', height: '100%' }"
     /> -->
-    <Popup
+    <!-- <Popup
       :visible="dialogStatu4"
       @close="closeDialog('right')"
       direction="center"
       :style="{ padding: '30px 50px' }"
-    />
+    /> -->
+    <Comfirm :visible="dialogStatu4" />
 
     <button @click="btnClick">dialog的哦</button>
     <button @click="btnClick('left')">左边出来</button>
@@ -57,11 +58,13 @@
 import { defineComponent, ref } from "vue";
 import Dialog from "../components/Dialog/Dialog";
 import Popup from "../components/Popup/Popup";
+import Comfirm from "../components/Comfirm/Comfirm";
 
 export default defineComponent({
   components: {
     Dialog,
     Popup,
+    Comfirm,
   },
   setup() {
     const dialogStatu = ref(false);
@@ -81,7 +84,9 @@ export default defineComponent({
           dialogStatu3.value = true;
           break;
         case "right":
+          console.log("开始", dialogStatu4.value);
           dialogStatu4.value = true;
+          console.log("结束", dialogStatu4.value);
           break;
         default:
           dialogStatu.value = true;

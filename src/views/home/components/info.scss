@@ -1,9 +1,15 @@
 .info {
   &-head {
     background-color: #fff;
+    .left-icon {
+      margin-right: 0.25rem;
+    }
   }
   &-content {
     padding: 0 0.25rem;
+    .left-icon {
+      margin-right: 0.25rem;
+    }
     &-blackvip {
       margin: 0.25rem 0;
       background-color: #333333;
@@ -22,6 +28,12 @@
       background-color: #fff;
       margin: 0.25rem 0;
       border-radius: 0.25rem;
+      &-title {
+        font-size: 0.32rem;
+        padding: 0.25rem;
+        color: #a0a0a0;
+        border-bottom: 1px solid #ebebeb;
+      }
     }
   }
 }
