@@ -565,5 +565,10 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
    slider.addEventListener("touchend", dragDropHandle);
    ```
 
-   
+
+#### 十六，Vue3.0 子组件通过update 更改props
+
+<font color=red>`vue2.x`</font> 版本时 可以通过父组件visible.sync="xxxxx"  然后子组件使用`update:xxx`即可更改值
+
+<font color=red>`vue3.0`</font> 版本中 已经丢弃`sync`，需要使用`v-model` 绑定的值 才能通过`update:xxx`进行修改
 

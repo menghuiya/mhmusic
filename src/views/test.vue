@@ -44,7 +44,7 @@
       direction="center"
       :style="{ padding: '30px 50px' }"
     /> -->
-    <Comfirm :visible="dialogStatu4" />
+    <Comfirm v-model="dialogStatu4" />
 
     <button @click="btnClick">dialog的哦</button>
     <button @click="btnClick('left')">左边出来</button>

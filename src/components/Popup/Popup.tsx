@@ -32,13 +32,23 @@ export default defineComponent({
     style: {
       type: Object as PropType<CSSProperties>,
     },
+    clickModalClose: {
+      type: Boolean,
+      default: true,
+    },
+    showSafeArea: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
     const modalStatu = ref(false);
     const modalClick = () => {
-      modalStatu.value = false;
-      emit("close");
+      if (props.clickModalClose) {
+        modalStatu.value = false;
+        emit("close");
+      }
     };
     const onOpened = () => {
       console.log("open");
@@ -77,7 +87,9 @@ export default defineComponent({
           style={props.style}
         >
           {renderPopHead()}
-          <div class="pop-body">{slots.default ? slots.default!() : null}</div>
+          <div class={["pop-body", props.showSafeArea ? "safe-area" : ""]}>
+            {slots.default ? slots.default!() : null}
+          </div>
         </div>
       );
     };

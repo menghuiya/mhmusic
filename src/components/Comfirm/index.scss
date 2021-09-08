@@ -1,0 +1,42 @@
+.comfirm {
+  &-title {
+    color: #010101;
+    font-weight: 550;
+    font-size: 0.4rem;
+    letter-spacing: 2px;
+    padding: 0.25rem 0.25rem 0 0.25rem;
+  }
+  &-message {
+    font-size: 0.32rem;
+    padding-top: 0.1rem;
+    padding: 0.1rem 0.2rem 0.4rem 0.2rem;
+  }
+  &-action {
+    border-top: 1px solid #c8c8c8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-cancle {
+      flex: 1;
+      align-items: center;
+      border-right: 1px solid #c8c8c8;
+      padding: 0.25rem;
+      color: #367af6;
+      font-size: 0.42rem;
+      font-weight: 600;
+      &:hover {
+        background-color: #dddddd;
+      }
+    }
+    &-comfirm {
+      flex: 1;
+      align-items: center;
+      padding: 0.25rem;
+      color: #3b7df6;
+      font-size: 0.42rem;
+      &:hover {
+        background-color: #dddddd;
+      }
+    }
+  }
+}
