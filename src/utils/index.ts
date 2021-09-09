@@ -1,7 +1,7 @@
-import { PropType, ComponentPublicInstance,App } from 'vue';
+import { ComponentPublicInstance, App } from "vue";
 
 export const extend = Object.assign;
-export const inBrowser = typeof window !== 'undefined';
+export const inBrowser = typeof window !== "undefined";
 // eslint-disable-next-line
 export type ComponentInstance = ComponentPublicInstance<{}, any>;
 
@@ -29,7 +29,6 @@ export type WithInstall<T> = T & {
   install(app: App): void;
 } & EventShim;
 
-
 export function withInstall<T>(options: T) {
   (options as Record<string, unknown>).install = (app: App) => {
     const { name } = options as any;
@@ -48,10 +47,10 @@ export function deepClone<T extends Record<string, any> | null | undefined>(
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item) => deepClone(item)) as unknown as T;
+    return (obj.map((item) => deepClone(item)) as unknown) as T;
   }
 
-  if (typeof obj === 'object') {
+  if (typeof obj === "object") {
     const to = {} as Record<string, any>;
     Object.keys(obj).forEach((key) => {
       to[key] = deepClone(obj[key]);

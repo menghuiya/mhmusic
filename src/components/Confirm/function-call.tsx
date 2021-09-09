@@ -1,4 +1,4 @@
-import { App, CSSProperties, TeleportProps } from "vue";
+import { App } from "vue";
 import {
   extend,
   inBrowser,
@@ -18,24 +18,15 @@ export type ConfirmOptions = {
   title?: string;
   width?: string | number;
   message?: ConfirmMessage;
-  overlay?: boolean;
-  teleport?: TeleportProps["to"];
-  className?: unknown;
-  allowHtml?: boolean;
-  lockScroll?: boolean;
-  transition?: string;
   beforeClose?: Interceptor;
+  teleport?: string;
   messageAlign?: ConfirmMessageAlign;
-  overlayClass?: string;
-  overlayStyle?: CSSProperties;
-  closeOnPopstate?: boolean;
   cancelButtonText?: string;
   showCancelButton?: boolean;
   showConfirmButton?: boolean;
   cancelButtonColor?: string;
   confirmButtonText?: string;
   confirmButtonColor?: string;
-  closeOnClickOverlay?: boolean;
 };
 
 let instance: ComponentInstance;
@@ -77,17 +68,10 @@ function Confirm(options: ConfirmOptions) {
 Confirm.defaultOptions = {
   title: "",
   width: "",
-  theme: null,
   message: "",
-  overlay: true,
   callback: null,
   teleport: "body",
-  className: "",
-  allowHtml: false,
-  lockScroll: true,
   beforeClose: null,
-  overlayClass: "",
-  overlayStyle: undefined,
   messageAlign: "",
   cancelButtonText: "",
   cancelButtonColor: null,
@@ -95,8 +79,6 @@ Confirm.defaultOptions = {
   confirmButtonColor: null,
   showConfirmButton: true,
   showCancelButton: false,
-  closeOnPopstate: true,
-  closeOnClickOverlay: false,
 };
 
 Confirm.currentOptions = extend({}, Confirm.defaultOptions);
