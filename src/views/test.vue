@@ -44,13 +44,17 @@
       direction="center"
       :style="{ padding: '30px 50px' }"
     /> -->
-    <Comfirm v-model="dialogStatu4" />
+    <MConfirm v-model="dialogStatu4" />
 
     <button @click="btnClick">dialog的哦</button>
     <button @click="btnClick('left')">左边出来</button>
     <button @click="btnClick('bottom')">底部出来</button>
     <button @click="btnClick('top')">顶部出来</button>
     <button @click="btnClick('right')">右边出来</button>
+
+    <br />
+
+    <button @click="showConfirm">点击调用</button>
   </div>
 </template>
 
@@ -58,13 +62,16 @@
 import { defineComponent, ref } from "vue";
 import Dialog from "../components/Dialog/Dialog";
 import Popup from "../components/Popup/Popup";
-import Comfirm from "../components/Comfirm/Comfirm";
+// import MConfirm from "../components/Confirm/Confirm";
+
+import { Confirm } from "@/components/Confirm";
+const MConfirm = Confirm.Component;
 
 export default defineComponent({
   components: {
     Dialog,
     Popup,
-    Comfirm,
+    MConfirm,
   },
   setup() {
     const dialogStatu = ref(false);
@@ -110,6 +117,19 @@ export default defineComponent({
           dialogStatu.value = false;
       }
     };
+
+    const showConfirm = () => {
+      Confirm.confirm({
+        title: "dadsa",
+        message: "dddd",
+      })
+        .then((res) => {
+          console.log("点击了确定");
+        })
+        .catch(() => {
+          console.log("点击了取消");
+        });
+    };
     return {
       dialogStatu,
       dialogStatu1,
@@ -118,6 +138,7 @@ export default defineComponent({
       dialogStatu4,
       btnClick,
       closeDialog,
+      showConfirm,
     };
   },
 });

@@ -3,29 +3,35 @@ import Popup from "../Popup/Popup";
 import "./index.scss";
 import { ClickEventFuncType } from "@/utils/types";
 
-type DialogAction = "confirm" | "cancel";
+export type ConfirmAction = "confirm" | "cancel";
+export type ConfirmMessage = string | (() => JSX.Element);
+export type ConfirmMessageAlign = "left" | "center" | "right";
 
 export default defineComponent({
-  name: "Comfirm",
+  name: "Confirm",
   props: {
-    callback: Function as PropType<(action?: DialogAction) => void>,
+    callback: Function as PropType<(action?: ConfirmAction) => void>,
     modelValue: {
       type: Boolean,
       default: false,
     },
+    title: String,
+    width: [Number, String],
+    message: [String, Function] as PropType<ConfirmMessage>,
+    messageAlign: String as PropType<ConfirmMessageAlign>,
   },
   emits: ["confirm", "cancel", "update:modelValue"],
   setup(props, { emit, slots }) {
     const updateShow = (value: boolean) => emit("update:modelValue", value);
 
-    const close = (action: DialogAction) => {
+    const close = (action: ConfirmAction) => {
       updateShow(false);
       if (props.callback) {
         props.callback(action);
       }
     };
 
-    const getActionHandler = (action: DialogAction) => () => {
+    const getActionHandler = (action: ConfirmAction) => () => {
       // should not trigger close event when hidden
       if (!props.modelValue) {
         return;
@@ -46,7 +52,7 @@ export default defineComponent({
     });
 
     return () => {
-      const { modelValue } = props;
+      const { modelValue, title, message } = props;
       return (
         <div>
           <Popup
@@ -61,8 +67,8 @@ export default defineComponent({
             }}
           >
             <div class="comfirm">
-              <div class="comfirm-title">梦回云音乐</div>
-              <div class="comfirm-message">确定退出当前账号吗？</div>
+              <div class="comfirm-title">{title}</div>
+              <div class="comfirm-message">{message}</div>
               <div class="comfirm-action">
                 <div class="comfirm-action-cancle" onClick={onCancel}>
                   取消
