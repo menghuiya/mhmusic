@@ -13,7 +13,7 @@ export default defineComponent({
     const playing = ref(false);
     const popVisible = ref(false);
     const playPageVisible = ref(false);
-    const playControRef = ref();
+    const playControRef = ref<any>(null);
     const playBufferTime = ref(0);
 
     const changePlayStatu = () => {
