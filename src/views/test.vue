@@ -44,17 +44,25 @@
       direction="center"
       :style="{ padding: '30px 50px' }"
     /> -->
-    <MConfirm v-model="dialogStatu4" />
+    <MConfirm v-model="dialogStatu3" />
 
     <button @click="btnClick">dialog的哦</button>
     <button @click="btnClick('left')">左边出来</button>
     <button @click="btnClick('bottom')">底部出来</button>
     <button @click="btnClick('top')">顶部出来</button>
-    <button @click="btnClick('right')">右边出来</button>
+    <button @click="btnClick('top')">右边出来</button>
 
     <br />
 
     <button @click="showConfirm">点击调用</button>
+    <button @click="btnClick('right')">测试toast</button>
+    <Toast
+      v-model="dialogStatu4"
+      icon="icon-xihuan"
+      position="top"
+      message="手机号应该是11位数"
+      type="loading"
+    />
   </div>
 </template>
 
@@ -63,6 +71,7 @@ import { defineComponent, ref } from "vue";
 import Dialog from "../components/Dialog/Dialog";
 import Popup from "../components/Popup/Popup";
 // import MConfirm from "../components/Confirm/Confirm";
+import Toast from "@/components/Toast/Toast";
 
 import { Confirm } from "@/components/Confirm";
 const MConfirm = Confirm.Component;
@@ -72,6 +81,7 @@ export default defineComponent({
     Dialog,
     Popup,
     MConfirm,
+    Toast,
   },
   setup() {
     const dialogStatu = ref(false);

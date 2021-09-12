@@ -13,6 +13,9 @@ export default createStore({
     user: {
       isLogin: false,
       userName: "未登录",
+      id: 0,
+      token: "",
+      cookies: "",
     },
   },
   getters: {
@@ -101,6 +104,13 @@ export default createStore({
       state.historySearch = [];
       localStorage.removeItem("historySearch");
       //
+    },
+    setUserLogin(state, value) {
+      state.user.isLogin = value.isLogin;
+      state.user.userName = value.userName;
+      state.user.id = value.id;
+      state.user.token = value.token;
+      state.user.cookies = value.cookies;
     },
   },
   actions: {

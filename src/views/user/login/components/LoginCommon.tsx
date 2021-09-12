@@ -5,6 +5,7 @@ import Nav from "@/components/Nav/Nav";
 import LoginAccount from "./LoginAccount";
 import LoginVeryCode from "./LoginVeryCode";
 import { accoutReItem } from "../type";
+import LoginPassword from "./LoginPassword";
 export default defineComponent({
   name: "LoginCommon",
   props: {
@@ -14,7 +15,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const loginNav = reactive({
       title: "手机号码登录",
-      step: 1,
+      step: 3,
     });
     const phoneAreaNo = ref("86");
     const phoneNumber = ref("18715890318");
@@ -27,6 +28,11 @@ export default defineComponent({
       }
       if (loginNav.step === 2) {
         loginNav.step = 1;
+        loginNav.title = "手机号码登录";
+      }
+      if (loginNav.step === 3) {
+        loginNav.step = 2;
+        loginNav.title = "验证码登录";
       }
     };
 
@@ -34,6 +40,28 @@ export default defineComponent({
       phoneAreaNo.value = data.phoneAreaNo;
       phoneNumber.value = data.phoneNumber;
       loginNav.step = 2;
+      loginNav.title = "验证码登录";
+    };
+
+    const passLoginClick = () => {
+      loginNav.step = 3;
+      loginNav.title = "账号密码登录";
+    };
+
+    const handleLogin = (password: string) => {
+      console.log(phoneNumber.value, password);
+    };
+
+    const renderSlotRight = (): JSX.Element | null => {
+      if (loginNav.step === 2) {
+        return (
+          <div class="login-common-passwordlogin" onClick={passLoginClick}>
+            密码登录
+          </div>
+        );
+      } else {
+        return null;
+      }
     };
 
     return () => {
@@ -47,7 +75,7 @@ export default defineComponent({
             <Nav
               leftIcon="icon-shanchu3"
               v-slots={{
-                right: () => null,
+                right: () => renderSlotRight(),
                 center: () => (
                   <span class="login-common-title">{loginNav.title}</span>
                 ),
@@ -62,6 +90,12 @@ export default defineComponent({
                 visible={loginNav.step === 2}
                 phoneAreaNo={phoneAreaNo.value}
                 phoneNumber={phoneNumber.value}
+              />
+            </div>
+            <div v-show={loginNav.step === 3}>
+              <LoginPassword
+                visible={loginNav.step === 3}
+                onLogin={handleLogin}
               />
             </div>
           </div>

@@ -1,0 +1,28 @@
+.toast {
+  background: #333333;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  white-space: pre-wrap;
+  text-align: center;
+  word-break: break-all;
+  box-sizing: content-box;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  padding: 0.5rem;
+  &-message {
+    font-size: 0.32rem;
+    padding-top: 0.25rem;
+  }
+  &-icon {
+    font-size: 0.6rem;
+  }
+}
+.toast-text {
+  padding: 0 1rem;
+  .toast-message {
+    padding: 0.25rem 0;
+  }
+}

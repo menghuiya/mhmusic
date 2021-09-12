@@ -24,8 +24,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit, slots }) {
-    const length = [0, 1, 2, 3, 4, 5];
-    const veryCode = ref("");
+    const length = [0, 1, 2, 3, 4, 5]; //只是用来展示
+    const veryCode = ref("999");
     const inputEle = ref();
 
     const arrCode = computed(() => {
@@ -38,7 +38,7 @@ export default defineComponent({
       if (codeCurrentIndex.value === 6) {
         console.log("开始校验验证码", veryCode.value);
         if (veryCode.value === "980306") {
-          // store.commit()
+          store.commit("setUserLogin");
           router.replace("/");
         }
       }
