@@ -1,0 +1,98 @@
+.login-common {
+  height: 100%;
+  // width: 100%;
+  background: #fff;
+  // overflow-y: auto;
+  position: fixed;
+  right: 0;
+  transform: translate3d(0, 0, 0);
+  &-show {
+    width: 100%;
+    right: 0;
+  }
+  .common-btn {
+    padding: 0.25rem;
+    width: 100%;
+    text-align: center;
+    background-color: #ec5149;
+    letter-spacing: 1px;
+    border-radius: 999rem;
+    font-size: 0.42rem;
+  }
+  .disable {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .account {
+    &-title {
+      font-weight: 600;
+    }
+    &-body {
+      padding: 0.5rem 0.25rem;
+      &-tps {
+        font-size: 0.48rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+      &-des {
+        font-size: 0.32rem;
+        padding: 0.25rem 0;
+        letter-spacing: 1px;
+        color: #9b9b9b;
+      }
+      &-btn {
+        margin: 1rem auto;
+        color: #fff;
+      }
+      &-phone {
+        display: flex;
+        align-items: center;
+        padding: 0.1rem 0;
+        border-bottom: 1px solid #e8e8e8;
+        .phone-code {
+          font-size: 0.48rem;
+          display: flex;
+          align-items: center;
+          &-smallt {
+            transform: scaleY(0.7);
+            margin: 0 0.05rem;
+          }
+        }
+        .phone-number {
+          flex: 1;
+          position: relative;
+          &-input {
+            width: 100%;
+            height: 100%;
+            padding: 0.2rem 0.7rem 0.2rem 0;
+            font-size: 0.42rem;
+            &:focus {
+              border: none;
+              border-color: red;
+              outline: none;
+            }
+          }
+          .icon-shanchu2 {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            vertical-align: middle;
+            color: #909399;
+            font-size: 0.36rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.login-common-fade-enter-active,
+.login-common-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.login-common-fade-enter-from,
+.login-common-fade-leave-to {
+  transform: translate3d(100%, 0, 0);
+}

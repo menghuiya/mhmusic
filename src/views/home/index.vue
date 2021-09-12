@@ -64,7 +64,7 @@ export default defineComponent({
       showInfo.value = true;
     };
     onMounted(() => {
-      handLeftClick();
+      // handLeftClick();
     });
     const handRightClick = () => {
       showSearch.value = true;

@@ -6,6 +6,10 @@ interface PlayContenx {
   play(type: boolean): void; //播放音乐
   pause(): void; //暂停音乐
 }
+interface PlayBoxState {
+  close(): void; //播放音乐
+  open(): void; //暂停音乐
+}
 
 interface LyricItem {
   min?: string | number;
@@ -26,4 +30,5 @@ export {
   CustomEventFuncType,
   LyricItem,
   ClickEventFuncType,
+  PlayBoxState,
 };

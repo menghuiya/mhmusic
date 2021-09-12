@@ -3,6 +3,8 @@ import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import "./info.scss";
+import Confirm from "@/components/Confirm";
+import router from "@/router";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -19,7 +21,22 @@ export default defineComponent({
     };
 
     const userLogin = () => {
-      confirm("confirm 弹出框");
+      router.push({
+        path: "/user",
+      });
+    };
+    const openQrCode = () => {
+      Confirm({
+        title: "温馨提示",
+        message: () => (
+          <img
+            src="https://www.52mhzy.cn/wp-content/uploads/2021/04/1619606328-7e4b80601a71e85-300x168.jpg"
+            alt=""
+          />
+        ),
+        showCancelButton: false,
+        confirmButtonText: "知道啦",
+      });
     };
 
     const renderDefault = (): JSX.Element => {
@@ -72,6 +89,7 @@ export default defineComponent({
             <CellItem icon="icon-fenxiang" title="分享梦回云音乐" />
             <CellItem icon="icon-guanyu" title="关于" />
           </div>
+          <div class="info-content-logout">退出登录</div>
         </div>
       );
     };
@@ -87,7 +105,8 @@ export default defineComponent({
               head: () => (
                 <div class="info-head">
                   <CellItem
-                    onClick={userLogin}
+                    onLeftClick={userLogin}
+                    onRightClick={openQrCode}
                     title="立即登录"
                     icon="icon-yonghu-yuan"
                     arrowIcon="icon-saoma"

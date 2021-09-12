@@ -122,6 +122,9 @@ export default defineComponent({
       Confirm.confirm({
         title: "dadsa",
         message: "dddd",
+        cancelButtonText: "我走了嗷",
+        confirmButtonText: "我来了嗷",
+        showCancelButton: false,
       })
         .then((res) => {
           console.log("点击了确定");

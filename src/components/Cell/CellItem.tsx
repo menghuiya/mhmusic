@@ -1,3 +1,4 @@
+import { CustomEventFuncType } from "@/utils/types";
 import { defineComponent, PropType, CSSProperties } from "vue";
 import "./index.scss";
 
@@ -44,15 +45,27 @@ export default defineComponent({
     titleStyle: {
       type: Object as PropType<CSSProperties>,
     },
+    onRightClick: Function as CustomEventFuncType<any>,
+    onLeftClick: Function as CustomEventFuncType<any>,
   },
-  emits: ["click"],
+  emits: ["click", "right-click", "left-click"],
   setup(props, { emit, slots }) {
+    const onClick = () => {
+      emit("click");
+    };
+    const rightClick = () => {
+      emit("right-click");
+    };
+    const leftClick = () => {
+      emit("left-click");
+    };
+
     const renderIcon = () => {
       //主要是用于插入图片等
       return slots.icon ? (
         slots.icon()
       ) : (
-        <div class="left-icon">
+        <div class="left-icon" onClick={leftClick}>
           <i
             class={["iconfont", props.icon]}
             style={`color:${props.iconColor};font-size:${props.iconSize}`}
@@ -83,14 +96,10 @@ export default defineComponent({
     const renderArrow = () => {
       //是否显示arrow
       return props.arrow ? (
-        <div class="right-icon">
+        <div class="right-icon" onClick={rightClick}>
           <i class={["iconfont", props.arrowIcon]} style={props.arrowStyle}></i>
         </div>
       ) : null;
-    };
-
-    const onClick = () => {
-      emit("click");
     };
 
     return () => {

@@ -2,6 +2,10 @@ import { ComponentPublicInstance, App } from "vue";
 
 export const extend = Object.assign;
 export const inBrowser = typeof window !== "undefined";
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(val: unknown): val is Function {
+  return typeof val === "function";
+}
 // eslint-disable-next-line
 export type ComponentInstance = ComponentPublicInstance<{}, any>;
 

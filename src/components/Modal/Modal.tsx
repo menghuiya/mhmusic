@@ -3,7 +3,7 @@ import "./index.scss";
 
 import { CustomEventFuncType } from "@/utils/types";
 export default defineComponent({
-  name: "Dialog",
+  name: "Modal",
   props: {
     mIndex: {
       type: Number,

@@ -17,6 +17,7 @@ import MConfirm, {
 export type ConfirmOptions = {
   title?: string;
   width?: string | number;
+  allowHtml?: boolean;
   message?: ConfirmMessage;
   beforeClose?: Interceptor;
   teleport?: string;
@@ -69,6 +70,7 @@ Confirm.defaultOptions = {
   title: "",
   width: "",
   message: "",
+  allowHtml: false,
   callback: null,
   teleport: "body",
   beforeClose: null,

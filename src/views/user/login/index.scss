@@ -1,0 +1,156 @@
+.login {
+  height: 100%;
+  width: 100%;
+  background: #c93d2d;
+  // overflow-y: auto;
+  position: fixed;
+  overflow-y: auto;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+  &-head {
+    .icon-shanchu3 {
+      font-size: 0.48rem;
+      color: #e4aba5;
+    }
+  }
+  &-logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    &-img {
+      z-index: 1;
+      width: 1.5rem;
+      border-radius: 50%;
+      filter: brightness(1.2) drop-shadow(5px 5px 5px rgb(175, 17, 17));
+    }
+    &-wave {
+      opacity: 1;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border-radius: 100%;
+      border: 0.5px solid #db665b;
+    }
+    &-wave1 {
+      animation: moveInner 5s 0s infinite ease-in;
+    }
+    &-wave2 {
+      animation: moveInner 5s 1s infinite ease-in;
+    }
+    &-wave3 {
+      animation: moveInner 5s 2s infinite ease-in;
+    }
+  }
+  &-content {
+    font-size: 0.32rem;
+    color: #fff;
+    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    &-head {
+      font-size: 0.48rem;
+      text-align: center;
+      .phone {
+        letter-spacing: 2px;
+        .icon-qianming {
+          color: #e0958d;
+        }
+      }
+      .phonedes {
+        color: #e0958d;
+        font-size: 0.25rem;
+        letter-spacing: 3px;
+      }
+      .next-button {
+        font-size: 0.42rem;
+        width: 7.5rem;
+        margin: 0.25rem auto;
+        padding: 0.25rem 0;
+        background-color: #fff;
+        color: #ec5149;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border-radius: 999rem;
+      }
+      .now-button {
+        font-size: 0.42rem;
+        width: 7.5rem;
+        margin: 0.25rem auto;
+        padding: 0.25rem 0;
+        color: #fff;
+        letter-spacing: 1px;
+        border-radius: 999rem;
+        border: 1px solid #fff;
+      }
+    }
+    &-body {
+      padding: 0.8rem 0.4rem;
+      font-size: 0.32rem;
+      text-align: center;
+      color: #d7776b;
+      span {
+        color: #ecc3bf;
+      }
+    }
+    &-footer {
+      display: flex;
+      padding: 0rem 0.8rem 0.25rem 0.8rem;
+      align-items: center;
+      justify-content: space-between;
+      .range {
+        // padding: 0.15rem;
+        background-color: #fff;
+        border-radius: 999rem;
+        width: 0.85rem;
+        height: 0.85rem;
+        text-align: center;
+        line-height: 0.85rem;
+      }
+      .icon-weixin {
+        font-size: 0.52rem;
+        color: #65db78;
+      }
+      .icon-QQ {
+        font-size: 0.52rem;
+        color: #448ff7;
+      }
+      .icon-weibo {
+        font-size: 0.52rem;
+        color: #db533b;
+      }
+      .icon-mh-wangyi {
+        font-size: 0.52rem;
+        color: #db533b;
+      }
+      .login-ios {
+        padding: 0.2rem 0.25rem;
+        color: #000;
+        background-color: #fff;
+        border-radius: 999rem;
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+@keyframes moveInner {
+  from {
+    width: 0px;
+    height: 0px;
+  }
+  to {
+    width: 10rem;
+    height: 10rem;
+    opacity: 0;
+  }
+}

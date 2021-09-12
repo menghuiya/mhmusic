@@ -1,3 +1,4 @@
+import store from "@/store";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -24,6 +25,30 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/search/index"),
     meta: {
       title: "梦回云音乐-搜索",
+    },
+  },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/user/index"),
+    meta: {
+      title: "梦回云音乐-个人中心",
+    },
+    beforeEnter: (to, from, next) => {
+      console.log(store.state.user);
+      if (store.state.user.isLogin) {
+        next();
+      } else {
+        next("login");
+      }
+    },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/user/login/index"),
+    meta: {
+      title: "梦回云音乐-登录中心",
     },
   },
   {

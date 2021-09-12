@@ -10,6 +10,10 @@ export default createStore({
     playCurrentTime: 0,
     playTotalTime: 0,
     historySearch: [] as any[],
+    user: {
+      isLogin: false,
+      userName: "未登录",
+    },
   },
   getters: {
     lyricList(state) {

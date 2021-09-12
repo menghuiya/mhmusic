@@ -13,7 +13,6 @@ import Modal from "@/components/Modal/Modal";
 
 export default defineComponent({
   name: "Popup",
-  components: { Modal },
   props: {
     visible: {
       type: Boolean,
@@ -40,6 +39,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    mIndex: {
+      type: Number,
+      default: 101,
+    },
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
@@ -49,12 +52,6 @@ export default defineComponent({
         modalStatu.value = false;
         emit("close");
       }
-    };
-    const onOpened = () => {
-      console.log("open");
-    };
-    const onClose = () => {
-      console.log("close");
     };
 
     watch(props, (newValue) => {
@@ -98,18 +95,14 @@ export default defineComponent({
         props.direction === "center"
           ? "pop-fade"
           : `pop-slide-${props.direction}`;
-      return (
-        <Transition name={name} onAfterEnter={onOpened} onAfterLeave={onClose}>
-          {renderPopup()}
-        </Transition>
-      );
+      return <Transition name={name}>{renderPopup()}</Transition>;
     };
 
     return () => {
       return (
         <>
           <Modal
-            mIndex={101}
+            mIndex={props.mIndex}
             show={modalStatu.value}
             onClickModal={modalClick}
             lockScroll={true}

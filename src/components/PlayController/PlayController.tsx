@@ -7,8 +7,13 @@ import PlayMusicPage from "./PlayMusicPage";
 
 export default defineComponent({
   name: "PlayController",
-  props: {},
-  setup() {
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  setup(props) {
     const store = useStore();
     const playing = ref(false);
     const popVisible = ref(false);
@@ -121,11 +126,23 @@ export default defineComponent({
         );
       }
     };
+
     return () => {
+      const { modelValue } = props;
       return (
         <>
-          <div class="play-box-empty">
-            <div class="play-box-area">
+          <div
+            class="play-box-empty"
+            style={{
+              display: modelValue ? "block" : "none",
+            }}
+          >
+            <div
+              class="play-box-area"
+              style={{
+                display: modelValue ? "block" : "none",
+              }}
+            >
               {store.state.playList[store.state.playCurrentIndex] ? (
                 <audio
                   src={`https://music.163.com/song/media/outer/url?id=${

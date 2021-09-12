@@ -594,3 +594,11 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
 
 <font color=red>`vue3.0`</font> 版本中 已经丢弃`sync`，需要使用`v-model` 绑定的值 才能通过`update:xxx`进行修改
 
+#### 十七，ios和pad中 在触发点击事件或者input时会有灰色背景显示
+
+当我们在ios触发某个div的click事件时，会显示一块灰色区域，类似hover样式，虽不影响功能，但是会看起来很怪异，需要用css 去取消此效果
+
+```css
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+```
+
