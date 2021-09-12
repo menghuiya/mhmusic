@@ -602,3 +602,13 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
 -webkit-tap-highlight-color:rgba(0,0,0,0);
 ```
 
+#### 十八，ios中 仅仅只设置input下边框或者其他一个边框时显示错误
+
+![](C:\Users\12743\Desktop\遇到问题的截图\iosinput样式.png)
+
+如同所示，使用css代码一行解决 把border-radius 设置为0
+
+```css
+border-radius: 0;
+```
+

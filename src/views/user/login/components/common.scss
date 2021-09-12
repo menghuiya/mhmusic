@@ -10,6 +10,9 @@
     width: 100%;
     right: 0;
   }
+  &-title {
+    font-weight: 600;
+  }
   .common-btn {
     padding: 0.25rem;
     width: 100%;
@@ -19,14 +22,12 @@
     border-radius: 999rem;
     font-size: 0.42rem;
   }
+
   .disable {
     opacity: 0.5;
     cursor: not-allowed;
   }
   .account {
-    &-title {
-      font-weight: 600;
-    }
     &-body {
       padding: 0.5rem 0.25rem;
       &-tps {
@@ -83,6 +84,132 @@
           }
         }
       }
+      .phone-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid #e8e8e8;
+        font-size: 0.32rem;
+        margin-right: 0.35rem;
+        &-areaname {
+          font-size: 0.36rem;
+        }
+        &-code {
+          color: #9b9b9b;
+          font-size: 0.32rem;
+        }
+      }
+    }
+  }
+  .veryCode {
+    padding: 0.5rem 0.25rem;
+    &-tps {
+      font-size: 0.48rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    &-des {
+      font-size: 0.32rem;
+      padding: 0.25rem 0;
+      letter-spacing: 1px;
+      color: #9b9b9b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &-code {
+        letter-spacing: 0px;
+        padding: 0 0.05rem;
+      }
+      &-number {
+        letter-spacing: 0px;
+      }
+      .icon-qianming {
+        font-size: 0.32rem;
+        margin-left: 0.15rem;
+      }
+      &-right {
+        font-size: 0.36rem;
+        letter-spacing: 0;
+      }
+    }
+    &-input {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      position: relative;
+      // input {
+      //   padding: 0.2rem 0.25rem;
+      //   font-size: 0.5rem;
+      //   border-radius: 0;
+      //   border-bottom: 1px solid #aca6a6;
+      //   text-align: center;
+      //   -webkit-appearance: none;
+      //   display: none;
+      //   &:focus {
+      //     border: none;
+      //     border-color: red;
+      //     outline: none;
+      //     border-bottom: 1px solid #5a5959;
+      //     transition: all 0.3s ease-out;
+      //   }
+      // }
+      &-code {
+        width: 100%;
+        padding: 0;
+        font-size: 0.5rem;
+        overflow: hidden;
+        border: none;
+        outline: none;
+        opacity: 0;
+        margin-left: -100%; // ios上透明度为0时依然有光标
+      }
+      &-labels {
+        display: flex;
+        width: 100%;
+        font-size: 0.5rem;
+        justify-content: space-between;
+        .label {
+          width: 1.2rem;
+          height: 1.1rem;
+          padding: 0.25rem 0;
+          border-bottom: 1px solid #cac5c5;
+          color: #313131;
+          font-size: 0.54rem;
+          text-align: center;
+          // font-weight: 600;
+          padding: 0.25rem 0;
+        }
+        .active {
+          border-bottom: 1px solid #838383;
+          &:after {
+            // 伪类实现光标效果
+            content: " ";
+            display: inline-block;
+            height: 100%;
+            width: 2px;
+            background: #313131;
+            animation: 1s inputing infinite;
+          }
+        }
+        .inputed {
+          border-bottom: 1px solid #0b0b0c;
+        }
+      }
+    }
+    &-stop {
+      font-size: 0.32rem;
+      padding: 1rem 0;
+      letter-spacing: 1px;
+      color: #9b9b9b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon-qianjin1 {
+        font-size: 0.32rem;
+      }
     }
   }
 }
@@ -95,4 +222,10 @@
 .login-common-fade-enter-from,
 .login-common-fade-leave-to {
   transform: translate3d(100%, 0, 0);
+}
+
+@keyframes inputing {
+  100% {
+    opacity: 0;
+  }
 }
