@@ -151,7 +151,10 @@ export default defineComponent({
     };
 
     const showToast = () => {
-      Toast.loading({ message: "贺雅玲666", icon: "icon-xihuan" });
+      Toast.fail({
+        message: "加载中...",
+        duration: 5000,
+      });
     };
 
     return {

@@ -4,6 +4,7 @@ import { ClickEventFuncType } from "@/utils/types";
 
 import Popup from "@/components/Popup/Popup";
 import { CountryItem } from "../type";
+import Toast from "@/components/Toast";
 const phoneCountry = require("@/assets/country.json");
 export default defineComponent({
   name: "LoginAccount",
@@ -30,11 +31,15 @@ export default defineComponent({
     };
 
     const handleNext = () => {
+      if (!phoneNumber.value) {
+        return false;
+      }
       const result = /^1(3|4|5|6|7|8|9)\d{9}$/.test(phoneNumber.value);
       if (!result) {
-        console.log("请输入11位手机号"); //后期改为提示框
+        Toast.fail("手机号格式不正确");
         return;
       }
+      Toast.loading("正在发送验证码");
       emit("next", {
         phoneAreaNo: phoneAreaNo.value,
         phoneNumber: phoneNumber.value,

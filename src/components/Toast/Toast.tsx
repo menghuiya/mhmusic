@@ -68,6 +68,30 @@ export default defineComponent({
 
     const renderIcon = (): JSX.Element | null => {
       const { icon, type } = props;
+      if (type === "loading") {
+        return (
+          <i
+            class={[
+              "iconfont",
+              icon ? icon : "icon-jiazai",
+              "toast-icon",
+              icon ? "" : "toast-icon-loading",
+            ]}
+          ></i>
+        );
+      }
+      if (type === "success") {
+        return (
+          <i
+            class={["iconfont", icon ? icon : "icon-success", "toast-icon"]}
+          ></i>
+        );
+      }
+      if (type === "fail") {
+        return (
+          <i class={["iconfont", icon ? icon : "icon-fail", "toast-icon"]}></i>
+        );
+      }
       return icon && type !== "text" ? (
         <i class={["iconfont", icon, "toast-icon"]}></i>
       ) : null;

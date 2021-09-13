@@ -15,7 +15,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const loginNav = reactive({
       title: "手机号码登录",
-      step: 3,
+      step: 1,
     });
     const phoneAreaNo = ref("86");
     const phoneNumber = ref("18715890318");

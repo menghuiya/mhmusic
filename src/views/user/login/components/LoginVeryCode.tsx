@@ -1,3 +1,4 @@
+import Toast from "@/components/Toast";
 import router from "@/router";
 import store from "@/store";
 import {
@@ -25,9 +26,9 @@ export default defineComponent({
   },
   setup(props, { emit, slots }) {
     const length = [0, 1, 2, 3, 4, 5]; //只是用来展示
-    const veryCode = ref("999");
+    const veryCode = ref("");
     const inputEle = ref();
-
+    const countDown = ref(60);
     const arrCode = computed(() => {
       return veryCode.value.split("");
     });
@@ -36,7 +37,7 @@ export default defineComponent({
     });
     const onVeryInput = () => {
       if (codeCurrentIndex.value === 6) {
-        console.log("开始校验验证码", veryCode.value);
+        Toast.loading("正在登录");
         if (veryCode.value === "980306") {
           store.commit("setUserLogin");
           router.replace("/");
@@ -52,14 +53,26 @@ export default defineComponent({
           nextTick(() => {
             setTimeout(() => {
               inputEle.value.focus();
+              startCountDown();
             }, 500);
           });
+        } else {
+          veryCode.value = "";
         }
       },
       {
         immediate: true,
       }
     );
+
+    const startCountDown = () => {
+      const time = setInterval(() => {
+        --countDown.value;
+        if (countDown.value === 0) {
+          clearInterval(time);
+        }
+      }, 1000);
+    };
 
     return () => {
       const { phoneAreaNo, phoneNumber } = props;
@@ -75,7 +88,7 @@ export default defineComponent({
               </span>
               <i class="iconfont icon-qianming"></i>
             </div>
-            <div class="veryCode-des-right">51S</div>
+            <div class="veryCode-des-right">{countDown.value}S</div>
           </div>
           <div class="veryCode-input">
             <input

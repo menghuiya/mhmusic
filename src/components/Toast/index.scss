@@ -12,6 +12,7 @@
   border-radius: 0.25rem;
   max-width: 100%;
   padding: 0.5rem;
+  position: relative;
   &-message {
     font-size: 0.32rem;
     padding-top: 0.25rem;
@@ -19,10 +20,24 @@
   &-icon {
     font-size: 0.6rem;
   }
+  &-icon-loading {
+    // position: absolute;
+    transform-origin: center;
+    animation: rotate 3s infinite linear;
+  }
 }
 .toast-text {
   padding: 0 1rem;
   .toast-message {
     padding: 0.25rem 0;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

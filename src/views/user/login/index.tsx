@@ -10,7 +10,7 @@ export default defineComponent({
   name: "login",
   props: {},
   setup(props, { emit, slots }) {
-    const accountVisible = ref(true);
+    const accountVisible = ref(false);
 
     const playBox = inject<PlayBoxState>("PlayBoxKey");
     onMounted(() => {

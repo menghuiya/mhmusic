@@ -1,5 +1,6 @@
 import Confirm from "@/components/Confirm";
-import { defineComponent, ref } from "vue";
+import Toast from "@/components/Toast";
+import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "LoginPassword",
@@ -16,9 +17,10 @@ export default defineComponent({
 
     const handleRightLogin = () => {
       if (!password.value) {
-        console.log("请输入密码");
+        Toast.fail("请输入密码");
         return false;
       }
+      Toast.loading("正在登录");
       emit("login", password.value);
     };
 
@@ -31,6 +33,15 @@ export default defineComponent({
         cancelButtonColor: "red",
       });
     };
+
+    watch(
+      () => props.visible,
+      (value) => {
+        if (!value) {
+          password.value = "";
+        }
+      }
+    );
 
     return () => {
       return (
