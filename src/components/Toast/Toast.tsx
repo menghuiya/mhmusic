@@ -60,7 +60,7 @@ export default defineComponent({
         clearTimer();
         if (props.modelValue && props.duration > 0) {
           timer = setTimeout(() => {
-            // updateShow(false);
+            updateShow(false);
           }, props.duration);
         }
       }
@@ -88,6 +88,7 @@ export default defineComponent({
             visible={modelValue}
             direction="center"
             style={popStyle.value}
+            opacity={0}
             mIndex={200}
             {...{ "onUpdate:modelValue": updateShow }}
             v-slots={{

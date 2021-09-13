@@ -56,7 +56,11 @@
 
     <button @click="showConfirm">点击调用</button>
     <button @click="btnClick('right')">测试toast</button>
-    <Toast
+
+    <br />
+    <button @click="showToast">点击Toast</button>
+
+    <MToast
       v-model="dialogStatu4"
       icon="icon-xihuan"
       position="top"
@@ -71,7 +75,9 @@ import { defineComponent, ref } from "vue";
 import Dialog from "../components/Dialog/Dialog";
 import Popup from "../components/Popup/Popup";
 // import MConfirm from "../components/Confirm/Confirm";
-import Toast from "@/components/Toast/Toast";
+import Toast from "@/components/Toast";
+
+const MToast = Toast.Component;
 
 import { Confirm } from "@/components/Confirm";
 const MConfirm = Confirm.Component;
@@ -81,7 +87,7 @@ export default defineComponent({
     Dialog,
     Popup,
     MConfirm,
-    Toast,
+    MToast,
   },
   setup() {
     const dialogStatu = ref(false);
@@ -129,7 +135,7 @@ export default defineComponent({
     };
 
     const showConfirm = () => {
-      Confirm.confirm({
+      Confirm({
         title: "dadsa",
         message: "dddd",
         cancelButtonText: "我走了嗷",
@@ -143,6 +149,11 @@ export default defineComponent({
           console.log("点击了取消");
         });
     };
+
+    const showToast = () => {
+      Toast.loading({ message: "贺雅玲666", icon: "icon-xihuan" });
+    };
+
     return {
       dialogStatu,
       dialogStatu1,
@@ -152,6 +163,7 @@ export default defineComponent({
       btnClick,
       closeDialog,
       showConfirm,
+      showToast,
     };
   },
 });

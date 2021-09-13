@@ -13,6 +13,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    opacity: {
+      type: Number,
+      default: 1,
+    },
     lockScroll: Boolean,
     onClickModal: Function as CustomEventFuncType<null>,
   },
@@ -27,20 +31,27 @@ export default defineComponent({
       }
     };
     const renderModal = () => {
+      const { mIndex, show, opacity } = props;
       return (
         <div
           class="mh-modal"
           style={{
-            zIndex: props.mIndex,
+            zIndex: mIndex,
+            opacity: opacity,
           }}
-          v-show={props.show}
+          v-show={show}
           onClick={handleClick}
           onTouchmove={preventTouchMove}
         ></div>
       );
     };
     return () => {
-      return <Transition name="modal-fade">{renderModal()}</Transition>;
+      const { opacity } = props;
+      return (
+        <Transition name={opacity === 0 ? "" : "modal-fade"}>
+          {renderModal()}
+        </Transition>
+      );
     };
   },
 });

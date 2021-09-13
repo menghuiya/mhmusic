@@ -43,6 +43,10 @@ export default defineComponent({
       type: Number,
       default: 101,
     },
+    opacity: {
+      type: Number,
+      default: 1,
+    },
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
@@ -99,13 +103,15 @@ export default defineComponent({
     };
 
     return () => {
+      const { opacity, mIndex } = props;
       return (
         <>
           <Modal
-            mIndex={props.mIndex}
+            mIndex={mIndex}
             show={modalStatu.value}
             onClickModal={modalClick}
             lockScroll={true}
+            opacity={opacity}
           />
           {renderTransition()}
         </>
