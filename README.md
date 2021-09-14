@@ -17,5 +17,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### 此分支是公司上班时开发专用的
