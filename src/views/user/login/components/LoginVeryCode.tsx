@@ -28,7 +28,7 @@ export default defineComponent({
     const length = [0, 1, 2, 3, 4, 5]; //只是用来展示
     const veryCode = ref("");
     const inputEle = ref();
-    const countDown = ref(60);
+    const countDown = ref(10);
     const arrCode = computed(() => {
       return veryCode.value.split("");
     });
@@ -74,6 +74,13 @@ export default defineComponent({
       }, 1000);
     };
 
+    const reSendVerCode = () => {
+      Toast.loading("正在重新发送");
+      veryCode.value = "";
+      countDown.value = 10;
+      startCountDown();
+    };
+
     return () => {
       const { phoneAreaNo, phoneNumber } = props;
       return (
@@ -88,7 +95,15 @@ export default defineComponent({
               </span>
               <i class="iconfont icon-qianming"></i>
             </div>
-            <div class="veryCode-des-right">{countDown.value}S</div>
+            <div class="veryCode-des-right">
+              {countDown.value > 0 ? (
+                <span>{countDown.value}S</span>
+              ) : (
+                <span class="veryCode-des-right-btn" onClick={reSendVerCode}>
+                  重新发送
+                </span>
+              )}
+            </div>
           </div>
           <div class="veryCode-input">
             <input

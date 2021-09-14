@@ -6,6 +6,11 @@ import LoginAccount from "./LoginAccount";
 import LoginVeryCode from "./LoginVeryCode";
 import { accoutReItem } from "../type";
 import LoginPassword from "./LoginPassword";
+import { userLoginItem } from "@/utils/types";
+import { postLogin } from "@/api/login";
+import store from "@/store";
+import router from "@/router";
+import Toast from "@/components/Toast";
 export default defineComponent({
   name: "LoginCommon",
   props: {
@@ -49,7 +54,22 @@ export default defineComponent({
     };
 
     const handleLogin = (password: string) => {
-      console.log(phoneNumber.value, password);
+      const loginData: userLoginItem = {
+        phone: phoneNumber.value,
+        password: password,
+      };
+      postLogin(loginData).then((res: any) => {
+        const userData: any = {
+          profile: res.profile,
+          token: res.token,
+          cookie: res.cookie,
+          loginType: res.loginType,
+          isLogin: true,
+        };
+        store.commit("setUserLogin", userData);
+        router.replace("/");
+        Toast.clear();
+      });
     };
 
     const renderSlotRight = (): JSX.Element | null => {

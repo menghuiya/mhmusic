@@ -10,13 +10,7 @@ export default createStore({
     playCurrentTime: 0,
     playTotalTime: 0,
     historySearch: [] as any[],
-    user: {
-      isLogin: false,
-      userName: "未登录",
-      id: 0,
-      token: "",
-      cookies: "",
-    },
+    userInfo: JSON.parse(localStorage.getItem("userInfo")||"{}"),
   },
   getters: {
     lyricList(state) {
@@ -106,12 +100,13 @@ export default createStore({
       //
     },
     setUserLogin(state, value) {
-      state.user.isLogin = value.isLogin;
-      state.user.userName = value.userName;
-      state.user.id = value.id;
-      state.user.token = value.token;
-      state.user.cookies = value.cookies;
+      localStorage.setItem('userInfo',JSON.stringify(value))
+      state.userInfo = value
     },
+    setLogout(state){
+      localStorage.removeItem('userInfo')
+      state.userInfo = {}
+    }
   },
   actions: {
     async reqLyric(content, payload) {

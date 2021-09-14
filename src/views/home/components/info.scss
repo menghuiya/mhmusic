@@ -3,6 +3,23 @@
     background-color: #fff;
     .left-icon {
       margin-right: 0.25rem;
+      .iconfont {
+        font-size: 0.7rem !important;
+      }
+      img {
+        width: 0.7rem;
+        height: 0.7rem;
+        vertical-align: middle;
+        border-radius: 999rem;
+        background-color: #fff;
+      }
+    }
+    &-title {
+      font-size: 0.4rem;
+      font-weight: 600;
+      .icon-qianjin1 {
+        font-size: 0.4rem;
+      }
     }
   }
   &-content {

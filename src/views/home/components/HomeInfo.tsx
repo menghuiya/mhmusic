@@ -1,10 +1,12 @@
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import "./info.scss";
 import Confirm from "@/components/Confirm";
 import router from "@/router";
+import store from "@/store";
+import { logout } from "@/api/login";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -16,6 +18,10 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
+    const userInfo = computed(() => {
+      return store.state.userInfo;
+    });
+
     const closePop = () => {
       emit("close");
     };
@@ -37,6 +43,39 @@ export default defineComponent({
         showCancelButton: false,
         confirmButtonText: "知道啦",
       });
+    };
+
+    const handleLogout = () => {
+      logout().then((res) => {
+        console.log(res);
+        store.commit("setLogout");
+      });
+    };
+
+    const renderUserInfo = (): JSX.Element => {
+      return (
+        <div class="left-icon" onClick={userLogin}>
+          {userInfo.value.isLogin ? (
+            <img src={userInfo.value.profile.avatarUrl} />
+          ) : (
+            <i class={["iconfont icon-yonghu-yuan"]}></i>
+          )}
+        </div>
+      );
+    };
+    const renderUserIcon = (): JSX.Element => {
+      return (
+        <div class="info-head-title" onClick={userLogin}>
+          {userInfo.value.isLogin ? (
+            <span>
+              {userInfo.value.profile.nickname}
+              <i class="iconfont icon-qianjin1"></i>{" "}
+            </span>
+          ) : (
+            "请登录账号"
+          )}
+        </div>
+      );
     };
 
     const renderDefault = (): JSX.Element => {
@@ -89,10 +128,15 @@ export default defineComponent({
             <CellItem icon="icon-fenxiang" title="分享梦回云音乐" />
             <CellItem icon="icon-guanyu" title="关于" />
           </div>
-          <div class="info-content-logout">退出登录</div>
+          {userInfo.value.isLogin ? (
+            <div class="info-content-logout" onClick={handleLogout}>
+              退出登录
+            </div>
+          ) : null}
         </div>
       );
     };
+
     return () => {
       return (
         <div>
@@ -105,19 +149,15 @@ export default defineComponent({
               head: () => (
                 <div class="info-head">
                   <CellItem
-                    onLeftClick={userLogin}
                     onRightClick={openQrCode}
-                    title="立即登录"
-                    icon="icon-yonghu-yuan"
                     arrowIcon="icon-saoma"
-                    iconSize="0.7rem"
                     arrowStyle={{
                       fontSize: "0.6rem",
                       color: "#000",
                     }}
-                    titleStyle={{
-                      fontSize: "0.4rem",
-                      fontWeight: 600,
+                    v-slots={{
+                      icon: () => renderUserInfo(),
+                      title: () => renderUserIcon(),
                     }}
                   />
                 </div>
