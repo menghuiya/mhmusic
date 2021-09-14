@@ -30,6 +30,11 @@ export default defineComponent({
       default: "#000",
       desc: "定义right插槽时此prop失效",
     },
+    iconSize: {
+      type: String,
+      default: "0.5rem",
+      desc: "定义right插槽时此prop失效",
+    },
     backStatus: {
       type: Boolean,
       default: false,
@@ -56,13 +61,18 @@ export default defineComponent({
       emit("right-click");
     };
     const renderLeft = () => {
+      const { iconColor, iconSize } = props;
+
       return slots.left ? (
         slots.left()
       ) : (
         <i
           class={["iconfont", props.leftIcon]}
           onClick={handleLeftClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };
@@ -101,13 +111,17 @@ export default defineComponent({
     });
 
     const renderRight = () => {
+      const { iconColor, iconSize } = props;
       return slots.right ? (
         slots.right()
       ) : (
         <i
           class={["iconfont", props.rightIcon]}
           onClick={handleRightClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };

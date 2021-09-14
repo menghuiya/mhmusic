@@ -1,11 +1,28 @@
-import { defineComponent } from "vue";
+import { defineComponent, inject, onBeforeUnmount, onMounted } from "vue";
+import UserTop from "./profileCom/UserTop";
+import UserContent from "./profileCom/UserContent";
+import { PlayBoxState } from "@/utils/types";
+import "./index.scss";
 
 export default defineComponent({
   name: "index",
   props: {},
   setup(props, { emit, slots }) {
+    const playBox = inject<PlayBoxState>("PlayBoxKey");
+    onMounted(() => {
+      playBox?.close();
+    });
+
+    onBeforeUnmount(() => {
+      playBox?.open();
+    });
     return () => {
-      return <div>我是个人中心呢</div>;
+      return (
+        <div class="m-user">
+          <UserTop />
+          <UserContent />
+        </div>
+      );
     };
   },
 });

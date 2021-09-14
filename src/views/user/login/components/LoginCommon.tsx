@@ -46,6 +46,10 @@ export default defineComponent({
       phoneNumber.value = data.phoneNumber;
       loginNav.step = 2;
       loginNav.title = "验证码登录";
+      Toast.loading({
+        message: "正在发送验证码",
+        duration: 10000,
+      });
     };
 
     const passLoginClick = () => {
@@ -58,18 +62,7 @@ export default defineComponent({
         phone: phoneNumber.value,
         password: password,
       };
-      postLogin(loginData).then((res: any) => {
-        const userData: any = {
-          profile: res.profile,
-          token: res.token,
-          cookie: res.cookie,
-          loginType: res.loginType,
-          isLogin: true,
-        };
-        store.commit("setUserLogin", userData);
-        router.replace("/");
-        Toast.clear();
-      });
+      store.dispatch("userLogin", loginData);
     };
 
     const renderSlotRight = (): JSX.Element | null => {

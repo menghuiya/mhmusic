@@ -7,6 +7,7 @@ import Confirm from "@/components/Confirm";
 import router from "@/router";
 import store from "@/store";
 import { logout } from "@/api/login";
+import Toast from "@/components/Toast";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -46,9 +47,14 @@ export default defineComponent({
     };
 
     const handleLogout = () => {
-      logout().then((res) => {
-        console.log(res);
-        store.commit("setLogout");
+      logout().then((res: any) => {
+        if (res.code === 200) {
+          store.commit("setLogout");
+          Toast.success("退出成功");
+          closePop();
+          router.push("/login");
+        }
+        Toast.fail("退出失败");
       });
     };
 

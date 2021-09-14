@@ -21,13 +21,14 @@ interface LyricItem {
   lyric?: string;
 }
 
-interface userLoginItem{
-  phone:string;
-  password?:string;
-  md5_password?:string;//md5加密密码 传入时password失效
-  captcha?:string;//验证码 传入时password失效
-  email?:string
-  cookie?:string; //邮箱登录时使用
+interface userLoginItem {
+  phone: string;
+  password?: string;
+  md5_password?: string; //md5加密密码 传入时password失效
+  captcha?: string; //验证码 传入时password失效
+  email?: string;
+  cookie?: string; //邮箱登录时使用
+  countrycode?: string;
 }
 
 type CustomEventFuncType<T> = PropType<(arg: T) => void>;
@@ -40,5 +41,5 @@ export {
   LyricItem,
   ClickEventFuncType,
   PlayBoxState,
-  userLoginItem
+  userLoginItem,
 };

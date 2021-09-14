@@ -1,0 +1,92 @@
+.usertop {
+  &-bgimg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 6.5rem;
+    width: 100%;
+    overflow: hidden;
+    z-index: -1;
+    filter: brightness(0.99);
+    transition: background-image 0.4s;
+    background: #c8c9cc no-repeat center center;
+    background-size: cover;
+  }
+}
+
+.userbase {
+  display: flex;
+  align-items: center;
+  margin-top: 5.2rem;
+  background-color: #fafafa;
+  &-avatar {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.35rem;
+    border: 2px solid red;
+    border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+  &-info {
+    flex: 1;
+    padding-right: 0.35rem;
+    font-size: 0.36rem;
+    display: flex;
+    flex-direction: column;
+    &-head {
+      padding: 0 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .info-head-item {
+        text-align: center;
+        .item-num {
+          font-weight: 600;
+          font-size: 0.4rem;
+        }
+        .item-name {
+          font-size: 0.32rem;
+          color: #9d9d9d;
+        }
+      }
+    }
+    &-btn {
+      text-align: center;
+      border: 1px solid #e1e1e1;
+      border-radius: 999rem;
+      padding: 0.15rem 0;
+      font-size: 0.34rem;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+.usertag {
+  font-size: 0.32rem;
+  padding: 0.35rem;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  &-item {
+    background-color: #ffffff;
+    padding: 0.1rem 0.15rem;
+    border-radius: 0.15rem;
+    border: 1px solid #acacac;
+    color: #afafaf;
+    font-size: 0.32rem;
+    .iconfont {
+      font-size: 0.32rem;
+    }
+  }
+}
+
+.ucontent {
+  background-color: #fafafa;
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
+}

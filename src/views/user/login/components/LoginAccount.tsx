@@ -39,7 +39,7 @@ export default defineComponent({
         Toast.fail("手机号格式不正确");
         return;
       }
-      Toast.loading("正在发送验证码");
+
       emit("next", {
         phoneAreaNo: phoneAreaNo.value,
         phoneNumber: phoneNumber.value,
