@@ -8,6 +8,7 @@ import {
 } from "vue";
 import "./index.scss";
 import { ClickEventFuncType } from "@/utils/types";
+import TitleLine from "@/components/TitleLine/TitleLine";
 
 export default defineComponent({
   name: "UserContent",
@@ -25,7 +26,6 @@ export default defineComponent({
       { id: 1, name: "动态", type: 1 },
       { id: 2, name: "播客", type: 1000 },
     ];
-
     const moveUnderLine = (width: number | string, left: number | string) => {
       navUnderlinStyle.value = {
         width: width + "px",
@@ -120,38 +120,77 @@ export default defineComponent({
           </div>
           <div class="ucontent-body">
             <swiper
-              class="msearch-body-track"
+              class="ucontent-body-track"
               onSwiper={onSwiper}
               onSlideChange={onSlideChange}
             >
               <swiper-slide>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss</h3>
-                <h3>sssss111</h3>
+                <div class="ucontent-body-cards">
+                  <div class="ucontent-body-card">
+                    <div class="ucontent-body-card-top">
+                      唱片收藏架 <br />
+                      表达音乐品味
+                    </div>
+                    <div class="ucontent-body-card-bottom">
+                      布置唱片架<i class="iconfont icon-qianjin1"></i>
+                    </div>
+                  </div>
+                  <div class="ucontent-body-card">
+                    <div class="ucontent-body-card-top">
+                      展示动态图片 <br />
+                      让别人了解你
+                    </div>
+                    <div class="ucontent-body-card-bottom">
+                      使用相册<i class="iconfont icon-qianjin1"></i>
+                    </div>
+                  </div>
+                  <div class="ucontent-body-card">
+                    <div class="ucontent-body-card-top">
+                      大声说出你的 <br />
+                      愿望
+                    </div>
+                    <div class="ucontent-body-card-bottom">
+                      写愿望清单<i class="iconfont icon-qianjin1"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="ucontent-group ucontent-body-info">
+                  <TitleLine
+                    showType="left"
+                    title="基本信息"
+                    btnName="播放"
+                    noPadding={false}
+                    icon="icon-Controls-71"
+                    titleStyle={{
+                      fontSize: "0.4rem",
+                      letterSpacing: "0",
+                    }}
+                  />
+                  <div class="ucontent-body-info-item">
+                    村龄：4年（2016年09月注册）
+                  </div>
+                  <div class="ucontent-body-info-item">性别：男</div>
+                  <div class="ucontent-body-info-item">地区：四川 成都</div>
+                  <div class="more-bottom">
+                    <span>查看更多信息</span>
+                    <i class="iconfont icon-qianjin1"></i>
+                  </div>
+                </div>
+                <div class="ucontent-group">
+                  <TitleLine
+                    showType="left"
+                    title="音乐品味"
+                    btnName="播放"
+                    noPadding={false}
+                    showLeft={false}
+                    icon="icon-Controls-71"
+                    titleStyle={{
+                      fontSize: "0.4rem",
+                      letterSpacing: "0",
+                    }}
+                  />
+                  xxxxx
+                </div>
               </swiper-slide>
               <swiper-slide>dddd</swiper-slide>
               <swiper-slide>ssssddwawas</swiper-slide>

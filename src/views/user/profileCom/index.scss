@@ -88,6 +88,13 @@
   background-color: #fafafa;
   height: 100%;
   flex: 1;
+  &-group {
+    padding: 0.1rem 0;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    margin-top: 0.25rem;
+    filter: drop-shadow(1px 1px 5px #ebebeb);
+  }
   &-nav {
     font-size: 0.36rem;
     position: sticky;
@@ -162,5 +169,54 @@
   }
   &-body {
     padding: 0.2rem 0.35rem;
+    &-cards {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &-card {
+      background-color: #fff;
+      margin: 0.15rem;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      font-size: 0.32rem;
+      height: 3.5rem;
+      width: calc(93% / 3);
+      filter: drop-shadow(1px 1px 5px #ebebeb);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &-top {
+        color: #727272;
+      }
+      &-bottom {
+        color: #ed625b;
+        .iconfont {
+          font-size: 0.32rem;
+        }
+      }
+    }
+    &-info {
+      &-item {
+        font-size: 0.32rem;
+        padding: 0.1rem 0.25rem;
+        color: #727272;
+      }
+    }
+  }
+}
+
+.more-bottom {
+  padding: 0.15rem 0;
+  border-top: 1px solid #ebeef5;
+  font-size: 0.32rem;
+  text-align: center;
+  color: #909399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon-qianjin1 {
+    font-size: 0.34rem;
+    // vertical-align: middle;
   }
 }
