@@ -30,6 +30,11 @@ export default defineComponent({
       default: "#000",
       desc: "定义right插槽时此prop失效",
     },
+    iconSize: {
+      type: String,
+      default: "0.5rem",
+      desc: "定义right插槽时此prop失效",
+    },
     backStatus: {
       type: Boolean,
       default: false,
@@ -39,11 +44,12 @@ export default defineComponent({
       default: "",
       desc: "作为背景使用",
     },
+    overflowHeight: Number,
     style: Object as PropType<CSSProperties>,
     onLeftClick: Function as CustomEventFuncType<null>,
     onRightClick: Function as CustomEventFuncType<null>,
   },
-  emits: ["left-click", "right-click", "moreNav", "lessNav"],
+  emits: ["left-click", "right-click", "moreNav", "lessNav", "scroll"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
       if (props.backStatus) {
@@ -56,13 +62,18 @@ export default defineComponent({
       emit("right-click");
     };
     const renderLeft = () => {
+      const { iconColor, iconSize } = props;
+
       return slots.left ? (
         slots.left()
       ) : (
         <i
           class={["iconfont", props.leftIcon]}
           onClick={handleLeftClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };
@@ -74,7 +85,12 @@ export default defineComponent({
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      if (scrollTop > offsetHeight.value) {
+      let moreThanHeight = offsetHeight.value;
+      emit("scroll", scrollTop);
+      if (props.overflowHeight && props.overflowHeight > 0) {
+        moreThanHeight = props.overflowHeight - offsetHeight.value;
+      }
+      if (scrollTop > moreThanHeight) {
         if (!isFixed.value) {
           isFixed.value = true;
           NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
@@ -93,6 +109,7 @@ export default defineComponent({
       window.addEventListener("scroll", initHeight);
       nextTick(() => {
         offsetHeight.value = NavRef.value.offsetHeight;
+        console.log(offsetHeight.value);
       });
     });
 
@@ -101,13 +118,17 @@ export default defineComponent({
     });
 
     const renderRight = () => {
+      const { iconColor, iconSize } = props;
       return slots.right ? (
         slots.right()
       ) : (
         <i
           class={["iconfont", props.rightIcon]}
           onClick={handleRightClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };

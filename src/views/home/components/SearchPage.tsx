@@ -121,7 +121,7 @@ export default defineComponent({
       }
     });
     onDeactivated(() => {
-      console.log("激活了");
+      console.log("激活了1");
     });
 
     return () => {

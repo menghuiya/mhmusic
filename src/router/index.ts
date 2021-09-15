@@ -35,8 +35,8 @@ const routes: Array<RouteRecordRaw> = [
       title: "梦回云音乐-个人中心",
     },
     beforeEnter: (to, from, next) => {
-      console.log(store.state.user);
-      if (store.state.user.isLogin) {
+      console.log(store.state.userInfo);
+      if (store.state.userInfo.isLogin) {
         next();
       } else {
         next("login");
@@ -49,6 +49,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/user/login/index"),
     meta: {
       title: "梦回云音乐-登录中心",
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.state.userInfo.isLogin) {
+        next("/");
+      } else {
+        next();
+      }
     },
   },
   {

@@ -1,6 +1,9 @@
 import { createStore } from "vuex";
 import { getMusicWord } from "@/api/public";
-import { LyricItem } from "@/utils/types";
+import { LyricItem, userLoginItem } from "@/utils/types";
+import { postLogin } from "@/api/login";
+import router from "@/router";
+import Toast from "@/components/Toast";
 
 export default createStore({
   state: {
@@ -10,13 +13,7 @@ export default createStore({
     playCurrentTime: 0,
     playTotalTime: 0,
     historySearch: [] as any[],
-    user: {
-      isLogin: false,
-      userName: "未登录",
-      id: 0,
-      token: "",
-      cookies: "",
-    },
+    userInfo: JSON.parse(localStorage.getItem("userInfo") || "{}"),
   },
   getters: {
     lyricList(state) {
@@ -106,11 +103,12 @@ export default createStore({
       //
     },
     setUserLogin(state, value) {
-      state.user.isLogin = value.isLogin;
-      state.user.userName = value.userName;
-      state.user.id = value.id;
-      state.user.token = value.token;
-      state.user.cookies = value.cookies;
+      localStorage.setItem("userInfo", JSON.stringify(value));
+      state.userInfo = value;
+    },
+    setLogout(state) {
+      localStorage.removeItem("userInfo");
+      state.userInfo = {};
     },
   },
   actions: {
@@ -121,6 +119,20 @@ export default createStore({
         } else {
           content.commit("setLyric", res.lrc.lyric);
         }
+      });
+    },
+    userLogin(content, payload: userLoginItem) {
+      postLogin(payload).then((res: any) => {
+        const userData: any = {
+          profile: res.profile,
+          token: res.token,
+          cookie: res.cookie,
+          loginType: res.loginType,
+          isLogin: true,
+        };
+        content.commit("setUserLogin", userData);
+        router.replace("/");
+        Toast.clear();
       });
     },
   },
