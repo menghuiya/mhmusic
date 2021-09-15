@@ -44,11 +44,12 @@ export default defineComponent({
       default: "",
       desc: "作为背景使用",
     },
+    overflowHeight: Number,
     style: Object as PropType<CSSProperties>,
     onLeftClick: Function as CustomEventFuncType<null>,
     onRightClick: Function as CustomEventFuncType<null>,
   },
-  emits: ["left-click", "right-click", "moreNav", "lessNav"],
+  emits: ["left-click", "right-click", "moreNav", "lessNav", "scroll"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
       if (props.backStatus) {
@@ -84,7 +85,12 @@ export default defineComponent({
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      if (scrollTop > offsetHeight.value) {
+      let moreThanHeight = offsetHeight.value;
+      emit("scroll", scrollTop);
+      if (props.overflowHeight && props.overflowHeight > 0) {
+        moreThanHeight = props.overflowHeight - offsetHeight.value;
+      }
+      if (scrollTop > moreThanHeight) {
         if (!isFixed.value) {
           isFixed.value = true;
           NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
@@ -103,6 +109,7 @@ export default defineComponent({
       window.addEventListener("scroll", initHeight);
       nextTick(() => {
         offsetHeight.value = NavRef.value.offsetHeight;
+        console.log(offsetHeight.value);
       });
     });
 

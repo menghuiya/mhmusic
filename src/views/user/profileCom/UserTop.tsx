@@ -1,4 +1,3 @@
-import Nav from "@/components/Nav/Nav";
 import store from "@/store";
 import { computed, defineComponent } from "vue";
 import "./index.scss";
@@ -10,16 +9,10 @@ export default defineComponent({
   },
   setup(props, { emit, slots }) {
     const userinfo = computed(() => store.state.userInfo);
+
     return () => {
       return (
-        <div>
-          <Nav backStatus={true} iconColor="#fff" iconSize="0.7rem" />
-          <div
-            class="usertop-bgimg"
-            style={{
-              backgroundImage: `url(${userinfo.value.profile.backgroundUrl})`,
-            }}
-          ></div>
+        <>
           <div class="userbase">
             <div class="userbase-avatar">
               <img src={userinfo.value.profile.avatarUrl} alt="" />
@@ -47,7 +40,7 @@ export default defineComponent({
               <i class="iconfont icon-zengjia"></i>添加音乐标签
             </div>
           </div>
-        </div>
+        </>
       );
     };
   },

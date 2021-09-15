@@ -53,6 +53,7 @@ export default defineComponent({
           Toast.success("退出成功");
           closePop();
           router.push("/login");
+          return;
         }
         Toast.fail("退出失败");
       });
