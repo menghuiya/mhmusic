@@ -203,6 +203,76 @@
         color: #727272;
       }
     }
+    &-music {
+      .user-cell-item-cover {
+        background: #ed6e68d4;
+        &-img {
+          z-index: -1;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+.user-cell-item {
+  &-cover {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 0.15rem;
+    margin-right: 0.25rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    &-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.15rem;
+    }
+    .iconfont {
+      line-height: 1.2rem;
+      color: #fff;
+      font-size: 0.5rem;
+    }
+  }
+  &-name {
+    color: #000000;
+    font-size: 0.38rem;
+    // transform: scaleY(1.05);
+    zoom: 1.1;
+    letter-spacing: 1px;
+    font-weight: 500;
+    line-height: 0.5rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  &-fans {
+    color: #909399;
+    font-size: 0.32rem;
+    margin-top: 0.1rem;
+    line-height: 0.35rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  &-btn {
+    border: 1px solid #f1adab;
+    border-radius: 999rem;
+    padding: 0.08rem 0.2rem;
+    font-size: 0.32rem;
+    vertical-align: middle;
+    color: #eb4d44;
+    &-add {
+      font-size: 0.32rem !important;
+      // vertical-align: middle;
+    }
   }
 }
 

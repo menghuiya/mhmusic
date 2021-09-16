@@ -62,7 +62,7 @@ export default defineComponent({
       nextTick(() => {
         overflowHeight.value = imgEle.value.offsetHeight;
         headHeight.value = headEle.value.offsetHeight;
-        console.log(headHeight.value);
+        window.scroll(0, 0);
       });
     });
     return () => {

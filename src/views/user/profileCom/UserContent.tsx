@@ -9,6 +9,7 @@ import {
 import "./index.scss";
 import { ClickEventFuncType } from "@/utils/types";
 import TitleLine from "@/components/TitleLine/TitleLine";
+import CellItem from "@/components/Cell/CellItem";
 
 export default defineComponent({
   name: "UserContent",
@@ -21,6 +22,7 @@ export default defineComponent({
     const navBoxRef = ref(); // nav的refs
     const navUnderlinStyle = ref<CSSProperties>({});
     const swipeRef = ref(); //swiper的实例
+    const defaultImg = require("@/assets/images/activ01.png");
     const baseNavData = [
       { id: 0, name: "主页", type: 1018 },
       { id: 1, name: "动态", type: 1 },
@@ -91,7 +93,6 @@ export default defineComponent({
     const onSlideChange = (swiper: any) => {
       navActiveId.value = swiper.activeIndex;
     };
-
     return () => {
       return (
         <div class="ucontent">
@@ -158,9 +159,9 @@ export default defineComponent({
                   <TitleLine
                     showType="left"
                     title="基本信息"
-                    btnName="播放"
+                    btnName="领取村民证"
                     noPadding={false}
-                    icon="icon-Controls-71"
+                    icon=""
                     titleStyle={{
                       fontSize: "0.4rem",
                       letterSpacing: "0",
@@ -176,7 +177,7 @@ export default defineComponent({
                     <i class="iconfont icon-qianjin1"></i>
                   </div>
                 </div>
-                <div class="ucontent-group">
+                <div class="ucontent-group ucontent-body-music">
                   <TitleLine
                     showType="left"
                     title="音乐品味"
@@ -189,7 +190,72 @@ export default defineComponent({
                       letterSpacing: "0",
                     }}
                   />
-                  xxxxx
+                  <CellItem
+                    arrow={false}
+                    style={{
+                      padding: "0.15rem 0",
+                      margin: "0 0.25rem",
+                    }}
+                    v-slots={{
+                      icon: () => (
+                        <div class="user-cell-item-cover">
+                          <img
+                            class="user-cell-item-cover-img"
+                            src={defaultImg}
+                            alt=""
+                          />
+                          <i class="iconfont icon-paihang"></i>
+                        </div>
+                      ),
+                      title: () => (
+                        <div>
+                          <div class="user-cell-item-name">听歌排行</div>
+                          <div class="user-cell-item-fans">累计听歌xxx</div>
+                        </div>
+                      ),
+                      right: () => null,
+                    }}
+                  ></CellItem>
+                  <CellItem
+                    arrow={false}
+                    style={{
+                      padding: "0.15rem 0",
+                      margin: "0 0.25rem",
+                    }}
+                    v-slots={{
+                      icon: () => (
+                        <div class="user-cell-item-cover">
+                          <img
+                            class="user-cell-item-cover-img"
+                            src={defaultImg}
+                            alt=""
+                          />
+                          <i class="iconfont icon-xihuan1"></i>
+                        </div>
+                      ),
+                      title: () => (
+                        <div>
+                          <div class="user-cell-item-name">我喜欢的音乐</div>
+                          <div class="user-cell-item-fans">175首，播放31次</div>
+                        </div>
+                      ),
+                      right: () => null,
+                    }}
+                  ></CellItem>
+                </div>
+                <div class="ucontent-group ucontent-body-music">
+                  <TitleLine
+                    showType="left"
+                    title="创建的歌单"
+                    btnName="播放"
+                    noPadding={false}
+                    showLeft={false}
+                    icon="icon-Controls-71"
+                    titleStyle={{
+                      fontSize: "0.4rem",
+                      letterSpacing: "0",
+                    }}
+                  />
                 </div>
               </swiper-slide>
               <swiper-slide>dddd</swiper-slide>
