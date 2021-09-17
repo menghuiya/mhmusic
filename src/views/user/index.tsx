@@ -15,6 +15,7 @@ import UserContent from "./profileCom/UserContent";
 import { PlayBoxState } from "@/utils/types";
 import "./index.scss";
 import Nav from "@/components/Nav/Nav";
+import { getUserVipinfo } from "@/api/user";
 
 export default defineComponent({
   name: "index",
@@ -33,6 +34,7 @@ export default defineComponent({
       background: undefined,
       color: "#fff",
     });
+    const vipinfo = ref<any>(null);
     // onMounted(() => {
     //   playBox?.close();
     // });
@@ -58,13 +60,21 @@ export default defineComponent({
         overHeight.value = false;
       }
     };
+    const getUserVip = () => {
+      getUserVipinfo().then((res) => {
+        vipinfo.value = res.data;
+      });
+    };
+
     onMounted(() => {
+      getUserVip();
       nextTick(() => {
         overflowHeight.value = imgEle.value.offsetHeight;
         headHeight.value = headEle.value.offsetHeight;
         window.scroll(0, 0);
       });
     });
+
     return () => {
       return (
         <div class="m-user">
@@ -77,7 +87,14 @@ export default defineComponent({
             overflowHeight={overflowHeight.value}
             onScroll={startScroll}
             v-slots={{
-              center: () => <div>个人中心</div>,
+              center: () => (
+                <div class="m-user-vip">
+                  {userinfo.value.profile.nickname}
+                  {vipinfo.value ? (
+                    <img src={vipinfo.value.redVipDynamicIconUrl2} alt="" />
+                  ) : null}
+                </div>
+              ),
             }}
           />
 

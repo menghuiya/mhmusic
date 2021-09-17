@@ -10,6 +10,10 @@ import "./index.scss";
 import { ClickEventFuncType } from "@/utils/types";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import CellItem from "@/components/Cell/CellItem";
+import { getUserSheet, getUserVipinfo } from "@/api/user";
+import { useRoute } from "vue-router";
+import store from "@/store";
+import { getShowNumber } from "@/utils/tool";
 
 export default defineComponent({
   name: "UserContent",
@@ -28,6 +32,11 @@ export default defineComponent({
       { id: 1, name: "动态", type: 1 },
       { id: 2, name: "播客", type: 1000 },
     ];
+    const route = useRoute();
+    const uPlaylist = ref([]);
+    
+    const uid = route.query.uid || store.state.userInfo.profile.userId;
+
     const moveUnderLine = (width: number | string, left: number | string) => {
       navUnderlinStyle.value = {
         width: width + "px",
@@ -72,12 +81,23 @@ export default defineComponent({
       }
     );
 
+    const getPlaylist = () => {
+      getUserSheet(uid).then((res: any) => {
+        console.log(res.playlist);
+        uPlaylist.value = res.playlist;
+      });
+    };
+
+   
+
     onMounted(() => {
       nextTick(() => {
         const navActive: any = document.querySelector(".ucontent-nav-active");
         moveUnderLine(navActive.offsetWidth, navActive.offsetLeft);
       });
       swipeToCurrentTab(navActiveId.value);
+      
+      getPlaylist();
     });
 
     const swipeToCurrentTab = (index: number) => {
@@ -243,7 +263,7 @@ export default defineComponent({
                     }}
                   ></CellItem>
                 </div>
-                <div class="ucontent-group ucontent-body-music">
+                <div class="ucontent-group ">
                   <TitleLine
                     showType="left"
                     title="创建的歌单"
@@ -256,6 +276,40 @@ export default defineComponent({
                       letterSpacing: "0",
                     }}
                   />
+                  {uPlaylist.value.map((item: any) => {
+                    return (
+                      <CellItem
+                        arrow={false}
+                        style={{
+                          padding: "0.15rem 0",
+                          margin: "0 0.25rem",
+                        }}
+                        v-slots={{
+                          icon: () => (
+                            <div class="user-cell-item-cover">
+                              <img
+                                class="user-cell-item-cover-img"
+                                src={item.coverImgUrl}
+                                alt=""
+                              />
+                              <i class="iconfont icon-xihuan1"></i>
+                            </div>
+                          ),
+                          title: () => (
+                            <div>
+                              <div class="user-cell-item-name">{item.name}</div>
+                              <div class="user-cell-item-fans">{`${
+                                item.trackCount
+                              }首，播放${getShowNumber(
+                                item.playCount
+                              )}次`}</div>
+                            </div>
+                          ),
+                          right: () => null,
+                        }}
+                      ></CellItem>
+                    );
+                  })}
                 </div>
               </swiper-slide>
               <swiper-slide>dddd</swiper-slide>

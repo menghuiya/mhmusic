@@ -1,3 +1,15 @@
+.m-user {
+  &-vip {
+    display: flex;
+    align-items: center;
+    img {
+      width: 1.2rem;
+      margin-left: 0.1rem;
+      vertical-align: middle;
+    }
+  }
+}
+
 .usertop {
   &-bgimg {
     position: absolute;
@@ -11,6 +23,21 @@
     transition: background-image 0.4s;
     background: #c8c9cc no-repeat center center;
     background-size: cover;
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1) 90%
+      );
+      width: 100%;
+      height: 1em;
+    }
   }
 }
 
@@ -19,6 +46,8 @@
   align-items: center;
   margin-top: 5.2rem;
   background-color: #fafafa;
+  position: relative;
+  padding-top: 0.25rem;
   &-avatar {
     width: 2rem;
     height: 2rem;
@@ -255,7 +284,7 @@
     color: #909399;
     font-size: 0.32rem;
     margin-top: 0.1rem;
-    line-height: 0.35rem;
+    line-height: 0.36rem;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
