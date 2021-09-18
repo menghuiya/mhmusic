@@ -1,51 +1,47 @@
-import { defineComponent, reactive, ref, watch } from "vue";
-import ProgressCom from "@/components/Progress/Progress";
+import Progress from "@/components/Progress/Progress";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "test",
-  components: {
-    ProgressCom,
-  },
-  setup(props, { emit }) {
+  setup() {
+    const show = ref(false);
+    const percentage = ref(0);
+    const changeShow = () => {
+      show.value = !show.value;
+    };
+    const format = (percentage: number | string) => {
+      return Number(percentage) === 100 ? "满" : `${percentage}%`;
+    };
+    const handleChange = (event: any) => {
+      percentage.value = Number(event.target.value);
+      // console.log(percentage.value, event.target.value);
+    };
+
     return () => {
-      const rangeData = ref(0);
-      const percentage = ref(10);
-      const type = ref(false);
-      const format = (percentage: number) => {
-        return percentage === 100 ? "满" : `${percentage}%`;
-      };
-      const process = {
-        showText: false,
-      };
-
-      const handleChange = (event: any) => {
-        percentage.value = Number(event.target.value);
-        console.log(percentage.value, event.target.value);
-      };
-      const handleClick = (event: any) => {
-        // rangeData.value = rangeData.value + 1;
-        console.log(process.showText);
-        process.showText = !process.showText;
-      };
-
       return (
         <div>
-          <h3>测试进度条</h3>
-          <ProgressCom
-            percentage={rangeData.value}
-            showText={process.showText}
+          <span>圆圆：</span>
+          <Progress
+            percentage={percentage.value}
+            showText={show.value}
+            format={format}
           />
+          <span>仪表盘：</span>
+          <Progress
+            percentage={percentage.value}
+            showText={show.value}
+            type="dashboard"
+          />
+          <div onClick={changeShow}>
+            点我{show.value ? "关闭" : "显示"}进度文字
+          </div>
           <input
             type="range"
             max="100"
             min="0"
-            value="0"
+            v-model={percentage.value}
             step="1"
-            onInput={handleChange}
           />
-
-          <button onClick={handleClick}>加1</button>
-          <hr />
         </div>
       );
     };

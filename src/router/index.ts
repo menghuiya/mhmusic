@@ -59,10 +59,17 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/comcenter",
+    name: "comcenter",
+    component: () => import("../views/test/index"),
+    meta: {
+      title: "梦回云音乐-组件测试中心",
+    },
+  },
+  {
     path: "/test",
     name: "test",
-    // component: () => import("../views/test.vue"),
-    component: () => import("../views/test/index"),
+    component: () => import("../views/test.vue"),
     meta: {
       title: "梦回云音乐-测试",
     },
@@ -81,7 +88,5 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
-
-
 
 export default router;

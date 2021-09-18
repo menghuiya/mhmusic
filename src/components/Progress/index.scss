@@ -1,0 +1,14 @@
+.progress {
+  width: 126px;
+  height: 126px;
+  position: relative;
+  &-data-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &-process {
+    transition: stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s;
+  }
+}

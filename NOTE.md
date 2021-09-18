@@ -612,3 +612,46 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
 border-radius: 0;
 ```
 
+#### 十九，tsx编写代码时 自己遇到的坑（自己建立的坑）子组件无法响应式
+
+千万别把函数代码写了setup的return里 不然你的所有响应式失效，子组件无法正常使用 这里给大家看看错误代码
+
+```tsx
+setup() {
+    return () => {
+        //记住 千万不能写在这！！！！！
+      const show = ref(false);
+      const percentage = ref(10);
+      const changeShow = () => {
+        show.value = !show.value;
+      };
+      const format = (percentage: number | string) => {
+        return Number(percentage) === 100 ? "满" : `${percentage}%`;
+      };
+      return (
+        <div>
+          <Progress
+            percentage={percentage.value}
+            showText={show.value}
+            format={format}
+          />
+          <hr />
+          <input
+            type="range"
+            max="100"
+            min="0"
+            v-model={percentage.value}
+            step="1"
+          />
+
+          <div onClick={changeShow}>点我试试</div>
+        </div>
+      );
+    };
+  },
+```
+
+上面就是错误代码，因为笔记本屏幕太小看不太清代码，导致写错位置
+
+修改方式就是提出来 与return同级即可
+
