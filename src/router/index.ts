@@ -61,7 +61,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/test",
     name: "test",
-    component: () => import("../views/test.vue"),
+    // component: () => import("../views/test.vue"),
+    component: () => import("../views/test/index"),
     meta: {
       title: "梦回云音乐-测试",
     },

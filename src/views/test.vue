@@ -67,6 +67,10 @@
       message="手机号应该是11位数"
       type="loading"
     />
+
+    <hr />
+    <button @click="handleClick">加1</button>
+    <ProgressCom :showText="showText" />
   </div>
 </template>
 
@@ -76,6 +80,7 @@ import Dialog from "../components/Dialog/Dialog";
 import Popup from "../components/Popup/Popup";
 // import MConfirm from "../components/Confirm/Confirm";
 import Toast from "@/components/Toast";
+import ProgressCom from "@/components/Progress/Progress";
 
 const MToast = Toast.Component;
 
@@ -88,6 +93,7 @@ export default defineComponent({
     Popup,
     MConfirm,
     MToast,
+    ProgressCom,
   },
   setup() {
     const dialogStatu = ref(false);
@@ -95,6 +101,7 @@ export default defineComponent({
     const dialogStatu2 = ref(false);
     const dialogStatu3 = ref(false);
     const dialogStatu4 = ref(false);
+    const showText = ref(false);
     const btnClick = (dict: string) => {
       switch (dict) {
         case "left":
@@ -157,6 +164,10 @@ export default defineComponent({
       });
     };
 
+    const handleClick = () => {
+      showText.value = !showText.value;
+    };
+
     return {
       dialogStatu,
       dialogStatu1,
@@ -167,6 +178,8 @@ export default defineComponent({
       closeDialog,
       showConfirm,
       showToast,
+      handleClick,
+      showText,
     };
   },
 });
