@@ -1,4 +1,4 @@
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onDeactivated, ref } from "vue";
 import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
@@ -8,6 +8,7 @@ import router from "@/router";
 import store from "@/store";
 import { logout } from "@/api/login";
 import Toast from "@/components/Toast";
+import Switch from "@/components/Switch/Switch";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -19,9 +20,14 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
+    onDeactivated(() => {
+      closePop();
+    });
     const userInfo = computed(() => {
       return store.state.userInfo;
     });
+
+    const dayNightState = ref(false);
 
     const closePop = () => {
       emit("close");
@@ -57,6 +63,10 @@ export default defineComponent({
         }
         Toast.fail("退出失败");
       });
+    };
+
+    const setClick = () => {
+      router.push("/setting");
     };
 
     const renderUserInfo = (): JSX.Element => {
@@ -117,8 +127,21 @@ export default defineComponent({
           </div>
           <div class="info-content-group">
             <div class="info-content-group-title">其他</div>
-            <CellItem icon="icon-shezhi" title="设置" />
-            <CellItem icon="icon-yueliang" title="夜间模式" />
+            <CellItem icon="icon-shezhi" title="设置" onClick={setClick} />
+            <CellItem
+              icon="icon-yueliang"
+              title="夜间模式"
+              arrow={false}
+              v-slots={{
+                right: () => (
+                  <Switch
+                    v-model={dayNightState.value}
+                    activeColor="#EB4D44"
+                    width="1rem"
+                  />
+                ),
+              }}
+            />
             <CellItem icon="icon-dingshi_timing" title="定时关闭" />
             <CellItem icon="icon-yifu" title="个性装扮" />
             <CellItem icon="icon-erji" title="边听边存" value="未开启" />

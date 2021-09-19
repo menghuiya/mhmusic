@@ -17,7 +17,7 @@ export default defineComponent({
   props: {
     leftIcon: {
       type: String,
-      default: "icon-fanhui",
+      default: "icon-fanhui1",
       desc: "定义left插槽时此prop失效",
     },
     rightIcon: {

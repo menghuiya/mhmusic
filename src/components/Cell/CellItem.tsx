@@ -64,14 +64,14 @@ export default defineComponent({
       //主要是用于插入图片等
       return slots.icon ? (
         slots.icon()
-      ) : (
+      ) : props.icon ? (
         <div class="left-icon" onClick={leftClick}>
           <i
             class={["iconfont", props.icon]}
             style={`color:${props.iconColor};font-size:${props.iconSize}`}
           ></i>
         </div>
-      );
+      ) : null;
     };
     const renderTitle = () => {
       //主要用来音乐列表

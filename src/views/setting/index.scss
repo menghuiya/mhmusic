@@ -1,0 +1,24 @@
+.setting {
+  background: #f8f8f8;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+  &-body {
+    overflow-y: auto;
+    .cell-title {
+      font-size: 0.38rem !important;
+    }
+    .cell-right {
+      display: block !important;
+    }
+    &-title {
+      font-size: 0.32rem;
+      padding: 0.25rem;
+      color: #a5a5a5;
+    }
+  }
+}

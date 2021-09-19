@@ -59,6 +59,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/setting",
+    name: "setting",
+    component: () => import("../views/setting/index"),
+    meta: {
+      title: "梦回云音乐-设置中心",
+    },
+  },
+  {
     path: "/comcenter",
     name: "comcenter",
     component: () => import("../views/test/index"),

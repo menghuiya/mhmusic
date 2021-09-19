@@ -1,192 +1,63 @@
-import Progress from "@/components/Progress/Progress";
+import Switch from "@/components/Switch/Switch";
 import { defineComponent, ref } from "vue";
 import "./index.scss";
 
 export default defineComponent({
   name: "test",
   setup() {
-    const show = ref(true);
-    const percentage = ref(0);
-    const changeShow = () => {
-      show.value = !show.value;
-    };
-    const format = (percentage: number | string) => {
-      return Number(percentage) === 100 ? "满" : `${percentage}%`;
-    };
-    const formatS = (percentage: number | string) => {
-      const rate = Number(percentage);
-      switch (true) {
-        case rate <= 5:
-          return "准备";
-          break;
-        case rate <= 20:
-          return "开始";
-          break;
-        case rate <= 40:
-          return "出门";
-          break;
-        case rate <= 50:
-          return "进步";
-          break;
-        case rate <= 65:
-          return "冲刺";
-          break;
-        case rate <= 80:
-          return "接近";
-          break;
-        case rate <= 100:
-          return "成功";
-          break;
-      }
-    };
-
-    const customColors = [
-      { color: "#f56c6c", percentage: 20 },
-      { color: "#e6a23c", percentage: 40 },
-      { color: "#5cb87a", percentage: 60 },
-      { color: "#1989fa", percentage: 80 },
-      { color: "#6f7ad3", percentage: 100 },
-    ];
-    const customColorMethod = (percentage: number) => {
-      if (percentage < 30) {
-        return "#909399";
-      } else if (percentage < 70) {
-        return "#e6a23c";
-      } else {
-        return "#67c23a";
-      }
+    const switchStatus = ref(false);
+    const changeData = ref("");
+    const handleChange = (val: any) => {
+      changeData.value = "change过后了" + val;
     };
     return () => {
       return (
         <div
           style={{
             fontSize: "0.36rem",
-            position: "relative",
           }}
         >
-          <div class="test-action">
-            <div onClick={changeShow} class="test-action-text">
-              点我{show.value ? "关闭" : "显示"}进度文字
-            </div>
-            <input
-              type="range"
-              max="100"
-              min="0"
-              v-model={percentage.value}
-              step="1"
-            />
-          </div>
-          <p>这里是圆的(粗细)：</p>
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            strokeWidth="6"
+          <p>默认</p>
+          <Switch v-model={switchStatus.value} />
+          <hr />
+          <p>设置长度</p>
+          <Switch v-model={switchStatus.value} width="2rem" />
+          <Switch v-model={switchStatus.value} width="1.8rem" />
+          <Switch v-model={switchStatus.value} width="1.5rem" />
+          <Switch v-model={switchStatus.value} width="1.2rem" />
+          <p>设置颜色</p>
+          <Switch
+            v-model={switchStatus.value}
+            inactiveColor="#ff4949"
+            activeColor="green"
           />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            strokeWidth="5"
+          <Switch
+            v-model={switchStatus.value}
+            inactiveColor="#f05b72"
+            activeColor="#ef5b9c"
           />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            strokeWidth="3"
+          <Switch
+            v-model={switchStatus.value}
+            inactiveColor="#8e453f"
+            activeColor="#fcaf17"
           />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            strokeWidth="1"
+          <Switch
+            v-model={switchStatus.value}
+            inactiveColor="#87843b"
+            activeColor="#224b8f"
+          />
+          <Switch
+            v-model={switchStatus.value}
+            inactiveColor="#27342b"
+            activeColor="#402e4c"
           />
           <hr />
-          <p>这里是圆的(大小)：</p>
-          <Progress percentage={percentage.value} showText={show.value} />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="100px"
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="60px"
-          />
+          <p>设置状态</p>
+          <Switch disable={true} />
           <hr />
-          <p>这里是圆的(颜色单色)：</p>
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            color="#6f7ad3"
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            color="#e6a23c"
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            color="#67c23a"
-          />
-          <hr />
-          <p>这里是圆的(颜色数组+函数)：</p>
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            color={customColors}
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            color={customColorMethod}
-          />
-
-          <hr />
-          <p>这里是圆的(不同进度显示文字)：</p>
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            format={format}
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-            format={formatS}
-          />
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            width="80px"
-          />
-
-          <hr />
-          <p>仪表盘：</p>
-          <Progress
-            percentage={percentage.value}
-            showText={show.value}
-            type="dashboard"
-            width="80px"
-          />
+          <p>change事件</p>
+          <Switch v-model={switchStatus.value} onChange={handleChange} />{" "}
+          <span>{changeData.value}</span>
         </div>
       );
     };
