@@ -8,7 +8,8 @@ import Toast from "@/components/Toast";
 export default createStore({
   state: {
     playList: [] as any[],
-    playCurrentIndex: null,
+    playCurrentIndex: null as any,
+    playType: "sheet",
     lyric: "",
     playCurrentTime: 0,
     playTotalTime: 0,
@@ -66,7 +67,27 @@ export default createStore({
   },
   mutations: {
     setPlayList(state, value) {
+      //设置搜索时点击的播放
+      if (state.playType === "sheet") {
+        //如果上一次时歌单播放 则全部清空
+        state.playList = [];
+      }
+      const palayIndex = state.playList.findIndex(
+        (item: any) => value.id === item.id
+      );
+      if (palayIndex !== -1) {
+        state.playList.splice(palayIndex, 1);
+      }
+      state.playList.push(value);
+      //这样设置时为了知道播放类型
+      state.playType = "single";
+      //设置播放位置index
+      state.playCurrentIndex = state.playList.length - 1;
+    },
+    setSheetPlayList(state, value) {
+      //设置歌单播放的点击播放其中一个 全部播放所有
       state.playList = value;
+      state.playType = "sheet";
     },
     setPlayCurrntIndex(state, value) {
       state.playCurrentIndex = value;

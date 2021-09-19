@@ -1,12 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  Transition,
-  watch,
-  nextTick,
-} from "vue";
+import { defineComponent, ref, Transition, watch } from "vue";
 import "./play.scss";
 import { imgToBlob, getPlayForamtTime } from "@/utils/tool";
 import Nav from "../Nav/Nav";

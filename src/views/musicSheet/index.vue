@@ -99,7 +99,7 @@ export default defineComponent({
     const playMusic = (mIndex: number) => {
       if (state.playlist) {
         store.commit("setPlayCurrntIndex", mIndex);
-        store.commit("setPlayList", state.playlist.tracks);
+        store.commit("setSheetPlayList", state.playlist.tracks);
       }
     };
 

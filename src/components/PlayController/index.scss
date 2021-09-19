@@ -36,6 +36,11 @@
     .music-name {
       font-size: 0.38rem;
       margin-right: 0.5rem;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .music-author {
       font-size: 0.32rem;
@@ -46,9 +51,11 @@
     display: flex;
     align-items: center;
     .play-btn {
-      margin-right: 0.3rem;
+      margin-right: 0.5rem;
+      display: flex;
+      align-items: center;
       .iconfont {
-        font-size: 0.8rem;
+        font-size: 0.35rem;
       }
       .icon-bofang1 {
         font-size: 0.75rem;

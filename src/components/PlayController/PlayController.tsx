@@ -4,6 +4,7 @@ import "./index.scss";
 
 import RedyPlayList from "./RedyPlayList";
 import PlayMusicPage from "./PlayMusicPage";
+import Progress from "../Progress/Progress";
 
 export default defineComponent({
   name: "PlayController",
@@ -20,7 +21,7 @@ export default defineComponent({
     const playPageVisible = ref(false);
     const playControRef = ref<any>(null);
     const playBufferTime = ref(0);
-
+    const playPercentage = ref(0);
     const changePlayStatu = () => {
       if (!playControRef.value) {
         console.log("未选择音乐");
@@ -73,10 +74,14 @@ export default defineComponent({
         "-单曲-梦回云音乐";
     };
 
+    const computeplayPercentage = (noeTime: number) => {
+      playPercentage.value = (noeTime / playControRef.value.duration) * 100;
+    };
+
     const onTimeupdate = () => {
       const timeDisplay = playControRef.value.currentTime; //获取实时时间
       // const min = t
-      // console.log(timeDisplay);
+      computeplayPercentage(timeDisplay);
       const timeRanges = playControRef.value.buffered;
       if (timeRanges.length - 1 !== -1) {
         // 获取已缓存的时间  timeRanges.end(timeRanges.length - 1)
@@ -177,12 +182,26 @@ export default defineComponent({
                 </div>
                 <div class="play-right">
                   <div class="play-btn" onClick={changePlayStatu}>
-                    <i
-                      class={[
-                        "iconfont",
-                        playing.value ? "icon-bofang1" : "icon-bofang",
-                      ]}
-                    ></i>
+                    <Progress
+                      percentage={playPercentage.value}
+                      showText={true}
+                      width="0.7rem"
+                      strokeWidth="2"
+                      baseColor="#E5E5E5"
+                      color="#000"
+                      v-slots={{
+                        center: () => (
+                          <>
+                            <i
+                              class={[
+                                "iconfont",
+                                playing.value ? "icon-puesed" : "icon-play",
+                              ]}
+                            ></i>
+                          </>
+                        ),
+                      }}
+                    />
                   </div>
                   <div class="play-list" onClick={openRedyList}>
                     <i class="iconfont icon-bofangliebiao"></i>

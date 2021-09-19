@@ -139,6 +139,11 @@
         &-name {
           display: inline-block;
           font-size: 0.36rem;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
         &:nth-child(-n + 3) {
           .hot-card-index {
