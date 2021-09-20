@@ -5,12 +5,14 @@ import { PlayBoxState } from "@/utils/types";
 import {
   CSSProperties,
   defineComponent,
+  getCurrentInstance,
   inject,
   onBeforeUnmount,
   onMounted,
   reactive,
   ref,
 } from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
 import { nodeData } from "./baseData";
 import "./index.scss";
 import { setDataItem } from "./type";
@@ -43,6 +45,11 @@ export default defineComponent({
       liveRermote: false,
       blockScrenRed: false,
     }) as Record<string, boolean>;
+
+    onBeforeRouteUpdate(() => {
+      const _this = getCurrentInstance()?.proxy as any;
+      _this.$router.isPush = true;
+    });
 
     return () => {
       return (

@@ -33,7 +33,8 @@ export default defineComponent({
                     <div class="all-sheet-item-body">
                       <div class="item-body-name">{item.name}</div>
                       <div class="item-body-info">
-                        {item.trackCount}首音乐 by {item.creator.nickname}
+                        {item.trackCount}首音乐 by{" "}
+                        {item.creator ? item.creator.nickname : "未知"}
                         ，播放
                         {getShowNumber(item.playCount)}次
                       </div>

@@ -655,3 +655,100 @@ setup() {
 
 修改方式就是提出来 与return同级即可
 
+#### vue3.0过场动画切换
+
+这里有个不足之处在于 vue3.0 的监听事件，我不知道怎么拿到路由的from 和to  只能拿到route的部分信息
+
+好的开始，我们需要辅助定义一下属性 在每个路由中定义个index 代表我们的层级
+
+```ts
+{
+    path: "/",
+    name: "Home",
+    component: () => import("../views/home/index.vue"),
+    meta: {
+      keepAlive: true, //是否需要缓存
+      title: "梦回云音乐-首页",
+      index: 1,
+    },
+  },
+  {
+    path: "/sheetList",
+    name: "sheetList",
+    component: () => import("../views/musicSheet/index.vue"),
+    meta: {
+      title: "梦回云音乐-歌单",
+      index: 2,
+    },
+  },
+```
+
+然后在`App.vue`中定义使用`transition	` 下面看代码
+
+```vue
+<router-view v-slot="{ Component }">
+    <!-- vue3.0配置 keep-alive缓存-->
+    <transition :name="$route.meta.transitionName">
+      <keep-alive>
+        <component
+          :is="Component"
+          v-if="$route.meta.keepAlive"
+        />
+      </keep-alive>
+    </transition>
+    <transition :name="$route.meta.transitionName">
+      <component
+        :is="Component"
+        v-if="!$route.meta.keepAlive"
+      />
+    </transition>
+  </router-view>
+```
+
+这里是关键的一个步骤 需要去监听我们的route的变化  但是我拿去不到当前的层级和要去的层级，所以只能暂时使用`vue2.x`的方法  不要写在setup里面 
+
+```tsx
+watch: {
+    $route(to, from) {
+      if (to.meta.index > from.meta.index) {
+        to.meta.transitionName = "jump";
+      } else {
+        to.meta.transitionName = "back";
+      }
+    },
+  },
+```
+
+后面定义我们的css过渡代码 动画样式
+
+```scss
+.back-enter-active,
+.back-leave-active,
+.jump-enter-active,
+.jump-leave-active {
+  will-change: transform;
+  transition: all 0.5s;
+  width: 100%;
+  position: absolute;
+  z-index: 99;
+}
+.jump-enter-from {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.jump-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-enter-from {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-leave-active {
+  opacity: 0;
+  transform: translate3d(+100%, 0, 0);
+}
+```
+
+
+

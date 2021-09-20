@@ -1,17 +1,31 @@
 <template>
   <!-- <div> -->
+
   <router-view v-slot="{ Component }">
     <!-- vue3.0配置 keep-alive缓存-->
-    <keep-alive>
-      <component :is="Component" v-if="$route.meta.keepAlive" />
-    </keep-alive>
-    <component :is="Component" v-if="!$route.meta.keepAlive" />
+    <transition :name="$route.meta.transitionName">
+      <keep-alive>
+        <component
+          :is="Component"
+          v-if="$route.meta.keepAlive"
+          class="app-view"
+        />
+      </keep-alive>
+    </transition>
+    <transition :name="$route.meta.transitionName">
+      <component
+        :is="Component"
+        v-if="!$route.meta.keepAlive"
+        class="app-view"
+      />
+    </transition>
   </router-view>
+
   <PlayController v-model="boxStatus" />
   <!-- </div> -->
 </template>
 <script lang="tsx">
-import { computed, defineComponent, onMounted, provide, ref } from "vue";
+import { computed, defineComponent, onMounted, provide, ref, watch } from "vue";
 import PlayController from "./components/PlayController/PlayController";
 
 import {
@@ -24,6 +38,15 @@ import store from "./store";
 export default defineComponent({
   components: {
     PlayController,
+  },
+  watch: {
+    $route(to, from) {
+      if (to.meta.index > from.meta.index) {
+        to.meta.transitionName = "jump";
+      } else {
+        to.meta.transitionName = "back";
+      }
+    },
   },
   setup() {
     onMounted(() => {
@@ -59,6 +82,7 @@ export default defineComponent({
     provide<DarkControllerState>(DarkControllerKey, {
       modelBrn,
     });
+
     return {
       boxStatus,
       modelBrn,
@@ -102,5 +126,50 @@ a {
 ul,
 li {
   list-style: none;
+}
+
+// .jump-enter-active {
+//   transform: translate(100%, 0);
+// }
+// .jump-enter-to {
+//   transform: translate(0, 0);
+// }
+
+// .back-leave-active {
+//   z-index: 5;
+//   transform: translate(0, 0);
+// }
+// .back-leave-to {
+//   transform: translate(100%, 0);
+// }
+.back-enter-active,
+.back-leave-active,
+.jump-enter-active,
+.jump-leave-active {
+  will-change: transform;
+  transition: all 0.5s;
+  width: 100%;
+  position: absolute;
+  z-index: 99;
+}
+.jump-enter-from {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.jump-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-enter-from {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-leave-active {
+  opacity: 0;
+  transform: translate3d(+100%, 0, 0);
+}
+
+.app-view {
+  // transition: transform 0.5s;
 }
 </style>

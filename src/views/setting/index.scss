@@ -26,6 +26,6 @@
     border-bottom: 1px solid #f8f8f8;
     @include border_color("border-color");
     @include font_color("text-color");
-    @include cell_bgcolor("background_color");
+    @include cell_bgcolor("cell-bgcolor");
   }
 }
