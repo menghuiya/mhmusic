@@ -41,6 +41,11 @@ export default defineComponent({
   },
   watch: {
     $route(to, from) {
+      //禁止刷新当前页时 触发动画效果
+      if (from.meta.index === undefined) {
+        to.meta.transitionName = "";
+        return;
+      }
       if (to.meta.index > from.meta.index) {
         to.meta.transitionName = "jump";
       } else {
