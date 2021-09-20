@@ -1,6 +1,7 @@
 import { PropType } from "vue";
 
 const PlayControlKey = "PlayControlKey";
+const DarkControllerKey = "DarkControllerKey";
 
 interface PlayContenx {
   play(type: boolean): void; //播放音乐
@@ -9,6 +10,9 @@ interface PlayContenx {
 interface PlayBoxState {
   close(): void; //播放音乐
   open(): void; //暂停音乐
+}
+interface DarkControllerState {
+  modelBrn(value: boolean): void;
 }
 
 interface LyricItem {
@@ -42,4 +46,6 @@ export {
   ClickEventFuncType,
   PlayBoxState,
   userLoginItem,
+  DarkControllerKey,
+  DarkControllerState,
 };

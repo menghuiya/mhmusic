@@ -62,7 +62,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .find-music-box {
+  @include cell_bgcolor("background_color");
   padding: 0 0.25rem;
   .swiper-slide {
     height: 3.8rem;

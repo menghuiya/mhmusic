@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   &-nav-music {
     color: #fff;
     text-align: center;
@@ -39,6 +40,7 @@
       }
     }
   }
+
   &-center {
     text-align: center;
     overflow-y: auto;

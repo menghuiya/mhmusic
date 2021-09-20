@@ -1,3 +1,5 @@
+@import "@/assets/css/common.scss";
+
 .m-user {
   &-vip {
     display: flex;
@@ -45,9 +47,10 @@
   display: flex;
   align-items: center;
   margin-top: 5.2rem;
-  background-color: #fafafa;
   position: relative;
   padding-top: 0.25rem;
+  @include background_color("secondary-bg");
+  @include font_color("text-color");
   &-avatar {
     width: 2rem;
     height: 2rem;
@@ -97,11 +100,12 @@
 .usertag {
   font-size: 0.32rem;
   padding: 0.35rem;
-  background-color: #fafafa;
+  // background-color: #fafafa;
   display: flex;
   align-items: center;
+  @include background_color("background_color");
   &-item {
-    background-color: #ffffff;
+    @include background_color("secondary-bg");
     padding: 0.1rem 0.15rem;
     border-radius: 0.15rem;
     border: 1px solid #acacac;
@@ -114,15 +118,19 @@
 }
 
 .ucontent {
-  background-color: #fafafa;
+  @include background_color("background_color");
+
   height: 100%;
   flex: 1;
   &-group {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
-    filter: drop-shadow(1px 1px 5px #ebebeb);
+    @include user_filter("filter-shadow");
+    .cell-box {
+      @include background_color("secondary-bg");
+    }
   }
   &-nav {
     font-size: 0.36rem;
@@ -132,7 +140,8 @@
     overflow-x: auto;
     white-space: nowrap;
     padding-top: 0.25rem;
-    background-color: #fafafa;
+    @include background_color("background_color");
+
     z-index: 2;
     &-box {
       width: 100%;
@@ -174,7 +183,7 @@
       // }
     }
     &-active {
-      color: #000;
+      @include font_color("text-color");
       font-weight: 600;
       // &::after {
       //   width: 100%;
@@ -204,14 +213,16 @@
       justify-content: space-between;
     }
     &-card {
-      background-color: #fff;
+      @include background_color("secondary-bg");
+
       margin: 0.15rem;
       padding: 0.25rem;
       border-radius: 0.25rem;
       font-size: 0.32rem;
       height: 3.5rem;
       width: calc(93% / 3);
-      filter: drop-shadow(1px 1px 5px #ebebeb);
+      @include user_filter("filter-shadow");
+      // filter: drop-shadow(1px 1px 1px #252525);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -267,7 +278,7 @@
     }
   }
   &-name {
-    color: #000000;
+    @include font_color("text-color");
     font-size: 0.38rem;
     // transform: scaleY(1.05);
     zoom: 1.1;
@@ -308,6 +319,7 @@
 .more-bottom {
   padding: 0.15rem 0;
   border-top: 1px solid #ebeef5;
+  @include border_color("border-color");
   font-size: 0.32rem;
   text-align: center;
   color: #909399;

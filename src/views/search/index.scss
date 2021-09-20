@@ -1,5 +1,7 @@
+@import "@/assets/css/common.scss";
 .msearch {
-  // padding: 0 0.25rem;
+  @include background_color("background_color");
+  @include font_color("text-color");
   width: 100%;
   height: 100%;
   background: #f1f1f1;
@@ -12,7 +14,8 @@
   .msearch-top {
     position: sticky;
     top: 0;
-    background-color: #fff;
+    @include background_color("background_color");
+    @include font_color("text-color");
     z-index: 100;
     padding: 0.25rem 0.25rem 0.1rem 0.25rem;
   }
@@ -49,7 +52,8 @@
     &-input {
       width: 100%;
       height: 100%;
-      background: #f1f1f1;
+      @include background_color("secondary-bg");
+      @include font_color("text-color");
       border: none;
       border-radius: 99rem;
       padding: 0.2rem 0.7rem;
@@ -110,8 +114,8 @@
       // }
     }
     &-active {
-      color: #000;
       font-weight: 600;
+      @include font_color("text-color");
       // &::after {
       //   width: 100%;
       //   left: 0;
@@ -137,6 +141,7 @@
     font-size: 0.36rem;
     overflow: hidden;
     // overflow-y: auto;
+
     &-track {
       position: relative;
       display: flex;

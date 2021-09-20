@@ -1,5 +1,8 @@
+@import "@/assets/css/common.scss";
 .setting {
-  background: #f8f8f8;
+  // background: #f8f8f8;
+  @include background_color("background_color");
+  @include font_color("text-color");
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,5 +23,11 @@
       padding: 0.25rem;
       color: #a5a5a5;
     }
+  }
+  .setting-cell {
+    border-bottom: 1px solid #f8f8f8;
+    @include border_color("border-color");
+    @include font_color("text-color");
+    @include cell_bgcolor("background_color");
   }
 }

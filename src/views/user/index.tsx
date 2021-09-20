@@ -18,11 +18,11 @@ import Nav from "@/components/Nav/Nav";
 import { getUserVipinfo } from "@/api/user";
 
 export default defineComponent({
-  name: "index",
+  name: "user",
   props: {},
   setup(props, { emit, slots }) {
     const userinfo = computed(() => store.state.userInfo);
-    const playBox = inject<PlayBoxState>("PlayBoxKey");
+    const dark = computed(() => store.state.dark);
     const iconColor = ref("#fff");
     const headEle = ref();
     const imgEle = ref();
@@ -43,9 +43,9 @@ export default defineComponent({
     //   playBox?.open();
     // });
     const scollerMore = () => {
-      navStyle.background = "#fff";
-      navStyle.color = "#000";
-      iconColor.value = "#000";
+      navStyle.background = dark.value ? "#000 !important" : "#fff !important";
+      navStyle.color = dark.value ? "#fff" : "#000";
+      iconColor.value = dark.value ? "#fff" : "#000";
     };
     const scollerLess = () => {
       navStyle.background = undefined;

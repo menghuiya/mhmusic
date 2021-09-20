@@ -11,11 +11,16 @@
   <!-- </div> -->
 </template>
 <script lang="tsx">
-import { defineComponent, onMounted, provide, ref } from "vue";
+import { computed, defineComponent, onMounted, provide, ref } from "vue";
 import PlayController from "./components/PlayController/PlayController";
 
-import { PlayBoxState } from "@/utils/types";
+import {
+  DarkControllerKey,
+  DarkControllerState,
+  PlayBoxState,
+} from "@/utils/types";
 import { disabledScale } from "@/plugins/disablescal";
+import store from "./store";
 export default defineComponent({
   components: {
     PlayController,
@@ -25,6 +30,7 @@ export default defineComponent({
       disabledScale();
     });
     const boxStatus = ref(true);
+    const dark = computed(() => store.state.dark);
     const close = () => {
       boxStatus.value = false;
     };
@@ -35,14 +41,34 @@ export default defineComponent({
       close,
       open,
     });
+
+    const modelBrn = (value: boolean) => {
+      store.commit("changeDark", value);
+      if (dark.value) {
+        window.document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        window.document.documentElement.setAttribute("data-theme", "light");
+      }
+    };
+    onMounted(() => {
+      window.document.documentElement.setAttribute(
+        "data-theme",
+        dark.value ? "dark" : "light"
+      );
+    });
+    provide<DarkControllerState>(DarkControllerKey, {
+      modelBrn,
+    });
     return {
       boxStatus,
+      modelBrn,
     };
   },
 });
 </script>
 
 <style lang="scss">
+@import "@/assets/css/common.scss";
 * {
   margin: 0;
   padding: 0;
@@ -55,6 +81,9 @@ html,
 body,
 #app {
   height: 100%;
+  // background: #f5f5f5;
+  @include background_color("background_color");
+  @include font_color("text-color");
 }
 a,
 img,

@@ -44,8 +44,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .menu-box {
-  margin: 0.4rem 0;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f8f8f8;
+  @include border_color("border-color");
   .swiper-slide {
     height: 2rem;
 

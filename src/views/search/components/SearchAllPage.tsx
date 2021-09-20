@@ -48,11 +48,7 @@ export default defineComponent({
                   return (
                     <CellItem
                       arrow={false}
-                      style={{
-                        borderTop: "1px solid #ebeef5",
-                        padding: "0.25rem 0",
-                        margin: "0 0.25rem",
-                      }}
+                      class="all-singersong-cell"
                       onClick={playMusic(item.id)}
                       v-slots={{
                         icon: () => null,

@@ -56,7 +56,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .swiper-box {
+  @include cell_bgcolor("background_color");
   margin: 0.1rem 0;
   .swiper-slide {
     padding: 0 0.25rem;

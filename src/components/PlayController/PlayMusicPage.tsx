@@ -339,7 +339,9 @@ export default defineComponent({
               v-slots={navSLots}
               style={{
                 position: "relative",
+                background: "no-repeat center center / cover !important",
               }}
+              class="playing-nav"
             ></Nav>
             {renderPlayCenter()}
             {renderPlayBottom()}

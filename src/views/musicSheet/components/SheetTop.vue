@@ -140,6 +140,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .sheet-bg-box {
   position: absolute;
   left: 0;
@@ -157,6 +158,14 @@ export default defineComponent({
   //   // filter: blur(40px) brightness(0.6);
   //   // transform: scale(1.2);
   // }
+}
+.sheet-page {
+  .top-nav {
+    background: no-repeat center center / cover !important;
+    .iconfont {
+      color: #fff !important;
+    }
+  }
 }
 
 .top-title {
@@ -288,6 +297,8 @@ export default defineComponent({
     }
   }
   .sheet-otherinfo-box {
+    @include background_color("background_color");
+    @include font_color("text-color");
     background-color: #fff;
     width: 7.5rem;
     margin: 0 auto;

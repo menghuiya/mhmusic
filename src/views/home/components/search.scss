@@ -1,4 +1,7 @@
+@import "@/assets/css/common.scss";
 .searchpage {
+  @include background_color("background_color");
+  @include font_color("text-color");
   position: fixed;
   // top: 0;
   // left: 0;
@@ -84,6 +87,9 @@
           margin: 0 0.2rem;
           padding: 0.2rem 0.3rem;
           background-color: #f1f1f1;
+          color: #000;
+          @include background_color("history");
+          @include font_color("text-color");
           border-radius: 999rem;
         }
         &::-webkit-scrollbar {
@@ -124,6 +130,7 @@
       flex-wrap: wrap;
       align-items: center;
       border-top: 1px solid #f2f6fc;
+      @include border_color("border-color");
       .hot-card {
         width: 50%;
         padding: 0.15rem 0;
@@ -229,6 +236,7 @@
             padding: 0.35rem 0;
             letter-spacing: 0.026667rem;
             border-bottom: 1px solid #ebeef5;
+            @include border_color("border-color");
             line-height: 0.35rem;
             text-overflow: ellipsis;
             display: -webkit-box;

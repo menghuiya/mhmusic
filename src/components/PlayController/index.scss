@@ -1,4 +1,7 @@
+@import "@/assets/css/common.scss";
 .play-box-area {
+  @include background_color("background_color");
+  @include font_color("text-color");
   position: fixed;
   left: 0;
   bottom: 0;
@@ -9,6 +12,7 @@
   padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
 }
 .play-box-empty {
+  @include background_color("background_color");
   height: 2rem;
   position: relative;
   padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
@@ -20,7 +24,7 @@
   align-items: center;
   border-top: 1px solid #f4f4f5;
   padding: 0.1rem 0.25rem;
-
+  @include border_color("border-color");
   .play-left {
     width: 1rem;
     background-color: #ccc;

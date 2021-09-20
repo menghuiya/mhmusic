@@ -93,7 +93,9 @@ export default defineComponent({
       if (scrollTop > moreThanHeight) {
         if (!isFixed.value) {
           isFixed.value = true;
-          NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+          // NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+          NavRef.value.style.cssText = `background-image:url('${props.bgImg}') !important`;
+
           emit("moreNav");
         }
       } else {

@@ -1,4 +1,4 @@
-import { computed, defineComponent, onDeactivated, ref } from "vue";
+import { computed, defineComponent, inject, onDeactivated, ref } from "vue";
 import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
@@ -9,6 +9,7 @@ import store from "@/store";
 import { logout } from "@/api/login";
 import Toast from "@/components/Toast";
 import Switch from "@/components/Switch/Switch";
+import { DarkControllerState } from "@/utils/types";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -20,6 +21,11 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
+    const darkThem = inject<DarkControllerState>("DarkControllerKey");
+
+    const changeDark = (val: boolean) => {
+      darkThem?.modelBrn(val);
+    };
     onDeactivated(() => {
       closePop();
     });
@@ -138,6 +144,7 @@ export default defineComponent({
                     v-model={dayNightState.value}
                     activeColor="#EB4D44"
                     width="1rem"
+                    onChange={changeDark}
                   />
                 ),
               }}

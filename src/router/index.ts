@@ -67,6 +67,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/creatorCenter",
+    name: "creatorCenter",
+    component: () => import("../views/user/creatorCenter/index"),
+    meta: {
+      title: "梦回云音乐-创作者中心",
+    },
+  },
+  {
     path: "/comcenter",
     name: "comcenter",
     component: () => import("../views/test/index"),

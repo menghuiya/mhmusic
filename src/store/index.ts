@@ -15,6 +15,7 @@ export default createStore({
     playTotalTime: 0,
     historySearch: [] as any[],
     userInfo: JSON.parse(localStorage.getItem("userInfo") || "{}"),
+    dark: false, //黑夜模式
   },
   getters: {
     lyricList(state) {
@@ -130,6 +131,9 @@ export default createStore({
     setLogout(state) {
       localStorage.removeItem("userInfo");
       state.userInfo = {};
+    },
+    changeDark(state, value) {
+      state.dark = value;
     },
   },
   actions: {

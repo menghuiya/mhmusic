@@ -86,4 +86,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/css/common.scss";
+.home {
+  @include cell_bgcolor("background_color");
+  @include font_color("text-color");
+}
+</style>
