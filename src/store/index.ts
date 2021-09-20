@@ -15,7 +15,7 @@ export default createStore({
     playTotalTime: 0,
     historySearch: [] as any[],
     userInfo: JSON.parse(localStorage.getItem("userInfo") || "{}"),
-    dark: false, //黑夜模式
+    dark: localStorage.getItem("themData") === "dark" ? true : false, //黑夜模式
   },
   getters: {
     lyricList(state) {
@@ -133,6 +133,11 @@ export default createStore({
       state.userInfo = {};
     },
     changeDark(state, value) {
+      if (value) {
+        localStorage.setItem("themData", "dark");
+      } else {
+        localStorage.setItem("themData", "light");
+      }
       state.dark = value;
     },
   },

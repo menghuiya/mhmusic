@@ -5,4 +5,5 @@ export interface setDataItem {
   filedName?: string;
   isSwitch?: boolean;
   value?: string;
+  arrow?: boolean;
 }

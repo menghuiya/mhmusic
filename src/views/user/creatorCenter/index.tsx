@@ -13,8 +13,9 @@ export default defineComponent({
     onBeforeUnmount(() => {
       playBox?.open();
     });
-    const logImg = require("@/assets/images/logo.png");
-
+    const wangyiCloudTalent = require("@/assets/images/creator-1.png");
+    const cloudMusicTalent = require("@/assets/images/creator-2.png");
+    const lookAnchor = require("@/assets/images/creator-3.png");
     return () => {
       return (
         <div class="creator-center">
@@ -29,15 +30,15 @@ export default defineComponent({
           />
           <div class="creator-center-body">
             <div class="creator-center-body-card">
-              <img src={logImg} alt="" class="creator-card-img" />
+              <img src={wangyiCloudTalent} alt="" class="creator-card-img" />
               <div class="creator-card-text">网易云达人</div>
             </div>
             <div class="creator-center-body-card">
-              <img src={logImg} alt="" class="creator-card-img" />
+              <img src={cloudMusicTalent} alt="" class="creator-card-img" />
               <div class="creator-card-text">云音乐达人</div>
             </div>
             <div class="creator-center-body-card">
-              <img src={logImg} alt="" class="creator-card-img" />
+              <img src={lookAnchor} alt="" class="creator-card-img" />
               <div class="creator-card-text">LOOK主播</div>
             </div>
           </div>

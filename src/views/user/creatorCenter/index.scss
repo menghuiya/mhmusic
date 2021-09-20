@@ -7,7 +7,6 @@
   &-nav {
     @include font_color("text-color");
     @include background_color("background_color");
-    background: #f8f8f8;
     padding: 0.25rem 0.25rem;
     .iconfont {
       @include font_color("text-color");
@@ -17,12 +16,13 @@
   &-body {
     &-card {
       margin: 0.5rem 0.25rem;
+      @include background_color("secondary-bg");
       background: #fff;
       text-align: center;
       padding: 0.8rem 0;
       border-radius: 0.25rem;
       .creator-card-img {
-        width: 1.5rem;
+        width: 3.5rem;
       }
       .creator-card-text {
         font-size: 0.46rem;

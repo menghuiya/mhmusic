@@ -69,7 +69,7 @@ export default defineComponent({
                   <CellItem
                     title={item.title}
                     class="setting-cell"
-                    arrow={false}
+                    arrow={item.arrow}
                     v-slots={{
                       right: () => {
                         return item.isSwitch && item.filedName ? (
@@ -78,6 +78,8 @@ export default defineComponent({
                             activeColor="#EB4D44"
                             width="1rem"
                           />
+                        ) : item.value ? (
+                          <div class="cell-value">{item.value}</div>
                         ) : null;
                       },
                     }}

@@ -1,4 +1,11 @@
-import { computed, defineComponent, inject, onDeactivated, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  onDeactivated,
+  ref,
+  watch,
+} from "vue";
 import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
@@ -34,7 +41,13 @@ export default defineComponent({
     });
 
     const dayNightState = ref(false);
-
+    watch(
+      () => store.state.dark,
+      (value) => {
+        dayNightState.value = value;
+      },
+      { immediate: true }
+    );
     const closePop = () => {
       emit("close");
     };
@@ -73,6 +86,9 @@ export default defineComponent({
 
     const setClick = () => {
       router.push("/setting");
+    };
+    const handleCreatorCenter = () => {
+      router.push("/creatorCenter");
     };
 
     const renderUserInfo = (): JSX.Element => {
@@ -122,7 +138,11 @@ export default defineComponent({
               title="云贝中心"
               value="40云贝待领取"
             />
-            <CellItem icon="icon-dengpaobeifen" title="创作者中心" />
+            <CellItem
+              icon="icon-dengpaobeifen"
+              onClick={handleCreatorCenter}
+              title="创作者中心"
+            />
           </div>
           <div class="info-content-group">
             <div class="info-content-group-title">音乐服务</div>

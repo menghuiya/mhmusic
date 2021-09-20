@@ -304,7 +304,8 @@ export default defineComponent({
     margin: 0 auto;
     padding: 0.3rem 0.3rem;
     border-radius: 0.85rem;
-    box-shadow: 1px 1px 20px #818181;
+    // box-shadow: 1px 1px 20px #818181;
+    @include user_filter("filter-shadow");
     display: flex;
     align-items: center;
     justify-content: space-around;
