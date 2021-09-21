@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import router from "@/router";
 import { defineComponent, reactive, ref } from "vue";
 import { MenuItem } from "./types";
 
@@ -34,6 +35,9 @@ export default defineComponent({
     ]);
     const handleClick = (menuData: MenuItem) => {
       console.log(menuData);
+      if (menuData.id === 1) {
+        router.push("/DayRecommd");
+      }
     };
     return {
       menuListData,

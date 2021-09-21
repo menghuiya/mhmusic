@@ -105,6 +105,7 @@ body,
   // background: #f5f5f5;
   @include background_color("background_color");
   @include font_color("text-color");
+  -webkit-overflow-scrolling: touch;
 }
 a,
 img,

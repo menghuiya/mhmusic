@@ -1,6 +1,6 @@
 @import "@/assets/css/common.scss";
 .play-box-area {
-  @include background_color("background_color");
+  @include background_color("cell-bgcolor");
   @include font_color("text-color");
   position: fixed;
   left: 0;
