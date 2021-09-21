@@ -114,15 +114,15 @@ export default defineComponent({
       }
     );
 
-    onActivated(() => {
-      console.log("激活了");
-      if (props.visible) {
-        inputRef.value.focus();
-      }
-    });
-    onDeactivated(() => {
-      console.log("激活了1");
-    });
+    // onActivated(() => {
+    //   console.log("激活了");
+    //   if (props.visible) {
+    //     inputRef.value.focus();
+    //   }
+    // });
+    // onDeactivated(() => {
+    //   console.log("激活了1");
+    // });
 
     return () => {
       return (

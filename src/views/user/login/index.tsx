@@ -115,10 +115,10 @@ export default defineComponent({
 
     return () => {
       return (
-        <>
+        <div class="login-box">
           {renderLogin()}
           <LoginAccount visible={accountVisible.value} onClose={closeAccount} />
-        </>
+        </div>
       );
     };
   },

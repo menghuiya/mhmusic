@@ -335,7 +335,7 @@ export default defineComponent({
               leftIcon="icon-xiangxia"
               rightIcon="icon-fenxiang"
               onLeftClick={handleLeftClick}
-              iconColor="#fff"
+              iconColor="#fff !important"
               v-slots={navSLots}
               style={{
                 position: "relative",

@@ -47,7 +47,7 @@ export default defineComponent({
 
     const popStyle = ref<CSSProperties>({
       overflow: "hidden",
-      backgroundColor: "transparent",
+      backgroundColor: "transparent !important",
       textAlign: "center",
       top: props.position === "center" ? "40%" : undefined,
     });

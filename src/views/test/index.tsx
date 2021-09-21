@@ -1,63 +1,55 @@
-import Switch from "@/components/Switch/Switch";
+import SliderNav from "@/components/SliderNav/SliderNav";
+import { ClickEventFuncType } from "@/utils/types";
 import { defineComponent, ref } from "vue";
 import "./index.scss";
 
 export default defineComponent({
   name: "test",
   setup() {
-    const switchStatus = ref(false);
-    const changeData = ref("");
-    const handleChange = (val: any) => {
-      changeData.value = "change过后了" + val;
+    const searchNavData = [
+      { id: 0, name: "综合", type: 1018 },
+      { id: 1, name: "单曲", type: 1 },
+      { id: 2, name: "歌单", type: 1000 },
+      { id: 3, name: "视频", type: 1014 },
+      { id: 4, name: "歌手", type: 100 },
+      { id: 5, name: "歌词", type: 1006 },
+      { id: 6, name: "用户", type: 1002 },
+      { id: 7, name: "电台", type: 1009 },
+      { id: 8, name: "专辑", type: 10 },
+      { id: 9, name: "MV", type: 1004 },
+    ];
+    const currentSliderId = ref(0);
+    const changeNav: ClickEventFuncType = (index: number) => (e) => {
+      currentSliderId.value = index;
+    };
+    const sliderChange = (value: number) => {
+      currentSliderId.value = value;
     };
     return () => {
       return (
         <div
           style={{
-            fontSize: "0.36rem",
+            padding: "0.25rem",
           }}
         >
-          <p>默认</p>
-          <Switch v-model={switchStatus.value} />
-          <hr />
-          <p>设置长度</p>
-          <Switch v-model={switchStatus.value} width="2rem" />
-          <Switch v-model={switchStatus.value} width="1.8rem" />
-          <Switch v-model={switchStatus.value} width="1.5rem" />
-          <Switch v-model={switchStatus.value} width="1.2rem" />
-          <p>设置颜色</p>
-          <Switch
-            v-model={switchStatus.value}
-            inactiveColor="#ff4949"
-            activeColor="green"
+          <SliderNav
+            sliderData={searchNavData}
+            currentSliderId={currentSliderId.value}
+            onChange={sliderChange}
           />
-          <Switch
-            v-model={switchStatus.value}
-            inactiveColor="#f05b72"
-            activeColor="#ef5b9c"
-          />
-          <Switch
-            v-model={switchStatus.value}
-            inactiveColor="#8e453f"
-            activeColor="#fcaf17"
-          />
-          <Switch
-            v-model={switchStatus.value}
-            inactiveColor="#87843b"
-            activeColor="#224b8f"
-          />
-          <Switch
-            v-model={switchStatus.value}
-            inactiveColor="#27342b"
-            activeColor="#402e4c"
-          />
-          <hr />
-          <p>设置状态</p>
-          <Switch disable={true} />
-          <hr />
-          <p>change事件</p>
-          <Switch v-model={switchStatus.value} onChange={handleChange} />{" "}
-          <span>{changeData.value}</span>
+
+          {searchNavData.map((item: any, index: number) => {
+            return (
+              <div
+                onClick={changeNav(index)}
+                style={{
+                  color: currentSliderId.value === index ? "red" : "",
+                }}
+              >
+                点击切换到{item.name}
+              </div>
+            );
+          })}
         </div>
       );
     };

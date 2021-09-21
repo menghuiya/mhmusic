@@ -187,8 +187,8 @@ export default defineComponent({
                       showText={true}
                       width="0.7rem"
                       strokeWidth="2"
-                      baseColor="#E5E5E5"
-                      color="#000"
+                      baseColor={store.state.dark ? "#313131" : "#E5E5E5"}
+                      color={store.state.dark ? "#fff" : "#000"}
                       v-slots={{
                         center: () => (
                           <>

@@ -1,7 +1,7 @@
 <template>
   <Nav
     leftIcon="icon-fanhui"
-    iconColor="#fff"
+    iconColor="#fff !important"
     :backStatus="true"
     :bgImg="TopBg"
     @moreNav="scollerMore"

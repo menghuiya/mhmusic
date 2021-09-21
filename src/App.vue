@@ -5,19 +5,11 @@
     <!-- vue3.0配置 keep-alive缓存-->
     <transition :name="$route.meta.transitionName">
       <keep-alive>
-        <component
-          :is="Component"
-          v-if="$route.meta.keepAlive"
-          class="app-view"
-        />
+        <component :is="Component" v-if="$route.meta.keepAlive" />
       </keep-alive>
     </transition>
     <transition :name="$route.meta.transitionName">
-      <component
-        :is="Component"
-        v-if="!$route.meta.keepAlive"
-        class="app-view"
-      />
+      <component :is="Component" v-if="!$route.meta.keepAlive" />
     </transition>
   </router-view>
 
@@ -152,25 +144,25 @@ li {
 .jump-enter-active,
 .jump-leave-active {
   will-change: transform;
-  transition: all 0.5s;
+  transition: all 0.3s;
   width: 100%;
   position: absolute;
   z-index: 99;
 }
 .jump-enter-from {
-  opacity: 0;
+  // opacity: 0;
   transform: translate3d(100%, 0, 0);
 }
 .jump-leave-active {
-  opacity: 0;
+  // opacity: 0;
   transform: translate3d(-100%, 0, 0);
 }
 .back-enter-from {
-  opacity: 0;
+  // opacity: 0;
   transform: translate3d(-100%, 0, 0);
 }
 .back-leave-active {
-  opacity: 0;
+  // opacity: 0;
   transform: translate3d(+100%, 0, 0);
 }
 

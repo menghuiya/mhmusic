@@ -60,12 +60,7 @@ export default defineComponent({
     const openQrCode = () => {
       Confirm({
         title: "温馨提示",
-        message: () => (
-          <img
-            src="https://www.52mhzy.cn/wp-content/uploads/2021/04/1619606328-7e4b80601a71e85-300x168.jpg"
-            alt=""
-          />
-        ),
+        message: "哈哈哈暂未开通哦",
         showCancelButton: false,
         confirmButtonText: "知道啦",
       });

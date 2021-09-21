@@ -111,7 +111,6 @@ export default defineComponent({
       window.addEventListener("scroll", initHeight);
       nextTick(() => {
         offsetHeight.value = NavRef.value.offsetHeight;
-        console.log(offsetHeight.value);
       });
     });
 

@@ -52,7 +52,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/user/login/index"),
     meta: {
       title: "梦回云音乐-登录中心",
-      index: 2,
+      index: 3,
     },
     beforeEnter: (to, from, next) => {
       if (store.state.userInfo.isLogin) {
@@ -77,6 +77,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/user/creatorCenter/index"),
     meta: {
       title: "梦回云音乐-创作者中心",
+      index: 2,
+    },
+  },
+  {
+    path: "/DayRecommd",
+    name: "DayRecommd",
+    component: () => import("../views/homePublic/DayRecommd"),
+    meta: {
+      title: "梦回云音乐-每日推荐",
       index: 2,
     },
   },
