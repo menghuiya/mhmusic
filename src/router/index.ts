@@ -90,6 +90,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/sheetSquare",
+    name: "sheetSquare",
+    component: () => import("../views/sheetSquare/sheetSquare"),
+    meta: {
+      title: "梦回云音乐-歌单广场",
+      index: 2,
+    },
+  },
+  {
     path: "/comcenter",
     name: "comcenter",
     component: () => import("../views/test/index"),

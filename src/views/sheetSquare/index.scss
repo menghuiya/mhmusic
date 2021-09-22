@@ -1,0 +1,26 @@
+@import "@/assets/css/common.scss";
+.sheetsquare {
+  &-head {
+    position: sticky;
+    top: 0;
+    @include background_color("background_color");
+    @include font_color("text-color");
+    &-slidernav {
+      padding: 0 0.25rem;
+      display: flex;
+      align-items: baseline;
+      .slidernav-category {
+        font-size: 0.5rem;
+        padding-left: 0.25rem;
+
+        .icon-fenlei {
+          vertical-align: middle;
+          font-size: 0.5rem;
+        }
+      }
+    }
+  }
+  &-body {
+    padding: 0 0.25rem;
+  }
+}

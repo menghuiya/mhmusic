@@ -140,6 +140,27 @@ export default createStore({
       }
       state.dark = value;
     },
+    deleteMusic(state, value) {
+      if (value <= state.playCurrentIndex && state.playList.length !== 1) {
+        if (state.playCurrentIndex !== 0) {
+          state.playCurrentIndex = state.playCurrentIndex - 1;
+        }
+      }
+      if (state.playList.length === 1 && value === 0) {
+        state.playCurrentIndex = null;
+        state.playCurrentTime = 0;
+        state.playTotalTime = 0;
+        state.lyric = "";
+      }
+      state.playList.splice(value, 1);
+    },
+    deletePlayList(state) {
+      state.playCurrentIndex = null;
+      state.playCurrentTime = 0;
+      state.playTotalTime = 0;
+      state.lyric = "";
+      state.playList = [];
+    },
   },
   actions: {
     async reqLyric(content, payload) {

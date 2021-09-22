@@ -34,9 +34,11 @@ export default defineComponent({
       { id: 5, name: "每日推荐", icon: "icon-tubiao204" },
     ]);
     const handleClick = (menuData: MenuItem) => {
-      console.log(menuData);
       if (menuData.id === 1) {
         router.push("/DayRecommd");
+      }
+      if (menuData.id === 3) {
+        router.push("/sheetSquare");
       }
     };
     return {

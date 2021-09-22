@@ -28,6 +28,17 @@ export default defineComponent({
       e.preventDefault();
       store.commit("setPlayCurrntIndex", index);
     };
+
+    const deleteMusic: ClickHandler = (index: number) => (e) => {
+      e.preventDefault();
+      store.commit("deleteMusic", index);
+    };
+    const clearPlatlist = (e: Event) => {
+      e.preventDefault();
+      store.commit("deletePlayList");
+      closePop();
+    };
+
     const renderRedyPlayList = () => {
       return props.playList.map((item: any, index: number) => {
         return (
@@ -55,7 +66,10 @@ export default defineComponent({
                 </div>
               ),
               right: () => (
-                <i class="iconfont icon-shanchu read-play-item-delete"></i>
+                <i
+                  class="iconfont icon-shanchu read-play-item-delete"
+                  onClick={deleteMusic(index)}
+                ></i>
               ),
             }}
           ></CellItem>
@@ -78,7 +92,7 @@ export default defineComponent({
               <div class="read-play-action-right">
                 <i class="iconfont icon-zengjiashuzi"></i>
                 <span class="collect-all">收藏全部</span>
-                <i class="iconfont icon-shanchu1"></i>
+                <i class="iconfont icon-shanchu1" onClick={clearPlatlist}></i>
               </div>
             </div>
           </div>
