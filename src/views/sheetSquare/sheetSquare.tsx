@@ -2,22 +2,25 @@ import Nav from "@/components/Nav/Nav";
 import SliderNav from "@/components/SliderNav/SliderNav";
 import { ClickEventFuncType } from "@/utils/types";
 import { defineComponent, ref } from "vue";
+import BoutiqueSheet from "./components/BoutiqueSheet";
+import CommonSheet from "./components/CommonSheet";
+import RecomondSheet from "./components/RecomondSheet";
 import "./index.scss";
 
 export default defineComponent({
   name: "sheetSquare",
   setup() {
+    const swipeRef = ref(); //swiper的实例
     const searchNavData = [
-      { id: 0, name: "综合", type: 1018 },
-      { id: 1, name: "单曲", type: 1 },
-      { id: 2, name: "歌单", type: 1000 },
-      { id: 3, name: "视频", type: 1014 },
-      { id: 4, name: "歌手", type: 100 },
-      { id: 5, name: "歌词", type: 1006 },
-      { id: 6, name: "用户", type: 1002 },
-      { id: 7, name: "电台", type: 1009 },
-      { id: 8, name: "专辑", type: 10 },
-      { id: 9, name: "MV", type: 1004 },
+      { id: 0, name: "推荐" },
+      { id: 1, name: "官方" },
+      { id: 2, name: "视频歌单" },
+      { id: 3, name: "精品" },
+      { id: 4, name: "欧美" },
+      { id: 5, name: "流行" },
+      { id: 6, name: "电子" },
+      { id: 7, name: "轻音乐" },
+      { id: 8, name: "摇滚" },
     ];
     const currentSliderId = ref(0);
     const changeNav: ClickEventFuncType = (index: number) => (e) => {
@@ -25,6 +28,45 @@ export default defineComponent({
     };
     const sliderChange = (value: number) => {
       currentSliderId.value = value;
+      swipeToCurrentTab(value);
+    };
+
+    const swipeToCurrentTab = (index: number) => {
+      // console.log(swipeRef.value);
+      if (swipeRef.value) {
+        swipeRef.value.slideTo(index, 500, false);
+      }
+    };
+
+    const onSwiper = (swiper: any) => {
+      swipeRef.value = swiper;
+    };
+
+    const onSlideChange = (swiper: any) => {
+      currentSliderId.value = swiper.activeIndex;
+    };
+    const renderSheet = () => {
+      return searchNavData.map((item: any, index: number) => {
+        if (item.name === "推荐") {
+          return (
+            <swiper-slide class="sheetsquare-body-slider">
+              <RecomondSheet />
+            </swiper-slide>
+          );
+        } else if (item.name === "精品") {
+          return (
+            <swiper-slide class="sheetsquare-body-slider">
+              <BoutiqueSheet />
+            </swiper-slide>
+          );
+        } else {
+          return (
+            <swiper-slide class="sheetsquare-body-slider">
+              <CommonSheet />
+            </swiper-slide>
+          );
+        }
+      });
     };
 
     return () => {
@@ -53,30 +95,13 @@ export default defineComponent({
           </div>
 
           <div class="sheetsquare-body">
-            {searchNavData.map((item: any, index: number) => {
-              return (
-                <div
-                  onClick={changeNav(index)}
-                  style={{
-                    color: currentSliderId.value === index ? "red" : "",
-                  }}
-                >
-                  点击切换到{item.name}
-                </div>
-              );
-            })}
-            {searchNavData.map((item: any, index: number) => {
-              return (
-                <div
-                  onClick={changeNav(index)}
-                  style={{
-                    color: currentSliderId.value === index ? "red" : "",
-                  }}
-                >
-                  点击切换到{item.name}
-                </div>
-              );
-            })}
+            <swiper
+              class="sheetsquare-body-track"
+              onSwiper={onSwiper}
+              onSlideChange={onSlideChange}
+            >
+              {renderSheet()}
+            </swiper>
           </div>
         </div>
       );

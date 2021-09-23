@@ -6,11 +6,7 @@
       :space-between="8"
       v-if="findSheetData.length"
     >
-      <swiper-slide
-        v-for="item in findSheetData"
-        :key="item.id"
-        @click="handleClick(item)"
-      >
+      <swiper-slide v-for="item in findSheetData" :key="item.id">
         <SongSheetCard :sheetData="item" />
       </swiper-slide>
     </swiper>
@@ -26,7 +22,6 @@ import { RecomdOptions, RecomdSheetItem } from "./types";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import LoadingCom from "@/components/Loading/LoadingCom";
 import SongSheetCard from "@/components/SongSheetCard/SongSheetCard";
-import router from "@/router";
 
 export default defineComponent({
   name: "FindMusiList",
@@ -44,18 +39,9 @@ export default defineComponent({
         findSheetData.value = res.result;
       });
     });
-    const handleClick = (sheetData: RecomdSheetItem) => {
-      console.log(sheetData);
-      router.push({
-        path: "/sheetList",
-        query: {
-          id: sheetData.id,
-        },
-      });
-    };
+
     return {
       findSheetData,
-      handleClick,
     };
   },
 });

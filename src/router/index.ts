@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/musicSheet/index.vue"),
     meta: {
       title: "梦回云音乐-歌单",
-      index: 2,
+      index: 5,
     },
   },
   {

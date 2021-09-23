@@ -1,10 +1,19 @@
 @import "@/assets/css/common.scss";
 .sheetsquare {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 2rem);
+  width: 100%;
+  top: 0;
+  right: 0;
+  position: fixed;
+  z-index: 1;
   &-head {
-    position: sticky;
-    top: 0;
+    // position: sticky;
+    // top: 0;
     @include background_color("background_color");
     @include font_color("text-color");
+    z-index: 1;
     &-slidernav {
       padding: 0 0.25rem;
       display: flex;
@@ -22,5 +31,16 @@
   }
   &-body {
     padding: 0 0.25rem;
+    // overflow-y: auto;
+    overflow: hidden;
+    flex: 1;
+    &-track {
+      height: 100%;
+      overflow: hidden;
+    }
+    &-slider {
+      height: 100%;
+      overflow-y: auto;
+    }
   }
 }

@@ -1,0 +1,10 @@
+.RecomondSheet {
+  &-ramdom {
+    display: flex;
+    flex-wrap: wrap;
+    &-card {
+      width: (100% / 3);
+      margin: 0.25rem 0;
+    }
+  }
+}
