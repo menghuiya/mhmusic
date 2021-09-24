@@ -7,4 +7,29 @@
       margin: 0.25rem 0;
     }
   }
+  &-dayre {
+    width: 100%;
+    &-card {
+      height: 3.8rem;
+      width: 2.8rem;
+      font-size: 0.14rem;
+      overflow: hidden;
+    }
+  }
+}
+
+.common-title {
+  padding: 0.25rem 0.25rem 0 0.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  .iconfont {
+    font-size: 0.36rem;
+    font-weight: 500;
+    margin-right: 0.1rem;
+  }
+  span {
+    font-size: 0.46rem;
+    letter-spacing: 1px;
+  }
 }

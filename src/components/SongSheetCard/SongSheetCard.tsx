@@ -27,7 +27,7 @@ export default defineComponent({
         <div class="song-sheet-card" onClick={handleClick}>
           <div class="song-sheet-cover">
             <img
-              src={props.sheetData.picUrl}
+              src={props.sheetData.picUrl || props.sheetData.coverImgUrl}
               alt={props.sheetData.name}
               class="cover-img"
             />
