@@ -757,3 +757,13 @@ watch: {
 
 
 
+#### ios safari浏览器 z-index 失效
+
+就是在页面上加上 下面这句代码后
+
+```css
+ -webkit-overflow-scrolling: touch;
+```
+
+属性后,在安卓上的z-index是有效的,但在苹果上的z-index却始终没有效果
+

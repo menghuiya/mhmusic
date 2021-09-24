@@ -1,6 +1,7 @@
 @import "@/assets/css/common.scss";
 .info {
   @include background_color("background_color");
+  position: relative;
   &-head {
     background-color: #fff;
     .left-icon {

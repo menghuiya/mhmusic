@@ -7,6 +7,7 @@
   z-index: 1;
   @include background_color("background_color");
   @include font_color("text-color");
+
   .top-nav {
     background: no-repeat center center / cover !important;
   }

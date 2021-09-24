@@ -80,11 +80,15 @@ export default defineComponent({
     const offsetHeight = ref(0);
     const isFixed = ref<boolean>(false);
     const NavRef = ref();
+    const appContent: any = document.querySelector(".app-content");
+    const backgroundStyle = ref<CSSProperties>({
+      backgroundImage: "",
+    });
     const initHeight = () => {
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
-        document.body.scrollTop;
+        appContent.scrollTop;
       let moreThanHeight = offsetHeight.value;
       emit("scroll", scrollTop);
       if (props.overflowHeight && props.overflowHeight > 0) {
@@ -94,22 +98,23 @@ export default defineComponent({
         if (!isFixed.value) {
           isFixed.value = true;
           // NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
-          NavRef.value.style.cssText = `background-image:url('${props.bgImg}') !important`;
-
+          // NavRef.value.style.cssText = `background-image:url('${props.bgImg}') !important`;
+          backgroundStyle.value.backgroundImage = `url('${props.bgImg}') !important`;
           emit("moreNav");
         }
       } else {
         if (isFixed.value) {
           isFixed.value = false;
-          NavRef.value.style.backgroundImage = ``;
+          // NavRef.value.style.backgroundImage = ``;
+          backgroundStyle.value.backgroundImage = ``;
           emit("lessNav");
         }
       }
     };
 
     onMounted(() => {
-      window.addEventListener("scroll", initHeight);
       nextTick(() => {
+        appContent.addEventListener("scroll", initHeight);
         offsetHeight.value = NavRef.value.offsetHeight;
       });
     });
@@ -138,7 +143,7 @@ export default defineComponent({
         <div
           class={["top-nav", isFixed.value ? "nav-fixed" : ""]}
           ref={NavRef}
-          style={props.style}
+          style={{ ...backgroundStyle.value, ...props.style }}
         >
           <div class="top-left">{renderLeft()}</div>
           <div class="top-center">{slots.center ? slots.center() : null}</div>

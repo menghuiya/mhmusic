@@ -196,7 +196,12 @@ export default defineComponent({
             visible={props.visible}
             onClose={closePop}
             direction="left"
-            style={{ width: "8rem", height: "100%", background: "#F1F1F1" }}
+            style={{
+              width: "8rem",
+              height: "100%",
+              background: "#F1F1F1",
+              zIndex: 999,
+            }}
             v-slots={{
               head: () => (
                 <div class="info-head">

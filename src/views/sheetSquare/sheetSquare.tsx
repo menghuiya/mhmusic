@@ -1,8 +1,9 @@
 import Nav from "@/components/Nav/Nav";
 import SliderNav from "@/components/SliderNav/SliderNav";
 import { ClickEventFuncType } from "@/utils/types";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import BoutiqueSheet from "./components/BoutiqueSheet";
+import CategoryPage from "./components/CategoryPage";
 import CommonSheet from "./components/CommonSheet";
 import RecomondSheet from "./components/RecomondSheet";
 import "./index.scss";
@@ -11,6 +12,7 @@ export default defineComponent({
   name: "sheetSquare",
   setup() {
     const swipeRef = ref(); //swiper的实例
+    const cateVisibel = ref(false);
     const searchNavData = [
       { id: 0, name: "推荐" },
       { id: 1, name: "官方" },
@@ -45,6 +47,14 @@ export default defineComponent({
     const onSlideChange = (swiper: any) => {
       currentSliderId.value = swiper.activeIndex;
     };
+
+    const openCate = () => {
+      cateVisibel.value = true;
+    };
+    const closeCate = () => {
+      cateVisibel.value = false;
+    };
+
     const renderSheet = () => {
       return searchNavData.map((item: any, index: number) => {
         if (item.name === "推荐") {
@@ -62,12 +72,21 @@ export default defineComponent({
         } else {
           return (
             <swiper-slide class="sheetsquare-body-slider">
-              <CommonSheet />
+              <CommonSheet
+                visible={index === currentSliderId.value}
+                cat={item.name}
+              />
             </swiper-slide>
           );
         }
       });
     };
+
+    onMounted(() => {
+      setTimeout(() => {
+        cateVisibel.value = true;
+      }, 100);
+    });
 
     return () => {
       return (
@@ -75,7 +94,7 @@ export default defineComponent({
           <div class="sheetsquare-head">
             <Nav
               backStatus={true}
-              iconSize="0.6rem"
+              iconSize="0.5rem"
               class="creator-center-nav"
               v-slots={{
                 right: () => null,
@@ -88,7 +107,7 @@ export default defineComponent({
                 currentSliderId={currentSliderId.value}
                 onChange={sliderChange}
               />
-              <div class="slidernav-category">
+              <div class="slidernav-category" onClick={openCate}>
                 <i class="iconfont icon-fenlei"></i>
               </div>
             </div>
@@ -103,6 +122,7 @@ export default defineComponent({
               {renderSheet()}
             </swiper>
           </div>
+          <CategoryPage show={cateVisibel.value} onClose={closeCate} />
         </div>
       );
     };

@@ -1,18 +1,18 @@
 <template>
   <!-- <div> -->
-
-  <router-view v-slot="{ Component }">
-    <!-- vue3.0配置 keep-alive缓存-->
-    <transition :name="$route.meta.transitionName">
-      <keep-alive>
-        <component :is="Component" v-if="$route.meta.keepAlive" />
-      </keep-alive>
-    </transition>
-    <transition :name="$route.meta.transitionName">
-      <component :is="Component" v-if="!$route.meta.keepAlive" />
-    </transition>
-  </router-view>
-
+  <div class="app-content">
+    <router-view v-slot="{ Component }">
+      <!-- vue3.0配置 keep-alive缓存-->
+      <transition :name="$route.meta.transitionName">
+        <keep-alive>
+          <component :is="Component" v-if="$route.meta.keepAlive" />
+        </keep-alive>
+      </transition>
+      <transition :name="$route.meta.transitionName">
+        <component :is="Component" v-if="!$route.meta.keepAlive" />
+      </transition>
+    </router-view>
+  </div>
   <PlayController v-model="boxStatus" />
   <!-- </div> -->
 </template>
@@ -105,7 +105,18 @@ body,
   // background: #f5f5f5;
   @include background_color("background_color");
   @include font_color("text-color");
-  -webkit-overflow-scrolling: touch;
+
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  .app-content {
+    flex: 1;
+    overflow: auto;
+    // -webkit-overflow-scrolling: touch;
+  }
 }
 a,
 img,

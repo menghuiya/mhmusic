@@ -1,17 +1,14 @@
 @import "@/assets/css/common.scss";
 
-.m-user {
-  &-vip {
-    display: flex;
-    align-items: center;
-    img {
-      width: 1.2rem;
-      margin-left: 0.1rem;
-      vertical-align: middle;
-    }
+.m-user-vip {
+  display: flex;
+  align-items: center;
+  img {
+    width: 1.2rem;
+    margin-left: 0.1rem;
+    vertical-align: middle;
   }
 }
-
 .usertop {
   &-bgimg {
     position: absolute;
