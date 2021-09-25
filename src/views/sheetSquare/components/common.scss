@@ -48,23 +48,23 @@
     margin-right: 0.1rem;
   }
   span {
-    font-size: 0.45rem;
+    font-size: 0.43rem;
     letter-spacing: 1px;
   }
 }
 
 .sheetcate {
-  @include background_color("background_color");
+  @include background_color("sheet-page-bg");
   @include font_color("text-color");
-  position: fixed;
+  position: absolute;
   // top: 0;
   // left: 0;
-  bottom: 0;
+  top: 0;
   right: 0;
   background-color: #fff;
   height: 100%;
   width: 100%;
-  z-index: 100;
+  z-index: 1;
   padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
   padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
   display: flex;
@@ -74,11 +74,128 @@
     right: 0;
   }
   &-nav {
-    @include background_color("cell-bgcolor");
+    @include background_color("sheet-page-bg");
+    &-title {
+      font-weight: 600;
+      font-size: 0.43rem;
+    }
   }
   &-body {
-    overflow-y: scroll;
+    // height: calc(100% - 2.5rem);
     flex: 1;
+    overflow: auto;
+    padding: 0 0.25rem;
+    &-title {
+      font-size: 0.38rem;
+      font-weight: 600;
+      padding: 0.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &-left {
+        span {
+          font-size: 0.32rem;
+          color: #d3d3d3;
+          font-weight: 500;
+        }
+      }
+      &-right {
+        font-size: 0.32rem;
+        font-weight: 500;
+        padding: 0.1rem 0.4rem;
+        color: #ea463d;
+        border: 1px solid #ea463d;
+        border-radius: 999rem;
+      }
+    }
+    &-group {
+      font-size: 0.34rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      &-item {
+        width: (100% / 4);
+        // text-align: center;
+        padding: 0.1rem;
+        background: transparent;
+        margin: 0.1rem 0;
+        &-card {
+          @include background_color("sheet-page-card");
+          @include font_color("text-color");
+          border-radius: 999rem;
+          font-size: 00.32rem;
+          height: 100%;
+          width: 100%;
+          padding: 0.25rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .iconfont {
+            font-size: 0.36rem;
+            margin-right: 0.05rem;
+          }
+          .sheetcate-card-name {
+            word-break: break-all;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        }
+      }
+      .group-item-active {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.commonPage {
+  @include background_color("sheet-page-bg");
+  @include font_color("text-color");
+  position: fixed;
+  // top: 0;
+  // left: 0;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  z-index: 101;
+  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+  display: flex;
+  flex-direction: column;
+  &-show {
+    width: 100%;
+    right: 0;
+  }
+}
+
+.boutique {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  &-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.36rem;
+    padding: 0.1rem;
+  }
+  &-body {
+    flex: 1;
+    overflow-y: auto;
+    &-data {
+      display: flex;
+      flex-wrap: wrap;
+      &-card {
+        width: (100% / 3);
+        margin: 0.25rem 0;
+      }
+    }
   }
 }
 

@@ -37,6 +37,7 @@ interface PlayListParmas {
   order?: PlayListParmasOrder;
   limit?: number;
   offset?: number;
+  before?: number;
 }
 
 /**
@@ -60,5 +61,29 @@ export function getPlayListCategory() {
   return request({
     url: `/playlist/catlist`,
     method: "get",
+  });
+}
+
+/**
+ * 获取精品歌单标签
+ * @returns
+ */
+export function getHighqualityTags() {
+  return request({
+    url: `/playlist/highquality/tags`,
+    method: "get",
+  });
+}
+
+/**
+ * 获取歌单
+ * @param data
+ * @returns
+ */
+export function getHighqualityPlayList(data: PlayListParmas) {
+  return request({
+    url: `/top/playlist/highquality`,
+    method: "get",
+    params: data,
   });
 }

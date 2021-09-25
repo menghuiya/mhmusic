@@ -1,4 +1,13 @@
 @import "@/assets/css/common.scss";
+.sheetsquare-content {
+  height: 100%;
+  overflow: hidden;
+}
+.sheetsquare-box {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
 .sheetsquare {
   display: flex;
   flex-direction: column;
@@ -42,6 +51,85 @@
     &-slider {
       height: 100%;
       overflow: hidden;
+    }
+  }
+}
+
+.screen {
+  @include background_color("sheet-page-bg");
+  @include font_color("text-color");
+  height: 100%;
+  padding: 0.3rem;
+  &-head {
+    @include background_color("sheet-page-bg");
+    @include font_color("text-color");
+    padding: 0.2rem 0.3rem;
+    &-center {
+      font-size: 0.43rem;
+      font-weight: 600;
+    }
+    &-close {
+      padding: 0.1rem;
+      @include background_color("sheet-page-card");
+      @include font_color("text-color");
+      border-radius: 50%;
+      width: 0.7rem;
+      height: 0.7rem;
+      text-align: center;
+      line-height: 0.5rem;
+      .iconfont {
+        font-size: 0.5rem;
+      }
+    }
+  }
+  &-body {
+    &-all {
+      border-radius: 999rem;
+      font-size: 0.32rem;
+      padding: 0.25rem 0;
+      text-align: center;
+      @include background_color("sheet-page-card");
+    }
+    &-group {
+      font-size: 0.34rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      &-item {
+        width: (100% / 4);
+        // text-align: center;
+        padding: 0.1rem;
+        background: transparent;
+        margin: 0.1rem 0;
+        &-card {
+          @include background_color("sheet-page-card");
+          @include font_color("text-color");
+          border-radius: 999rem;
+          font-size: 00.32rem;
+          height: 100%;
+          width: 100%;
+          padding: 0.25rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .iconfont {
+            font-size: 0.36rem;
+            margin-right: 0.05rem;
+          }
+          .sheetcate-card-name {
+            word-break: break-all;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    .screen-active {
+      background: linear-gradient(to right, #ec6554, #ea3d2b) !important;
+      color: #fff !important;
     }
   }
 }

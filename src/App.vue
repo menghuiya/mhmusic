@@ -17,7 +17,15 @@
   <!-- </div> -->
 </template>
 <script lang="tsx">
-import { computed, defineComponent, onMounted, provide, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  provide,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import PlayController from "./components/PlayController/PlayController";
 
 import {
@@ -70,6 +78,7 @@ export default defineComponent({
         window.document.documentElement.setAttribute("data-theme", "light");
       }
     };
+
     onMounted(() => {
       window.document.documentElement.setAttribute(
         "data-theme",

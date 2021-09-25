@@ -39,9 +39,12 @@ export default defineComponent({
     };
 
     watch(
-      () => props.visible,
+      () => [props.visible, props.cat],
       (newValue) => {
-        if (newValue && !sheetData.value.length) {
+        if (newValue[1] && props.visible) {
+          sheetData.value = [];
+        }
+        if (props.visible && !sheetData.value.length) {
           isLoading.value = true;
           getSheetData();
         }
@@ -56,7 +59,7 @@ export default defineComponent({
       const targetHeight =
         sheetRef.value.scrollHeight - sheetRef.value.clientHeight;
       if (
-        targetHeight < scrollTop &&
+        targetHeight <= scrollTop &&
         !isLoading.value &&
         qureyOffset.value < 4
       ) {
@@ -75,8 +78,11 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      window.removeEventListener("scroll", initHeight);
+      if (sheetRef.value) {
+        sheetRef.value.removeEventListener("scroll", initHeight);
+      }
     });
+
     return () => {
       return (
         <div class="commonsheet" ref={sheetRef}>

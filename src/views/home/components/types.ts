@@ -24,6 +24,8 @@ interface RecomdSheetItem {
   trackCount?: number;
   trackNumberUpdateTime?: number;
   type?: number;
+  updateTime?: number;
+  createTime?: number;
 }
 
 interface ArtistItem {
