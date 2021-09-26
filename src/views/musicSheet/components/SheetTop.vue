@@ -25,7 +25,7 @@
         <div class="sheet-cover">
           <img
             class="sheet-cover-img"
-            :src="sheetData.coverImgUrl"
+            v-imgLazy="sheetData.coverImgUrl"
             v-if="sheetData"
           />
           <div class="sheet-cover-img-load" v-else></div>
@@ -197,7 +197,7 @@ export default defineComponent({
         width: 3rem;
         height: 3rem;
         border-radius: 0.25rem;
-        background-color: #f4f4f5;
+        // background-color: #f4f4f5;
         filter: drop-shadow(5px 5px 5px #000);
       }
       .sheet-cover-img-load {

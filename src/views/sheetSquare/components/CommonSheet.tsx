@@ -1,4 +1,5 @@
 import { getPlayList } from "@/api/songSheet";
+import Divider from "@/components/Divider/Divider";
 import LoadingCom from "@/components/Loading/LoadingCom";
 import SongSheetCard from "@/components/SongSheetCard/SongSheetCard";
 import { RecomdSheetItem } from "@/views/home/components/types";
@@ -99,6 +100,12 @@ export default defineComponent({
               : null}
           </div>
           <LoadingCom v-show={isLoading.value} />
+          <Divider
+            position="center"
+            v-show={!isLoading.value && qureyOffset.value >= 4}
+          >
+            已经拉到底部啦！
+          </Divider>
         </div>
       );
     };

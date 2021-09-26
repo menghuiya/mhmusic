@@ -1,5 +1,6 @@
 import { getRecomdSheet } from "@/api/home";
 import { getPlayList } from "@/api/songSheet";
+import Divider from "@/components/Divider/Divider";
 import LoadingCom from "@/components/Loading/LoadingCom";
 import SongSheetCard from "@/components/SongSheetCard/SongSheetCard";
 import TitleLine from "@/components/TitleLine/TitleLine";
@@ -65,7 +66,6 @@ export default defineComponent({
       getDayRecommdData();
       getOfficialData();
     });
-
     return () => {
       return (
         <div class="RecomondSheet">
@@ -148,6 +148,7 @@ export default defineComponent({
                   }
                 )}
               </div>
+              <Divider position="center">已经拉到底部啦！</Divider>
             </>
           ) : (
             <LoadingCom />

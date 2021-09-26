@@ -183,7 +183,7 @@ export default defineComponent({
                       title: () => (
                         <div class="dayrecommd-music-music">
                           <img
-                            src={item.al.picUrl}
+                            v-imgLazy={item.al.picUrl}
                             class="dayrecommd-music-music-cover"
                             alt=""
                           />

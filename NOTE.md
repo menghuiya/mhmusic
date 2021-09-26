@@ -767,3 +767,72 @@ watch: {
 
 属性后,在安卓上的z-index是有效的,但在苹果上的z-index却始终没有效果
 
+
+
+#### Vue3.0 图片懒加载
+
+因为要使用到自定义指令 所以我们创建一个directive文件 在下面建立 index.ts
+
+```ts
+import { useIntersectionObserver } from "@vueuse/core";
+import { App, DirectiveBinding } from "vue";
+const imgDefault = require("@/assets/images/activ01.png");
+export default {
+  install(app: App) {
+    app.directive("imgLazy", {
+      mounted(el: any, binding: DirectiveBinding) {
+        el.src = imgDefault; // 默认图片
+        const { stop } = useIntersectionObserver(
+          el,
+          ([{ isIntersecting }], observerElement) => {
+            if (isIntersecting) {
+              // 可见区域
+              el.onerror = () => {
+                // 当图片加载失败 设置为默认图片
+                el.src = imgDefault;
+              };
+              stop(); // 可见区域后 下次不在执行监听
+              el.src = binding.value; // 设置传过来的地址去请求
+            }
+          },
+          { threshold: 0 }
+        ); // 当可视区域宽高为0就触发
+      },
+    });
+  },
+};
+
+```
+
+然后再main.ts 中注册全局自定义指令
+
+```ts
+import directive from "@/directive/index";
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(directive)
+  .mount("#app");
+
+```
+
+在tsx中使用
+
+```tsx
+<img
+  v-imgLazy={props.sheetData.picUrl || props.sheetData.coverImgUrl}
+  alt={props.sheetData.name}
+  class="cover-img"
+/>
+```
+
+在vue 文件中使用
+
+```vue
+<img
+  class="sheet-cover-img"
+  v-imgLazy="sheetData.coverImgUrl"
+  v-if="sheetData"
+/>
+```
+
