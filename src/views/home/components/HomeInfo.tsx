@@ -200,7 +200,7 @@ export default defineComponent({
               width: "8rem",
               height: "100%",
               background: "#F1F1F1",
-              zIndex: 999,
+              zIndex: 101,
             }}
             v-slots={{
               head: () => (
