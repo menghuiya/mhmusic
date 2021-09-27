@@ -6,6 +6,11 @@ import LoginAccount from "./LoginAccount";
 import LoginVeryCode from "./LoginVeryCode";
 import { accoutReItem } from "../type";
 import LoginPassword from "./LoginPassword";
+import { userLoginItem } from "@/utils/types";
+import { postLogin } from "@/api/login";
+import store from "@/store";
+import router from "@/router";
+import Toast from "@/components/Toast";
 export default defineComponent({
   name: "LoginCommon",
   props: {
@@ -41,6 +46,10 @@ export default defineComponent({
       phoneNumber.value = data.phoneNumber;
       loginNav.step = 2;
       loginNav.title = "验证码登录";
+      Toast.loading({
+        message: "正在发送验证码",
+        duration: 10000,
+      });
     };
 
     const passLoginClick = () => {
@@ -49,7 +58,11 @@ export default defineComponent({
     };
 
     const handleLogin = (password: string) => {
-      console.log(phoneNumber.value, password);
+      const loginData: userLoginItem = {
+        phone: phoneNumber.value,
+        password: password,
+      };
+      store.dispatch("userLogin", loginData);
     };
 
     const renderSlotRight = (): JSX.Element | null => {

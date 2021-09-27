@@ -6,6 +6,8 @@ import { getShowNumber, getFormateData } from "@/utils/tool";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import CellItem from "@/components/Cell/CellItem";
 import { CustomEventFuncType, ClickEventFuncType } from "@/utils/types";
+import { getSongSheetDetailAll } from "@/api/songSheet";
+import store from "@/store";
 export default defineComponent({
   name: "SearchAllPage",
   props: {
@@ -19,6 +21,13 @@ export default defineComponent({
     const handleMoreClick: ClickEventFuncType = (id: number) => (e) => {
       emit("more-click", id);
     };
+
+    const playMusic: ClickEventFuncType = (id: any) => (e) => {
+      getSongSheetDetailAll(id).then((data: any) => {
+        store.commit("setPlayList", data.songs[0]);
+      });
+    };
+
     return () => {
       return (
         <div class="all">
@@ -39,11 +48,8 @@ export default defineComponent({
                   return (
                     <CellItem
                       arrow={false}
-                      style={{
-                        borderTop: "1px solid #ebeef5",
-                        padding: "0.25rem 0",
-                        margin: "0 0.25rem",
-                      }}
+                      class="all-singersong-cell"
+                      onClick={playMusic(item.id)}
                       v-slots={{
                         icon: () => null,
                         title: () => (

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sheet-page">
     <SheetTop :sheetData="state.playlist" />
     <div class="sheet-detail-box">
       <div class="vip-box" v-if="false">
@@ -99,7 +99,7 @@ export default defineComponent({
     const playMusic = (mIndex: number) => {
       if (state.playlist) {
         store.commit("setPlayCurrntIndex", mIndex);
-        store.commit("setPlayList", state.playlist.tracks);
+        store.commit("setSheetPlayList", state.playlist.tracks);
       }
     };
 
@@ -112,15 +112,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
+.sheet-page {
+  z-index: 1;
+  position: relative;
+  @include background_color("background_color");
+  @include font_color("text-color");
+}
 .sheet-detail-box {
-  background-color: #fff;
   margin: 0.3rem 0;
-  height: 100%;
+  height: calc(100% - 2rem);
   position: relative;
   .sheet-list-all {
     position: sticky;
     top: 1rem;
-    background-color: #fff;
+    @include background_color("background_color");
+    @include font_color("text-color");
     z-index: 1;
   }
   .vip-box {

@@ -46,3 +46,14 @@ export function getRecomdVideos(offset: number) {
     },
   });
 }
+
+/**
+ * 获取每日推荐
+ * @returns
+ */
+export function getDaliyRecomd() {
+  return request({
+    url: `/recommend/songs`,
+    method: "get",
+  });
+}

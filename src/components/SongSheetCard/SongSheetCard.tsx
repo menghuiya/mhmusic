@@ -1,3 +1,4 @@
+import router from "@/router";
 import { getShowNumber } from "@/utils/tool";
 import { RecomdSheetItem } from "@/views/home/components/types";
 import { defineComponent, PropType } from "vue";
@@ -12,12 +13,21 @@ export default defineComponent({
     },
   },
   setup(props, { emit, slots }) {
+    const handleClick = () => {
+      const { sheetData } = props;
+      router.push({
+        path: "/sheetList",
+        query: {
+          id: sheetData.id,
+        },
+      });
+    };
     return () => {
       return (
-        <div class="song-sheet-card">
+        <div class="song-sheet-card" onClick={handleClick}>
           <div class="song-sheet-cover">
             <img
-              src={props.sheetData.picUrl}
+              v-imgLazy={props.sheetData.picUrl || props.sheetData.coverImgUrl}
               alt={props.sheetData.name}
               class="cover-img"
             />

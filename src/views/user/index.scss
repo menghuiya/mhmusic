@@ -1,0 +1,14 @@
+@import "@/assets/css/common.scss";
+.m-user {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  @include background_color("background_color");
+  @include font_color("text-color");
+
+  .top-nav {
+    background: no-repeat center center / cover !important;
+  }
+}

@@ -1,5 +1,8 @@
+@import "@/assets/css/common.scss";
 .play-box-area {
-  position: fixed;
+  @include background_color("play-con-bg");
+  @include font_color("text-color");
+  position: relative;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -9,10 +12,11 @@
   padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
 }
 .play-box-empty {
-  height: 2rem;
+  @include background_color("background_color");
+  // height: 2rem;
   position: relative;
-  padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-  padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+  // padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
+  // padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
 }
 .play-box {
   width: 100%;
@@ -20,7 +24,7 @@
   align-items: center;
   border-top: 1px solid #f4f4f5;
   padding: 0.1rem 0.25rem;
-
+  @include border_color("border-color");
   .play-left {
     width: 1rem;
     background-color: #ccc;
@@ -36,6 +40,11 @@
     .music-name {
       font-size: 0.38rem;
       margin-right: 0.5rem;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .music-author {
       font-size: 0.32rem;
@@ -46,9 +55,11 @@
     display: flex;
     align-items: center;
     .play-btn {
-      margin-right: 0.3rem;
+      margin-right: 0.5rem;
+      display: flex;
+      align-items: center;
       .iconfont {
-        font-size: 0.8rem;
+        font-size: 0.35rem;
       }
       .icon-bofang1 {
         font-size: 0.75rem;

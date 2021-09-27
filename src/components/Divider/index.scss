@@ -1,0 +1,51 @@
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: #969799;
+  font-size: 14px;
+  line-height: 24px;
+  border-color: #ebedf0;
+  border-style: solid;
+  border-width: 0;
+  .iconfont {
+    font-size: 14px;
+  }
+  &::before,
+  &::after {
+    display: block;
+    flex: 1;
+    box-sizing: border-box;
+    height: 1px;
+    border-color: inherit;
+    border-style: inherit;
+    border-width: 1px 0 0;
+  }
+  &::before {
+    content: "";
+  }
+  &-dashed {
+    border-style: dashed;
+  }
+  &-left,
+  &-center,
+  &-right {
+    &::before {
+      margin-right: 16px;
+    }
+    &::after {
+      margin-left: 16px;
+      content: "";
+    }
+  }
+  &-left {
+    &::before {
+      max-width: 10%;
+    }
+  }
+  &-right {
+    &::after {
+      max-width: 10%;
+    }
+  }
+}

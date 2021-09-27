@@ -1,12 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  Transition,
-  watch,
-  nextTick,
-} from "vue";
+import { defineComponent, ref, Transition, watch } from "vue";
 import "./play.scss";
 import { imgToBlob, getPlayForamtTime } from "@/utils/tool";
 import Nav from "../Nav/Nav";
@@ -343,11 +335,13 @@ export default defineComponent({
               leftIcon="icon-xiangxia"
               rightIcon="icon-fenxiang"
               onLeftClick={handleLeftClick}
-              iconColor="#fff"
+              iconColor="#fff !important"
               v-slots={navSLots}
               style={{
                 position: "relative",
+                background: "no-repeat center center / cover !important",
               }}
+              class="playing-nav"
             ></Nav>
             {renderPlayCenter()}
             {renderPlayBottom()}

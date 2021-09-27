@@ -1,6 +1,8 @@
+import { sureVeryCode, veryCodeLogin } from "@/api/login";
 import Toast from "@/components/Toast";
 import router from "@/router";
 import store from "@/store";
+import { userLoginItem } from "@/utils/types";
 import {
   defineComponent,
   ref,
@@ -25,7 +27,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit, slots }) {
-    const length = [0, 1, 2, 3, 4, 5]; //只是用来展示
+    const length = [0, 1, 2, 3]; //只是用来展示
+    const sendVeryCOde = ref(false);
     const veryCode = ref("");
     const inputEle = ref();
     const countDown = ref(60);
@@ -35,14 +38,41 @@ export default defineComponent({
     const codeCurrentIndex = computed(() => {
       return veryCode.value.length;
     });
+
     const onVeryInput = () => {
-      if (codeCurrentIndex.value === 6) {
+      const { phoneNumber, phoneAreaNo } = props;
+      if (codeCurrentIndex.value === length.length) {
         Toast.loading("正在登录");
-        if (veryCode.value === "980306") {
-          store.commit("setUserLogin");
-          router.replace("/");
-        }
+        sureVeryCode(phoneNumber, veryCode.value, phoneAreaNo).then(
+          (res: any) => {
+            if (res.code === 200) {
+              const loginData: userLoginItem = {
+                phone: phoneNumber,
+                countrycode: phoneAreaNo,
+                captcha: veryCode.value,
+              };
+              store.dispatch("userLogin", loginData);
+            } else {
+              Toast.success("验证码错误");
+            }
+          }
+        );
+        // if (veryCode.value === "980306") {
+        //   store.commit("setUserLogin");
+        //   router.replace("/");
+        // }
       }
+    };
+
+    const getVeryCode = () => {
+      const { phoneNumber, phoneAreaNo } = props;
+      veryCodeLogin(phoneNumber, phoneAreaNo).then((res: any) => {
+        if (res.code === 200) {
+          sendVeryCOde.value = true;
+          Toast.clear();
+          startCountDown();
+        }
+      });
     };
 
     watch(
@@ -51,10 +81,10 @@ export default defineComponent({
       (newvalue) => {
         if (newvalue) {
           nextTick(() => {
-            setTimeout(() => {
-              inputEle.value.focus();
-              startCountDown();
-            }, 500);
+            inputEle.value.focus();
+            if (!sendVeryCOde.value) {
+              getVeryCode();
+            }
           });
         } else {
           veryCode.value = "";
@@ -74,6 +104,13 @@ export default defineComponent({
       }, 1000);
     };
 
+    const reSendVerCode = () => {
+      Toast.loading("正在重新发送");
+      veryCode.value = "";
+      countDown.value = 60;
+      getVeryCode();
+    };
+
     return () => {
       const { phoneAreaNo, phoneNumber } = props;
       return (
@@ -88,7 +125,15 @@ export default defineComponent({
               </span>
               <i class="iconfont icon-qianming"></i>
             </div>
-            <div class="veryCode-des-right">{countDown.value}S</div>
+            <div class="veryCode-des-right">
+              {countDown.value > 0 ? (
+                <span>{countDown.value}S</span>
+              ) : (
+                <span class="veryCode-des-right-btn" onClick={reSendVerCode}>
+                  重新发送
+                </span>
+              )}
+            </div>
           </div>
           <div class="veryCode-input">
             <input

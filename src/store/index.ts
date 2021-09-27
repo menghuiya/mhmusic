@@ -1,22 +1,21 @@
 import { createStore } from "vuex";
 import { getMusicWord } from "@/api/public";
-import { LyricItem } from "@/utils/types";
+import { LyricItem, userLoginItem } from "@/utils/types";
+import { postLogin } from "@/api/login";
+import router from "@/router";
+import Toast from "@/components/Toast";
 
 export default createStore({
   state: {
     playList: [] as any[],
-    playCurrentIndex: null,
+    playCurrentIndex: null as any,
+    playType: "sheet",
     lyric: "",
     playCurrentTime: 0,
     playTotalTime: 0,
     historySearch: [] as any[],
-    user: {
-      isLogin: false,
-      userName: "未登录",
-      id: 0,
-      token: "",
-      cookies: "",
-    },
+    userInfo: JSON.parse(localStorage.getItem("userInfo") || "{}"),
+    dark: localStorage.getItem("themData") === "dark" ? true : false, //黑夜模式
   },
   getters: {
     lyricList(state) {
@@ -69,7 +68,27 @@ export default createStore({
   },
   mutations: {
     setPlayList(state, value) {
+      //设置搜索时点击的播放
+      if (state.playType === "sheet") {
+        //如果上一次时歌单播放 则全部清空
+        state.playList = [];
+      }
+      const palayIndex = state.playList.findIndex(
+        (item: any) => value.id === item.id
+      );
+      if (palayIndex !== -1) {
+        state.playList.splice(palayIndex, 1);
+      }
+      state.playList.push(value);
+      //这样设置时为了知道播放类型
+      state.playType = "single";
+      //设置播放位置index
+      state.playCurrentIndex = state.playList.length - 1;
+    },
+    setSheetPlayList(state, value) {
+      //设置歌单播放的点击播放其中一个 全部播放所有
       state.playList = value;
+      state.playType = "sheet";
     },
     setPlayCurrntIndex(state, value) {
       state.playCurrentIndex = value;
@@ -106,11 +125,41 @@ export default createStore({
       //
     },
     setUserLogin(state, value) {
-      state.user.isLogin = value.isLogin;
-      state.user.userName = value.userName;
-      state.user.id = value.id;
-      state.user.token = value.token;
-      state.user.cookies = value.cookies;
+      localStorage.setItem("userInfo", JSON.stringify(value));
+      state.userInfo = value;
+    },
+    setLogout(state) {
+      localStorage.removeItem("userInfo");
+      state.userInfo = {};
+    },
+    changeDark(state, value) {
+      if (value) {
+        localStorage.setItem("themData", "dark");
+      } else {
+        localStorage.setItem("themData", "light");
+      }
+      state.dark = value;
+    },
+    deleteMusic(state, value) {
+      if (value <= state.playCurrentIndex && state.playList.length !== 1) {
+        if (state.playCurrentIndex !== 0) {
+          state.playCurrentIndex = state.playCurrentIndex - 1;
+        }
+      }
+      if (state.playList.length === 1 && value === 0) {
+        state.playCurrentIndex = null;
+        state.playCurrentTime = 0;
+        state.playTotalTime = 0;
+        state.lyric = "";
+      }
+      state.playList.splice(value, 1);
+    },
+    deletePlayList(state) {
+      state.playCurrentIndex = null;
+      state.playCurrentTime = 0;
+      state.playTotalTime = 0;
+      state.lyric = "";
+      state.playList = [];
     },
   },
   actions: {
@@ -121,6 +170,20 @@ export default createStore({
         } else {
           content.commit("setLyric", res.lrc.lyric);
         }
+      });
+    },
+    userLogin(content, payload: userLoginItem) {
+      postLogin(payload).then((res: any) => {
+        const userData: any = {
+          profile: res.profile,
+          token: res.token,
+          cookie: res.cookie,
+          loginType: res.loginType,
+          isLogin: true,
+        };
+        content.commit("setUserLogin", userData);
+        router.replace("/");
+        Toast.clear();
       });
     },
   },

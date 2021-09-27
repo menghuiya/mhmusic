@@ -4,6 +4,8 @@ import "./index.scss";
 
 import RedyPlayList from "./RedyPlayList";
 import PlayMusicPage from "./PlayMusicPage";
+import Progress from "../Progress/Progress";
+import Toast from "../Toast";
 
 export default defineComponent({
   name: "PlayController",
@@ -16,11 +18,12 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const playing = ref(false);
+    const playLoop = ref(false);
     const popVisible = ref(false);
     const playPageVisible = ref(false);
     const playControRef = ref<any>(null);
     const playBufferTime = ref(0);
-
+    const playPercentage = ref(0);
     const changePlayStatu = () => {
       if (!playControRef.value) {
         console.log("未选择音乐");
@@ -60,6 +63,11 @@ export default defineComponent({
     };
 
     const onPlay = () => {
+      if (store.state.playList.length === 1) {
+        playLoop.value = true;
+      } else {
+        playLoop.value = false;
+      }
       playing.value = true;
       store.commit("setPlayTotalTime", playControRef.value.duration);
       document.title =
@@ -67,16 +75,31 @@ export default defineComponent({
     };
 
     const onPause = () => {
+      if (store.state.playCurrentIndex === null) {
+        return false;
+      }
       playing.value = false;
       document.title =
         store.state.playList[store.state.playCurrentIndex].name +
         "-单曲-梦回云音乐";
     };
 
+    const computeplayPercentage = (noeTime: number) => {
+      if (store.state.playCurrentIndex === null) {
+        playPercentage.value = 0;
+        return false;
+      }
+      playPercentage.value = (noeTime / playControRef.value.duration) * 100;
+    };
+
     const onTimeupdate = () => {
+      if (store.state.playCurrentIndex === null) {
+        computeplayPercentage(0);
+        return false;
+      }
       const timeDisplay = playControRef.value.currentTime; //获取实时时间
       // const min = t
-      // console.log(timeDisplay);
+      computeplayPercentage(timeDisplay);
       const timeRanges = playControRef.value.buffered;
       if (timeRanges.length - 1 !== -1) {
         // 获取已缓存的时间  timeRanges.end(timeRanges.length - 1)
@@ -90,14 +113,22 @@ export default defineComponent({
       playControRef.value.currentTime = time;
     };
 
+    const onError = (val: any) => {
+      Toast.fail("播放失败，自动播放下一曲");
+      playEnd();
+    };
+
     watch(
-      () => store.state.playCurrentIndex,
-      (newValue, oldValue) => {
-        // console.log(newValue, oldValue);
+      () => [store.state.playCurrentIndex, store.state.playList],
+      (newValue) => {
+        if (store.state.playCurrentIndex === null) {
+          playing.value = false;
+          return false;
+        }
         if (!playing.value) {
           playing.value = true;
-          // playControRef.value.play();
         }
+
         store.dispatch(
           "reqLyric",
           store.state.playList[store.state.playCurrentIndex]
@@ -154,6 +185,8 @@ export default defineComponent({
                   onPlay={onPlay}
                   onPause={onPause}
                   onTimeupdate={onTimeupdate}
+                  loop={playLoop.value}
+                  onError={onError}
                 ></audio>
               ) : null}
 
@@ -177,12 +210,26 @@ export default defineComponent({
                 </div>
                 <div class="play-right">
                   <div class="play-btn" onClick={changePlayStatu}>
-                    <i
-                      class={[
-                        "iconfont",
-                        playing.value ? "icon-bofang1" : "icon-bofang",
-                      ]}
-                    ></i>
+                    <Progress
+                      percentage={playPercentage.value}
+                      showText={true}
+                      width="0.7rem"
+                      strokeWidth="2"
+                      baseColor={store.state.dark ? "#313131" : "#E5E5E5"}
+                      color={store.state.dark ? "#fff" : "#000"}
+                      v-slots={{
+                        center: () => (
+                          <>
+                            <i
+                              class={[
+                                "iconfont",
+                                playing.value ? "icon-puesed" : "icon-play",
+                              ]}
+                            ></i>
+                          </>
+                        ),
+                      }}
+                    />
                   </div>
                   <div class="play-list" onClick={openRedyList}>
                     <i class="iconfont icon-bofangliebiao"></i>

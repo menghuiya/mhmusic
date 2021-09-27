@@ -84,10 +84,20 @@ const getPlayForamtTime = (time: number) => {
   return `${min > 9 ? min : "0" + min}:${sec > 9 ? sec : "0" + sec}`;
 };
 
+const sampleSize = ([...arr], n = 1) => {
+  let m = arr.length;
+  while (m) {
+    const i = Math.floor(Math.random() * m--);
+    [arr[m], arr[i]] = [arr[i], arr[m]];
+  }
+  return arr.slice(0, n);
+};
+
 export {
   getShowNumber,
   imgToBlob,
   getFormateData,
   getFormateTime,
   getPlayForamtTime,
+  sampleSize,
 };

@@ -1,0 +1,35 @@
+@import "@/assets/css/common.scss";
+
+.creator-center {
+  height: 100%;
+  //在此使用了背景颜色变量
+  @include background_color("background_color");
+  &-nav {
+    @include font_color("text-color");
+    @include background_color("background_color");
+    padding: 0.25rem 0.25rem;
+    .iconfont {
+      @include font_color("text-color");
+      color: #000;
+    }
+  }
+  &-body {
+    &-card {
+      margin: 0.5rem 0.25rem;
+      @include background_color("secondary-bg");
+      @include font_color("text-color");
+      background: #fff;
+      text-align: center;
+      padding: 0.8rem 0;
+      border-radius: 0.25rem;
+      .creator-card-img {
+        width: 3.5rem;
+      }
+      .creator-card-text {
+        font-size: 0.46rem;
+        font-weight: 600;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+}

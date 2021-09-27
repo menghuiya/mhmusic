@@ -1,0 +1,12 @@
+.test-action {
+  position: sticky;
+  top: 0rem;
+  padding: 0 0.25rem;
+  background-color: rgba(78, 75, 75, 0.8);
+  color: #fff;
+  z-index: 99;
+  input {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+}

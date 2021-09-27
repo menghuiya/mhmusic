@@ -1,10 +1,22 @@
-import { defineComponent } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  onDeactivated,
+  ref,
+  watch,
+} from "vue";
 import Popup from "@/components/Popup/Popup";
 import CellItem from "@/components/Cell/CellItem";
 import TitleLine from "@/components/TitleLine/TitleLine";
 import "./info.scss";
 import Confirm from "@/components/Confirm";
 import router from "@/router";
+import store from "@/store";
+import { logout } from "@/api/login";
+import Toast from "@/components/Toast";
+import Switch from "@/components/Switch/Switch";
+import { DarkControllerState } from "@/utils/types";
 
 export default defineComponent({
   name: "HomeInfo",
@@ -16,6 +28,26 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit, slots }) {
+    const darkThem = inject<DarkControllerState>("DarkControllerKey");
+
+    const changeDark = (val: boolean) => {
+      darkThem?.modelBrn(val);
+    };
+    onDeactivated(() => {
+      closePop();
+    });
+    const userInfo = computed(() => {
+      return store.state.userInfo;
+    });
+
+    const dayNightState = ref(false);
+    watch(
+      () => store.state.dark,
+      (value) => {
+        dayNightState.value = value;
+      },
+      { immediate: true }
+    );
     const closePop = () => {
       emit("close");
     };
@@ -28,15 +60,56 @@ export default defineComponent({
     const openQrCode = () => {
       Confirm({
         title: "温馨提示",
-        message: () => (
-          <img
-            src="https://www.52mhzy.cn/wp-content/uploads/2021/04/1619606328-7e4b80601a71e85-300x168.jpg"
-            alt=""
-          />
-        ),
+        message: "哈哈哈暂未开通哦",
         showCancelButton: false,
         confirmButtonText: "知道啦",
       });
+    };
+
+    const handleLogout = () => {
+      logout().then((res: any) => {
+        if (res.code === 200) {
+          store.commit("setLogout");
+          Toast.success("退出成功");
+          closePop();
+          router.push("/login");
+          return;
+        }
+        Toast.fail("退出失败");
+      });
+    };
+
+    const setClick = () => {
+      router.push("/setting");
+    };
+    const handleCreatorCenter = () => {
+      router.push("/creatorCenter");
+    };
+
+    const renderUserInfo = (): JSX.Element => {
+      return (
+        <div class="left-icon" onClick={userLogin}>
+          {userInfo.value.isLogin ? (
+            <img src={userInfo.value.profile.avatarUrl} />
+          ) : (
+            <i class={["iconfont icon-yonghu-yuan"]}></i>
+          )}
+        </div>
+      );
+    };
+    const renderUserIcon = (): JSX.Element => {
+      return (
+        <div class="info-head-title" onClick={userLogin}>
+          {userInfo.value.isLogin ? (
+            <span>
+              {userInfo.value.profile.nickname}
+              <i class="iconfont icon-qianjin1"></i>{" "}
+            </span>
+          ) : (
+            "请登录账号"
+          )}
+        </div>
+      );
     };
 
     const renderDefault = (): JSX.Element => {
@@ -60,7 +133,11 @@ export default defineComponent({
               title="云贝中心"
               value="40云贝待领取"
             />
-            <CellItem icon="icon-dengpaobeifen" title="创作者中心" />
+            <CellItem
+              icon="icon-dengpaobeifen"
+              onClick={handleCreatorCenter}
+              title="创作者中心"
+            />
           </div>
           <div class="info-content-group">
             <div class="info-content-group-title">音乐服务</div>
@@ -71,8 +148,22 @@ export default defineComponent({
           </div>
           <div class="info-content-group">
             <div class="info-content-group-title">其他</div>
-            <CellItem icon="icon-shezhi" title="设置" />
-            <CellItem icon="icon-yueliang" title="夜间模式" />
+            <CellItem icon="icon-shezhi" title="设置" onClick={setClick} />
+            <CellItem
+              icon="icon-yueliang"
+              title="夜间模式"
+              arrow={false}
+              v-slots={{
+                right: () => (
+                  <Switch
+                    v-model={dayNightState.value}
+                    activeColor="#EB4D44"
+                    width="1rem"
+                    onChange={changeDark}
+                  />
+                ),
+              }}
+            />
             <CellItem icon="icon-dingshi_timing" title="定时关闭" />
             <CellItem icon="icon-yifu" title="个性装扮" />
             <CellItem icon="icon-erji" title="边听边存" value="未开启" />
@@ -89,10 +180,15 @@ export default defineComponent({
             <CellItem icon="icon-fenxiang" title="分享梦回云音乐" />
             <CellItem icon="icon-guanyu" title="关于" />
           </div>
-          <div class="info-content-logout">退出登录</div>
+          {userInfo.value.isLogin ? (
+            <div class="info-content-logout" onClick={handleLogout}>
+              退出登录
+            </div>
+          ) : null}
         </div>
       );
     };
+
     return () => {
       return (
         <div>
@@ -100,24 +196,25 @@ export default defineComponent({
             visible={props.visible}
             onClose={closePop}
             direction="left"
-            style={{ width: "8rem", height: "100%", background: "#F1F1F1" }}
+            style={{
+              width: "8rem",
+              height: "100%",
+              background: "#F1F1F1",
+              zIndex: 999,
+            }}
             v-slots={{
               head: () => (
                 <div class="info-head">
                   <CellItem
-                    onLeftClick={userLogin}
                     onRightClick={openQrCode}
-                    title="立即登录"
-                    icon="icon-yonghu-yuan"
                     arrowIcon="icon-saoma"
-                    iconSize="0.7rem"
                     arrowStyle={{
                       fontSize: "0.6rem",
                       color: "#000",
                     }}
-                    titleStyle={{
-                      fontSize: "0.4rem",
-                      fontWeight: 600,
+                    v-slots={{
+                      icon: () => renderUserInfo(),
+                      title: () => renderUserIcon(),
                     }}
                   />
                 </div>

@@ -612,3 +612,227 @@ state.historySearch = JSON.parse(localStorage.getItem("historySearch")||'[]');
 border-radius: 0;
 ```
 
+#### 十九，tsx编写代码时 自己遇到的坑（自己建立的坑）子组件无法响应式
+
+千万别把函数代码写了setup的return里 不然你的所有响应式失效，子组件无法正常使用 这里给大家看看错误代码
+
+```tsx
+setup() {
+    return () => {
+        //记住 千万不能写在这！！！！！
+      const show = ref(false);
+      const percentage = ref(10);
+      const changeShow = () => {
+        show.value = !show.value;
+      };
+      const format = (percentage: number | string) => {
+        return Number(percentage) === 100 ? "满" : `${percentage}%`;
+      };
+      return (
+        <div>
+          <Progress
+            percentage={percentage.value}
+            showText={show.value}
+            format={format}
+          />
+          <hr />
+          <input
+            type="range"
+            max="100"
+            min="0"
+            v-model={percentage.value}
+            step="1"
+          />
+
+          <div onClick={changeShow}>点我试试</div>
+        </div>
+      );
+    };
+  },
+```
+
+上面就是错误代码，因为笔记本屏幕太小看不太清代码，导致写错位置
+
+修改方式就是提出来 与return同级即可
+
+#### vue3.0过场动画切换
+
+这里有个不足之处在于 vue3.0 的监听事件，我不知道怎么拿到路由的from 和to  只能拿到route的部分信息
+
+好的开始，我们需要辅助定义一下属性 在每个路由中定义个index 代表我们的层级
+
+```ts
+{
+    path: "/",
+    name: "Home",
+    component: () => import("../views/home/index.vue"),
+    meta: {
+      keepAlive: true, //是否需要缓存
+      title: "梦回云音乐-首页",
+      index: 1,
+    },
+  },
+  {
+    path: "/sheetList",
+    name: "sheetList",
+    component: () => import("../views/musicSheet/index.vue"),
+    meta: {
+      title: "梦回云音乐-歌单",
+      index: 2,
+    },
+  },
+```
+
+然后在`App.vue`中定义使用`transition	` 下面看代码
+
+```vue
+<router-view v-slot="{ Component }">
+    <!-- vue3.0配置 keep-alive缓存-->
+    <transition :name="$route.meta.transitionName">
+      <keep-alive>
+        <component
+          :is="Component"
+          v-if="$route.meta.keepAlive"
+        />
+      </keep-alive>
+    </transition>
+    <transition :name="$route.meta.transitionName">
+      <component
+        :is="Component"
+        v-if="!$route.meta.keepAlive"
+      />
+    </transition>
+  </router-view>
+```
+
+这里是关键的一个步骤 需要去监听我们的route的变化  但是我拿去不到当前的层级和要去的层级，所以只能暂时使用`vue2.x`的方法  不要写在setup里面 
+
+```tsx
+watch: {
+    $route(to, from) {
+      //禁止刷新当前页时 触发动画效果
+      if (from.meta.index === undefined) {
+        to.meta.transitionName = "";
+        return;
+      }
+      if (to.meta.index > from.meta.index) {
+        to.meta.transitionName = "jump";
+      } else {
+        to.meta.transitionName = "back";
+      }
+    },
+  },
+```
+
+后面定义我们的css过渡代码 动画样式
+
+```scss
+.back-enter-active,
+.back-leave-active,
+.jump-enter-active,
+.jump-leave-active {
+  will-change: transform;
+  transition: all 0.5s;
+  width: 100%;
+  position: absolute;
+  z-index: 99;
+}
+.jump-enter-from {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.jump-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-enter-from {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.back-leave-active {
+  opacity: 0;
+  transform: translate3d(+100%, 0, 0);
+}
+```
+
+
+
+#### ios safari浏览器 z-index 失效
+
+就是在页面上加上 下面这句代码后
+
+```css
+ -webkit-overflow-scrolling: touch;
+```
+
+属性后,在安卓上的z-index是有效的,但在苹果上的z-index却始终没有效果
+
+
+
+#### Vue3.0 图片懒加载
+
+因为要使用到自定义指令 所以我们创建一个directive文件 在下面建立 index.ts
+
+```ts
+import { useIntersectionObserver } from "@vueuse/core";
+import { App, DirectiveBinding } from "vue";
+const imgDefault = require("@/assets/images/activ01.png");
+export default {
+  install(app: App) {
+    app.directive("imgLazy", {
+      mounted(el: any, binding: DirectiveBinding) {
+        el.src = imgDefault; // 默认图片
+        const { stop } = useIntersectionObserver(
+          el,
+          ([{ isIntersecting }], observerElement) => {
+            if (isIntersecting) {
+              // 可见区域
+              el.onerror = () => {
+                // 当图片加载失败 设置为默认图片
+                el.src = imgDefault;
+              };
+              stop(); // 可见区域后 下次不在执行监听
+              el.src = binding.value; // 设置传过来的地址去请求
+            }
+          },
+          { threshold: 0 }
+        ); // 当可视区域宽高为0就触发
+      },
+    });
+  },
+};
+
+```
+
+然后再main.ts 中注册全局自定义指令
+
+```ts
+import directive from "@/directive/index";
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(directive)
+  .mount("#app");
+
+```
+
+在tsx中使用
+
+```tsx
+<img
+  v-imgLazy={props.sheetData.picUrl || props.sheetData.coverImgUrl}
+  alt={props.sheetData.name}
+  class="cover-img"
+/>
+```
+
+在vue 文件中使用
+
+```vue
+<img
+  class="sheet-cover-img"
+  v-imgLazy="sheetData.coverImgUrl"
+  v-if="sheetData"
+/>
+```
+

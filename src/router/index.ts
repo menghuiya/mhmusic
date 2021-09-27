@@ -9,6 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       keepAlive: true, //是否需要缓存
       title: "梦回云音乐-首页",
+      index: 1,
     },
   },
   {
@@ -17,6 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/musicSheet/index.vue"),
     meta: {
       title: "梦回云音乐-歌单",
+      index: 5,
     },
   },
   {
@@ -25,6 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/search/index"),
     meta: {
       title: "梦回云音乐-搜索",
+      index: 2,
     },
   },
   {
@@ -33,10 +36,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/user/index"),
     meta: {
       title: "梦回云音乐-个人中心",
+      index: 2,
     },
     beforeEnter: (to, from, next) => {
-      console.log(store.state.user);
-      if (store.state.user.isLogin) {
+      if (store.state.userInfo.isLogin) {
         next();
       } else {
         next("login");
@@ -49,6 +52,59 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/user/login/index"),
     meta: {
       title: "梦回云音乐-登录中心",
+      index: 3,
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.state.userInfo.isLogin) {
+        next("/");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/setting",
+    name: "setting",
+    component: () => import("../views/setting/index"),
+    meta: {
+      title: "梦回云音乐-设置中心",
+      index: 2,
+    },
+  },
+  {
+    path: "/creatorCenter",
+    name: "creatorCenter",
+    component: () => import("../views/user/creatorCenter/index"),
+    meta: {
+      title: "梦回云音乐-创作者中心",
+      index: 2,
+    },
+  },
+  {
+    path: "/DayRecommd",
+    name: "DayRecommd",
+    component: () => import("../views/homePublic/DayRecommd"),
+    meta: {
+      title: "梦回云音乐-每日推荐",
+      index: 2,
+    },
+  },
+  {
+    path: "/sheetSquare",
+    name: "sheetSquare",
+    component: () => import("../views/sheetSquare/sheetSquare"),
+    meta: {
+      title: "梦回云音乐-歌单广场",
+      index: 2,
+    },
+  },
+  {
+    path: "/comcenter",
+    name: "comcenter",
+    component: () => import("../views/test/index"),
+    meta: {
+      title: "梦回云音乐-组件测试中心",
+      index: 2,
     },
   },
   {
@@ -57,6 +113,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/test.vue"),
     meta: {
       title: "梦回云音乐-测试",
+      index: 2,
     },
   },
 ];

@@ -17,7 +17,7 @@ export default defineComponent({
   props: {
     leftIcon: {
       type: String,
-      default: "icon-fanhui",
+      default: "icon-fanhui1",
       desc: "定义left插槽时此prop失效",
     },
     rightIcon: {
@@ -30,6 +30,11 @@ export default defineComponent({
       default: "#000",
       desc: "定义right插槽时此prop失效",
     },
+    iconSize: {
+      type: String,
+      default: "0.5rem",
+      desc: "定义right插槽时此prop失效",
+    },
     backStatus: {
       type: Boolean,
       default: false,
@@ -39,11 +44,12 @@ export default defineComponent({
       default: "",
       desc: "作为背景使用",
     },
+    overflowHeight: Number,
     style: Object as PropType<CSSProperties>,
     onLeftClick: Function as CustomEventFuncType<null>,
     onRightClick: Function as CustomEventFuncType<null>,
   },
-  emits: ["left-click", "right-click", "moreNav", "lessNav"],
+  emits: ["left-click", "right-click", "moreNav", "lessNav", "scroll"],
   setup(props, { emit, slots }) {
     const handleLeftClick = () => {
       if (props.backStatus) {
@@ -56,42 +62,59 @@ export default defineComponent({
       emit("right-click");
     };
     const renderLeft = () => {
+      const { iconColor, iconSize } = props;
+
       return slots.left ? (
         slots.left()
       ) : (
         <i
           class={["iconfont", props.leftIcon]}
           onClick={handleLeftClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };
     const offsetHeight = ref(0);
     const isFixed = ref<boolean>(false);
     const NavRef = ref();
+    const appContent: any = document.querySelector(".app-content");
+    const backgroundStyle = ref<CSSProperties>({
+      backgroundImage: "",
+    });
     const initHeight = () => {
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      if (scrollTop > offsetHeight.value) {
+        appContent.scrollTop;
+      let moreThanHeight = offsetHeight.value;
+      emit("scroll", scrollTop);
+      if (props.overflowHeight && props.overflowHeight > 0) {
+        moreThanHeight = props.overflowHeight - offsetHeight.value;
+      }
+      if (scrollTop > moreThanHeight) {
         if (!isFixed.value) {
           isFixed.value = true;
-          NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+          // NavRef.value.style.backgroundImage = `url('${props.bgImg}')`;
+          // NavRef.value.style.cssText = `background-image:url('${props.bgImg}') !important`;
+          backgroundStyle.value.backgroundImage = `url('${props.bgImg}') !important`;
           emit("moreNav");
         }
       } else {
         if (isFixed.value) {
           isFixed.value = false;
-          NavRef.value.style.backgroundImage = ``;
+          // NavRef.value.style.backgroundImage = ``;
+          backgroundStyle.value.backgroundImage = ``;
           emit("lessNav");
         }
       }
     };
 
     onMounted(() => {
-      window.addEventListener("scroll", initHeight);
       nextTick(() => {
+        appContent.addEventListener("scroll", initHeight);
         offsetHeight.value = NavRef.value.offsetHeight;
       });
     });
@@ -101,13 +124,17 @@ export default defineComponent({
     });
 
     const renderRight = () => {
+      const { iconColor, iconSize } = props;
       return slots.right ? (
         slots.right()
       ) : (
         <i
           class={["iconfont", props.rightIcon]}
           onClick={handleRightClick}
-          style={`color:${props.iconColor}`}
+          style={{
+            color: iconColor,
+            fontSize: iconSize,
+          }}
         ></i>
       );
     };
@@ -116,7 +143,7 @@ export default defineComponent({
         <div
           class={["top-nav", isFixed.value ? "nav-fixed" : ""]}
           ref={NavRef}
-          style={props.style}
+          style={{ ...backgroundStyle.value, ...props.style }}
         >
           <div class="top-left">{renderLeft()}</div>
           <div class="top-center">{slots.center ? slots.center() : null}</div>

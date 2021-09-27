@@ -74,7 +74,7 @@ export default defineComponent({
       width: "6.5rem",
       borderRadius: "0.35rem",
       overflow: "hidden",
-      backgroundColor: "#F1F0F0",
+      backgroundColor: "#F1F0F0 ",
       textAlign: "center",
     });
 

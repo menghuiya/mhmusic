@@ -1,9 +1,11 @@
+@import "@/assets/css/common.scss";
 .all {
-  // background-color: #f1f1f1;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   .more-bottom {
     padding: 0.15rem 0;
     border-top: 1px solid #ebeef5;
+    @include border_color("border-color");
     font-size: 0.32rem;
     text-align: center;
     color: #909399;
@@ -18,7 +20,8 @@
   &-singersong {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
+    @include font_color("text-color");
     margin-top: 0.25rem;
     &-music {
       flex: 1;
@@ -52,11 +55,19 @@
         margin-right: 0.1rem;
       }
     }
+    &-cell {
+      border-top: 1px solid #ebeef5;
+      padding: 0.25rem 0;
+      margin: 0 0.25rem;
+      @include border_color("border-color");
+      @include background_color("secondary-bg");
+    }
   }
   &-sheet {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
+
     margin-top: 0.25rem;
     &-item {
       padding: 0.1rem 0;
@@ -72,8 +83,10 @@
       &-body {
         font-size: 0.32rem;
         color: #909399;
+
         .item-body-name {
-          color: #000000;
+          @include font_color("text-color");
+          @include font_color("text-color");
           font-size: 0.38rem;
           // transform: scaleY(1.05);
           zoom: 1.1;
@@ -109,7 +122,7 @@
   &-video {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
     .video-item {
       padding: 0.1rem 0;
@@ -142,7 +155,7 @@
         font-size: 0.32rem;
         color: #909399;
         &-name {
-          color: #000000;
+          @include font_color("text-color");
           font-size: 0.38rem;
           // transform: scaleY(1.05);
           zoom: 1.1;
@@ -164,7 +177,7 @@
   &-singer {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
     .singer-item {
       &-cover {
@@ -174,7 +187,7 @@
         margin-right: 0.25rem;
       }
       &-name {
-        color: #000000;
+        @include font_color("text-color");
         font-size: 0.38rem;
         // transform: scaleY(1.05);
         zoom: 1.1;
@@ -205,11 +218,14 @@
         }
       }
     }
+    .cell-box {
+      @include background_color("secondary-bg");
+    }
   }
   &-ablm {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
     .ablm-item {
       &-cover {
@@ -219,7 +235,7 @@
         margin-right: 0.25rem;
       }
       &-name {
-        color: #000000;
+        @include font_color("text-color");
         font-size: 0.38rem;
         // transform: scaleY(1.05);
         zoom: 1.1;
@@ -238,11 +254,14 @@
         margin-top: 0.1rem;
       }
     }
+    .cell-box {
+      @include background_color("secondary-bg");
+    }
   }
   &-qurey {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
     &-box {
       display: flex;
@@ -251,6 +270,9 @@
         font-size: 0.32rem;
         padding: 0.15rem 0.25rem;
         background-color: #f1f1f1;
+        color: #000;
+        @include background_color("history");
+        @include font_color("text-color");
         border-radius: 99rem;
         margin: 0.25rem 0.2rem;
       }
@@ -259,7 +281,7 @@
   &-user {
     padding: 0.1rem 0;
     border-radius: 0.25rem;
-    background-color: #fff;
+    @include background_color("secondary-bg");
     margin-top: 0.25rem;
     .user-item {
       &-cover {
@@ -269,7 +291,7 @@
         margin-right: 0.25rem;
       }
       &-name {
-        color: #000000;
+        @include font_color("text-color");
         font-size: 0.38rem;
         // transform: scaleY(1.05);
         zoom: 1.1;
@@ -306,17 +328,20 @@
         }
       }
     }
+    .cell-box {
+      @include background_color("secondary-bg");
+    }
   }
 }
 
 .song {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   // position: relative;
   min-height: 100%;
   &-head {
     position: sticky;
-    background-color: #fff;
+    @include background_color("background_color");
     z-index: 1;
     top: 0;
     &-title {
@@ -367,18 +392,21 @@
       font-size: 0.45rem !important;
       margin-right: 0.1rem;
     }
+    .cell-box {
+      @include border_color("border-color");
+    }
   }
 }
 
 .sheet,
 .musicword {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   // position: relative;
   min-height: 100%;
 }
 .video {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   // position: relative;
   min-height: 100%;
@@ -414,7 +442,7 @@
       font-size: 0.32rem;
       color: #909399;
       &-name {
-        color: #000000;
+        @include font_color("text-color");
         font-size: 0.38rem;
         // transform: scaleY(1.05);
         zoom: 1.1;
@@ -440,7 +468,7 @@
 }
 
 .singer {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   // position: relative;
   min-height: 100%;
@@ -452,7 +480,7 @@
       margin-right: 0.25rem;
     }
     &-name {
-      color: #000000;
+      @include font_color("text-color");
       font-size: 0.38rem;
       // transform: scaleY(1.05);
       zoom: 1.1;
@@ -486,7 +514,7 @@
 }
 
 .muser {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   min-height: 100%;
   .user-item {
@@ -497,7 +525,7 @@
       margin-right: 0.25rem;
     }
     &-name {
-      color: #000000;
+      @include font_color("text-color");
       font-size: 0.38rem;
       // transform: scaleY(1.05);
       zoom: 1.1;
@@ -537,7 +565,7 @@
 }
 
 .album {
-  background-color: #fff;
+  @include background_color("background_color");
   padding: 0 0.25rem;
   // position: relative;
   min-height: 100%;
@@ -549,7 +577,7 @@
       margin-right: 0.25rem;
     }
     &-name {
-      color: #000000;
+      @include font_color("text-color");
       font-size: 0.38rem;
       // transform: scaleY(1.05);
       zoom: 1.1;

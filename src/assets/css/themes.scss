@@ -1,0 +1,38 @@
+$themes: (
+  light: (
+    //背景色
+      background_color: #f8f8f8,
+    // 主文本色,,,,,
+      text-color: #000,
+    //边框颜色
+      border-color: #f8f8f8,
+    //单元格背景色
+      cell-bgcolor: #fff,
+    //次要背景色
+      secondary-bg: #fff,
+    filter-shadow: #ebebeb,
+    history: #f1f1f1,
+    comfirm-hover-bg: #dddddd,
+    sheet-page-bg: #fff,
+    sheet-page-card: #f1f1f1,
+    play-con-bg: #fbfbfb,
+  ),
+  dark: (
+    //背景
+      background_color: #080808,
+    // 主文本色,,,
+      text-color: #f8f8f8,
+    //边框颜色
+      border-color: #313131,
+    //单元格背景色
+      cell-bgcolor: #080808,
+    //次要背景色
+      secondary-bg: #1a1919,
+    filter-shadow: #252525,
+    history: #252424,
+    comfirm-hover-bg: #212121,
+    sheet-page-bg: #0a0a0a,
+    sheet-page-card: #101010,
+    play-con-bg: #0d0d0d,
+  ),
+);

@@ -1,12 +1,33 @@
+@import "@/assets/css/common.scss";
 .info {
+  @include background_color("background_color");
+  position: relative;
   &-head {
     background-color: #fff;
     .left-icon {
       margin-right: 0.25rem;
+      .iconfont {
+        font-size: 0.7rem !important;
+      }
+      img {
+        width: 0.7rem;
+        height: 0.7rem;
+        vertical-align: middle;
+        border-radius: 999rem;
+        background-color: #fff;
+      }
+    }
+    &-title {
+      font-size: 0.4rem;
+      font-weight: 600;
+      .icon-qianjin1 {
+        font-size: 0.4rem;
+      }
     }
   }
   &-content {
     padding: 0 0.25rem;
+    @include background_color("background_color");
     .left-icon {
       margin-right: 0.25rem;
     }
@@ -25,18 +46,23 @@
       }
     }
     &-group {
-      background-color: #fff;
+      @include secondary_bg("secondary-bg");
       margin: 0.25rem 0;
       border-radius: 0.25rem;
+      overflow: hidden;
+      .cell-box {
+        @include secondary_bg("secondary-bg");
+      }
       &-title {
         font-size: 0.32rem;
         padding: 0.25rem;
         color: #a0a0a0;
         border-bottom: 1px solid #ebebeb;
+        @include border_color("border-color");
       }
     }
     &-logout {
-      background-color: #fff;
+      @include background_color("secondary-bg");
       margin: 0.25rem 0;
       text-align: center;
       padding: 0.25rem 0;

@@ -1,0 +1,49 @@
+@import "@/assets/css/common.scss";
+.slider {
+  &-nav {
+    font-size: 0.36rem;
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    &-box {
+      width: 100%;
+      display: flex;
+      white-space: nowrap;
+      align-items: center;
+      padding-bottom: 0.15rem;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &-item {
+      margin: 0 0.35rem;
+      padding-bottom: 0.1rem;
+      box-sizing: border-box;
+      position: relative;
+      text-align: center;
+      width: fit-content;
+      color: #909399;
+      &:nth-child(1) {
+        margin-left: 0.15rem;
+      }
+      &:last-child {
+        margin-right: 0.15rem;
+      }
+    }
+    &-active {
+      font-weight: 600;
+      @include font_color("text-color");
+    }
+    &-underline {
+      position: absolute;
+      bottom: 0;
+      display: block;
+      height: 4px;
+      border-radius: 4px;
+      background-color: red;
+      transition: all 0.3s ease-out;
+      margin-bottom: 0.1rem;
+    }
+  }
+}

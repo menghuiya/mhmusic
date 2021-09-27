@@ -12,6 +12,7 @@ interface RecomdOptions extends AxiosResponse {
 }
 
 interface RecomdSheetItem {
+  coverImgUrl?: string;
   alg?: string;
   canDislike?: boolean;
   copywriter?: string;
@@ -23,6 +24,8 @@ interface RecomdSheetItem {
   trackCount?: number;
   trackNumberUpdateTime?: number;
   type?: number;
+  updateTime?: number;
+  createTime?: number;
 }
 
 interface ArtistItem {

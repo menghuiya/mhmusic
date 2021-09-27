@@ -1,0 +1,34 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-size: 0.32rem;
+  height: 0.6rem;
+  vertical-align: middle;
+  background-color: rgb(19, 206, 102);
+  width: 1.2rem;
+  border: 1px solid #dcdfe6;
+  outline: none;
+  border-radius: 999rem;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, background-color 0.3s;
+  box-sizing: content-box;
+  &-dot {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 100%;
+    transition: all 0.3s;
+    width: 0.6rem;
+    height: 0.6rem;
+    background-color: #fff;
+    box-shadow: 0 3px 1px 0 #0000000d, 0 2px 2px 0 #0000001a,
+      0 3px 3px 0 #0000000d;
+  }
+}
+
+.disable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

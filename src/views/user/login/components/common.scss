@@ -1,7 +1,8 @@
+@import "@/assets/css/common.scss";
 .login-common {
   height: 100%;
   // width: 100%;
-  background: #fff;
+  @include background_color("cell-bgcolor");
   // overflow-y: auto;
   position: fixed;
   right: 0;
@@ -18,6 +19,7 @@
     padding: 0.08rem 0.2rem;
     border-radius: 999rem;
     border: 1px solid #e6e6e6;
+    display: inline-block;
   }
   .common-btn {
     padding: 0.25rem;
@@ -56,6 +58,7 @@
         align-items: center;
         padding: 0.1rem 0;
         border-bottom: 1px solid #e8e8e8;
+        @include border_color("border-color");
         .phone-code {
           font-size: 0.48rem;
           display: flex;
@@ -73,6 +76,8 @@
             height: 100%;
             padding: 0.2rem 0.7rem 0.2rem 0;
             font-size: 0.42rem;
+            @include background_color("cell-bgcolor");
+            @include font_color("text-color");
             &:focus {
               border: none;
               border-color: red;
@@ -137,6 +142,9 @@
       &-right {
         font-size: 0.36rem;
         letter-spacing: 0;
+        &-btn {
+          color: #5a7cab;
+        }
       }
     }
     &-input {
@@ -146,6 +154,7 @@
       justify-content: space-between;
       padding: 0.25rem 0;
       position: relative;
+
       // input {
       //   padding: 0.2rem 0.25rem;
       //   font-size: 0.5rem;
@@ -224,11 +233,14 @@
       position: relative;
       border-bottom: 1px solid #e8e8e8;
       margin: 0.5rem 0;
+      @include border_color("border-color");
       &-input {
         width: 100%;
         height: 100%;
         padding: 0.2rem 0.7rem 0.2rem 0;
         font-size: 0.42rem;
+        @include background_color("cell-bgcolor");
+        @include font_color("text-color");
         &:focus {
           border: none;
           border-color: red;

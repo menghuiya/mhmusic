@@ -1,3 +1,4 @@
+@import "@/assets/css/common.scss";
 .read-play {
   &-head-box {
     padding: 0.2rem 0.25rem 0 0.25rem;
@@ -5,6 +6,8 @@
     top: 0;
     background: #fff;
     z-index: 1;
+    @include background_color("background_color");
+    @include font_color("text-color");
   }
   &-head {
     &-title {
@@ -24,6 +27,7 @@
     &-left {
       font-size: 0.34rem;
       .iconfont {
+        @include font_color("text-color");
         font-size: 0.4rem;
         color: #606266;
         margin-right: 0.2rem;
@@ -33,6 +37,7 @@
     &-right {
       font-size: 0.34rem;
       .iconfont {
+        @include font_color("text-color");
         font-size: 0.4rem;
         color: #606266;
         vertical-align: middle;

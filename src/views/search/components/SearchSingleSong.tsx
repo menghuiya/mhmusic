@@ -11,21 +11,26 @@ export default defineComponent({
   },
   setup(props, { emit, slots }) {
     const store = useStore();
-    type ClickHandler = (index: number) => (e: MouseEvent) => void;
-    const playMusic: ClickHandler = (index: number) => (e) => {
+    type ClickEventFuncType = (item: any, type?: string) => (e: Event) => void;
+    const playMusic: ClickEventFuncType = (item: any, type = "single") => (
+      e
+    ) => {
       if (props.data) {
-        // store.commit("setPlayCurrntIndex", index);
-        // store.commit("setPlayList", props.data.songs);
-
-        const ids = props.data.songs.map((item: any) => item.id);
-        getSongSheetDetailAll(ids.join(",")).then((data: any) => {
-          store.commit("setPlayCurrntIndex", index);
-          store.commit("setPlayList", data.songs);
-        });
+        if (type === "single") {
+          getSongSheetDetailAll(item.id).then((data: any) => {
+            store.commit("setPlayList", data.songs[0]);
+          });
+        } else {
+          const ids = props.data.songs.map((item: any) => item.id);
+          getSongSheetDetailAll(ids.join(",")).then((data: any) => {
+            store.commit("setPlayCurrntIndex", 0);
+            store.commit("setSheetPlayList", data.songs);
+          });
+        }
       }
     };
     const playAll = () => {
-      playMusic(0);
+      playMusic(null, "sheet");
     };
     return () => {
       return (
@@ -39,7 +44,7 @@ export default defineComponent({
               style={{
                 padding: "0.15rem 0",
               }}
-              onClick={playAll}
+              onClick={playMusic(null, "sheet")}
               v-slots={{
                 title: () => (
                   <>
@@ -65,7 +70,7 @@ export default defineComponent({
                       padding: "0.25rem 0",
                       margin: "0 0.15rem",
                     }}
-                    onClick={playMusic(index)}
+                    onClick={playMusic(item)}
                     v-slots={{
                       icon: () => null,
                       title: () => (

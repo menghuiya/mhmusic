@@ -51,7 +51,6 @@ export default defineComponent({
     });
 
     const closeSearch = () => {
-      clear();
       router.go(-1);
     };
     const clear = () => {

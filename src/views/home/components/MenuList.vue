@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import router from "@/router";
 import { defineComponent, reactive, ref } from "vue";
 import { MenuItem } from "./types";
 
@@ -33,7 +34,12 @@ export default defineComponent({
       { id: 5, name: "每日推荐", icon: "icon-tubiao204" },
     ]);
     const handleClick = (menuData: MenuItem) => {
-      console.log(menuData);
+      if (menuData.id === 1) {
+        router.push("/DayRecommd");
+      }
+      if (menuData.id === 3) {
+        router.push("/sheetSquare");
+      }
     };
     return {
       menuListData,
@@ -44,8 +50,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .menu-box {
-  margin: 0.4rem 0;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f8f8f8;
+  @include border_color("border-color");
   .swiper-slide {
     height: 2rem;
 

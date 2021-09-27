@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from "vue";
+import { defineComponent, inject, onMounted, reactive, ref, watch } from "vue";
 import Nav from "@/components/Nav/Nav";
 import HomeBanner from "./components/HomeBanner";
 import SearchPage from "./components/SearchPage";
@@ -37,6 +37,7 @@ import HomeInfo from "./components/HomeInfo";
 import MenuList from "./components/MenuList.vue";
 import FindMusiList from "./components/FindMusiList.vue";
 import SelectMusicVideo from "./components/SelectMusicVideo.vue";
+import { PlayBoxState } from "@/utils/types";
 
 export default defineComponent({
   name: "Home",
@@ -59,7 +60,7 @@ export default defineComponent({
       { id: 3, name: "云村" },
       { id: 4, name: "视频" },
     ]);
-
+    const playBox = inject<PlayBoxState>("PlayBoxKey");
     const handLeftClick = () => {
       showInfo.value = true;
     };
@@ -72,6 +73,17 @@ export default defineComponent({
     const handleChange = (num: number) => {
       selectId.value = num;
     };
+
+    // watch(
+    //   () => showInfo.value,
+    //   (newValue) => {
+    //     if (newValue) {
+    //       playBox?.close();
+    //     } else {
+    //       playBox?.open();
+    //     }
+    //   }
+    // );
 
     return {
       handLeftClick,
@@ -86,4 +98,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/css/common.scss";
+.home {
+  @include cell_bgcolor("background_color");
+  @include font_color("text-color");
+}
+</style>
