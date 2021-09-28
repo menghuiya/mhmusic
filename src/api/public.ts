@@ -17,22 +17,33 @@ export function getMusicWord(id: number) {
 
 /**
  * 获取热搜列表
- * @param type 
- * @returns 
+ * @param type
+ * @returns
  */
 export function getHotSearch() {
   return request({
-    url: '/search/hot/detail',
+    url: "/search/hot/detail",
     method: "get",
   });
 }
 
 /**
  * 获取默认搜索关键词
- * @returns 
+ * @returns
  */
-export function getDefaultSearch(){
+export function getDefaultSearch() {
   return request({
-    url:'/search/default'
-  })
+    url: "/search/default",
+  });
+}
+
+/**
+ * 获取排行榜数据
+ * @returns
+ *
+ */
+export function getRankList() {
+  return request({
+    url: "/toplist/detail",
+  });
 }

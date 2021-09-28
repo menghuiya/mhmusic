@@ -40,6 +40,9 @@ export default defineComponent({
       if (menuData.id === 3) {
         router.push("/sheetSquare");
       }
+      if (menuData.id === 4) {
+        router.push("/rankingList");
+      }
     };
     return {
       menuListData,
