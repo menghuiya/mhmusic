@@ -90,6 +90,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/rankingList",
+    name: "rankingList",
+    component: () => import("../views/homePublic/rankingList"),
+    meta: {
+      title: "梦回云音乐-排行榜",
+      index: 2,
+    },
+  },
+  {
     path: "/sheetSquare",
     name: "sheetSquare",
     component: () => import("../views/sheetSquare/sheetSquare"),
