@@ -12,6 +12,8 @@ interface RecomdOptions extends AxiosResponse {
 }
 
 interface RecomdSheetItem {
+  [x: string]: any;
+  updateFrequency?: any;
   coverImgUrl?: string;
   alg?: string;
   canDislike?: boolean;

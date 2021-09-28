@@ -4,12 +4,15 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  &-head-title {
+    font-weight: 600;
+  }
   .slider-nav-item {
     margin: 0 0.53rem;
     font-size: 0.4rem;
   }
   .common-title {
-    padding: 0.25rem 0;
+    padding: 0.25rem 0.35rem;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -33,20 +36,106 @@
     flex: 1;
     overflow-y: auto;
     width: 100%;
-    padding: 0 0.35rem;
+    // padding: 0 0.35rem;
     &-recomm {
-      margin: 0.25rem 0;
-      padding: 0 0.25rem;
+      margin: 0.25rem auto;
+      padding: 0 0.35rem;
       border-radius: 0.25rem;
+      width: calc(100% - 0.7rem);
       @include background_color("secondary-bg");
-      width: 100%;
+      .common-title {
+        padding: 0.25rem 0;
+      }
       &-content {
         display: flex;
         justify-content: space-between;
       }
       &-card {
-        width: (100% / 3);
+        // width: (100% / 3);
+        // flex: 1;
+        .song-sheet-cover {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+        .song-sheet-desc {
+          width: 2.5rem;
+        }
+      }
+    }
+    &-offcirank {
+      background: #f6eaef;
+      padding: 0.1rem 0.25rem 0.25rem 0.25rem;
+      border-radius: 0.25rem;
+      font-size: 0.36rem;
+      margin: 0.25rem auto;
+      width: calc(100% - 0.7rem);
+      &:nth-child(2) {
+        background: #ebf2f1;
+      }
+      &:nth-child(4) {
+        background: #ebeff5;
+      }
+      &-tag {
+        font-size: 0.32rem;
+        color: #c8cecd;
+        text-align: right;
+      }
+      &-card {
+        display: flex;
+      }
+      &-left {
+        margin: 0 0.25rem;
+        &-title {
+          font-size: 0.56rem;
+          font-weight: 600;
+          color: #d43f76;
+        }
+        &-img {
+          width: 1.7rem;
+          height: 1.7rem;
+          margin: 0.25rem 0;
+          border-radius: 0.25rem;
+        }
+      }
+      &-right {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0.35rem 0.35rem 0.35rem 0.35rem;
+        font-size: 0.38rem;
+        &-item {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          .mhrank-item-info {
+            flex: 1;
+            display: flex;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .mhrank-item-author {
+            color: #b8bdbc;
+          }
+        }
+      }
+    }
+    &-common {
+      @include background_color("secondary-bg");
+      border-radius: 0.25rem;
+      margin: 0.25rem auto;
+      width: 100%;
+      &-content {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        &-card {
+          width: (100% / 3);
+          margin: 0.15rem 0;
+        }
       }
     }
   }

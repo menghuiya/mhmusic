@@ -11,6 +11,10 @@ export default defineComponent({
       type: Object as PropType<RecomdSheetItem>,
       required: true,
     },
+    origin: {
+      type: String,
+      default: "sheet",
+    },
   },
   setup(props, { emit, slots }) {
     const handleClick = () => {
@@ -23,20 +27,24 @@ export default defineComponent({
       });
     };
     return () => {
+      const { sheetData, origin } = props;
       return (
         <div class="song-sheet-card" onClick={handleClick}>
           <div class="song-sheet-cover">
             <img
-              v-imgLazy={props.sheetData.picUrl || props.sheetData.coverImgUrl}
-              alt={props.sheetData.name}
+              v-imgLazy={sheetData.picUrl || sheetData.coverImgUrl}
+              alt={sheetData.name}
               class="cover-img"
             />
             <div class="cover-count">
-              <i class="iconfont icon-bofang2"></i>
-              {getShowNumber(props.sheetData.playCount)}
+              {origin === "rank" ? null : <i class="iconfont icon-bofang2"></i>}
+
+              {origin === "sheet"
+                ? getShowNumber(sheetData.playCount)
+                : sheetData.updateFrequency}
             </div>
           </div>
-          <div class="song-sheet-desc">{props.sheetData.name}</div>
+          <div class="song-sheet-desc">{sheetData.name}</div>
         </div>
       );
     };
